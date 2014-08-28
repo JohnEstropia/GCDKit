@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2F31115F19AF70EE00DF35D0 /* DispatchKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */; };
+		2F31116119AF758600DF35D0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 2F31116019AF758600DF35D0 /* LICENSE */; };
+		2F31116319AF75AA00DF35D0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 2F31116219AF75AA00DF35D0 /* README.md */; };
 		2FBBCADB19A9FE610070E4AB /* DispatchKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,8 @@
 
 /* Begin PBXFileReference section */
 		2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchKit.swift; sourceTree = "<group>"; };
+		2F31116019AF758600DF35D0 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		2F31116219AF75AA00DF35D0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2FBBCACB19A9FE610070E4AB /* DispatchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DispatchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBBCACF19A9FE610070E4AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FBBCAD619A9FE610070E4AB /* DispatchKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DispatchKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +55,8 @@
 		2FBBCAC119A9FE610070E4AB = {
 			isa = PBXGroup;
 			children = (
+				2F31116019AF758600DF35D0 /* LICENSE */,
+				2F31116219AF75AA00DF35D0 /* README.md */,
 				2FBBCACD19A9FE610070E4AB /* DispatchKit */,
 				2FBBCAD719A9FE610070E4AB /* DispatchKitTests */,
 				2FBBCACC19A9FE610070E4AB /* Products */,
@@ -189,6 +195,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F31116119AF758600DF35D0 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F31116319AF75AA00DF35D0 /* README.md in Sources */,
 				2F31115F19AF70EE00DF35D0 /* DispatchKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
