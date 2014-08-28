@@ -7,14 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FBBCAD119A9FE610070E4AB /* DispatchKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FBBCAD019A9FE610070E4AB /* DispatchKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F31115F19AF70EE00DF35D0 /* DispatchKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */; };
 		2FBBCADB19A9FE610070E4AB /* DispatchKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2F5BBACF19AA302D0061C57C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2FBBCAC219A9FE610070E4AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FBBCACA19A9FE610070E4AB;
+			remoteInfo = DispatchKit;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchKit.swift; sourceTree = "<group>"; };
 		2FBBCACB19A9FE610070E4AB /* DispatchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DispatchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBBCACF19A9FE610070E4AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2FBBCAD019A9FE610070E4AB /* DispatchKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DispatchKit.h; sourceTree = "<group>"; };
 		2FBBCAD619A9FE610070E4AB /* DispatchKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DispatchKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBBCAD919A9FE610070E4AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchKitTests.swift; sourceTree = "<group>"; };
@@ -59,7 +69,7 @@
 		2FBBCACD19A9FE610070E4AB /* DispatchKit */ = {
 			isa = PBXGroup;
 			children = (
-				2FBBCAD019A9FE610070E4AB /* DispatchKit.h */,
+				2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */,
 				2FBBCACE19A9FE610070E4AB /* Supporting Files */,
 			);
 			path = DispatchKit;
@@ -97,7 +107,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FBBCAD119A9FE610070E4AB /* DispatchKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +142,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				2F5BBAD019AA302D0061C57C /* PBXTargetDependency */,
 			);
 			name = DispatchKitTests;
 			productName = DispatchKitTests;
@@ -196,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F31115F19AF70EE00DF35D0 /* DispatchKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +219,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2F5BBAD019AA302D0061C57C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FBBCACA19A9FE610070E4AB /* DispatchKit */;
+			targetProxy = 2F5BBACF19AA302D0061C57C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2FBBCADC19A9FE610070E4AB /* Debug */ = {
@@ -298,6 +317,7 @@
 		2FBBCADF19A9FE610070E4AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -307,12 +327,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		2FBBCAE019A9FE610070E4AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -374,6 +396,7 @@
 				2FBBCAE019A9FE610070E4AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2FBBCAE119A9FE610070E4AB /* Build configuration list for PBXNativeTarget "DispatchKitTests" */ = {
 			isa = XCConfigurationList;
@@ -382,6 +405,7 @@
 				2FBBCAE319A9FE610070E4AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
