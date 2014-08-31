@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2F31115F19AF70EE00DF35D0 /* DispatchKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */; };
-		2F31116119AF758600DF35D0 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 2F31116019AF758600DF35D0 /* LICENSE */; };
-		2F31116319AF75AA00DF35D0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 2F31116219AF75AA00DF35D0 /* README.md */; };
 		2FBBCADB19A9FE610070E4AB /* DispatchKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -195,7 +193,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F31116119AF758600DF35D0 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,7 +210,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F31116319AF75AA00DF35D0 /* README.md in Sources */,
 				2F31115F19AF70EE00DF35D0 /* DispatchKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,13 +26,165 @@
 
 import Foundation
 
+
 /**
-A dispatch queue is a lightweight object to which your application submits blocks for subsequent execution.
+A wrapper and utility class for dispatch_block_t.
 */
+@availability(iOS, introduced=8.0)
+public struct GCDBlock {
+    
+    /**
+    Submits a closure for asynchronous execution on a queue and returns immediately.
+    
+    :param: queue The queue to which the supplied block will be submitted.
+    :param: closure The closure to submit to the target queue.
+    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    */
+    public static func async(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+        
+        return queue.async(closure)
+    }
+    
+    /**
+    Submits a closure for execution on a queue and waits until that block completes.
+    
+    :param: queue The queue to which the supplied block will be submitted.
+    :param: closure The closure to submit to the target queue.
+    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    */
+    public static func sync(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+        
+        return queue.sync(closure)
+    }
+    
+    /**
+    Enqueue a closure for execution at the specified time.
+    
+    :param: queue The queue to which the supplied block will be submitted.
+    :param: delay The number of seconds delay before executing the block
+    :param: closure The closure to submit to the target queue.
+    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    */
+    public static func after(queue: GCDQueue, delay: NSTimeInterval, _ closure: () -> ()) -> GCDBlock {
+        
+        return queue.after(delay, closure)
+    }
+    
+    /**
+    Submits a barrier closure for asynchronous execution and returns immediately.
+    
+    :param: queue The queue to which the supplied block will be submitted.
+    :param: closure The closure to submit to the target queue.
+    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    */
+    public static func barrierAsync(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+        
+        return queue.barrierAsync(closure)
+    }
+    
+    /**
+    Submits a barrier closure object for execution and waits until that block completes.
+    
+    :param: queue The queue to which the supplied block will be submitted.
+    :param: closure The closure to submit to the target queue.
+    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    */
+    public static func barrierSync(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+        
+        return queue.barrierSync(closure)
+    }
+    
+    /**
+    Synchronously executes the block.
+    */
+    public func perform() {
+        
+        self.rawObject()
+    }
+    
+    /**
+    Schedule a notification closure to be submitted to a queue when the execution of the block has completed.
+    
+    :param: queue The queue to which the supplied notification closure will be submitted when the block completes.
+    :param: closure The notification closure to submit when the block completes.
+    :returns: The notification block. Useful when chaining blocks together.
+    */
+    public func notify(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+        
+        let block = GCDBlock(closure)
+        dispatch_block_notify(self.rawObject, queue.dispatchQueue(), block.rawObject)
+        
+        return block
+    }
+    
+    /**
+    Asynchronously cancel the block.
+    */
+    public func cancel() {
+        
+        dispatch_block_cancel(self.rawObject)
+    }
+    
+    /**
+    Wait synchronously until execution of the block has completed.
+    */
+    public func wait() {
+        
+        dispatch_block_wait(self.rawObject, DISPATCH_TIME_FOREVER)
+    }
+    
+    /**
+    Wait synchronously until execution of the block has completed or until the specified timeout has elapsed.
+    
+    :param: timeout The number of seconds before timeout.
+    :returns: Returns zero on success, or non-zero if the timeout occurred.
+    */
+    public func wait(timeout: NSTimeInterval) -> Int {
+        
+        return dispatch_block_wait(self.rawObject, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
+    }
+    
+    /**
+    Wait synchronously until execution of the block has completed or until the specified timeout has elapsed.
+    
+    :param: date The timeout date.
+    :returns: Returns zero on success, or non-zero if the timeout occurred.
+    */
+    public func wait(date: NSDate) -> Int {
+        
+        return self.wait(date.timeIntervalSinceNow)
+    }
+    
+    /**
+    Returns the dispatch_block_t object associated with this value.
+    
+    :returns: The dispatch_block_t object associated with this value.
+    */
+    public func dispatchBlock() -> dispatch_block_t {
+        
+        return self.rawObject
+    }
+    
+    private let rawObject: dispatch_block_t
+    
+    private init(closure: () -> ()) {
+        
+        self.rawObject = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS) {
+            
+            autoreleasepool(closure)
+            
+        }
+    }
+}
+
+/**
+A wrapper and utility class for dispatch_queue_t.
+*/
+@availability(iOS, introduced=8.0)
 public enum GCDQueue {
     
     /**
-    The serial dispatch queue associated with the application’s main thread
+    The serial queue associated with the application’s main thread
     */
     case Main
     
@@ -62,87 +214,186 @@ public enum GCDQueue {
     case Background
     
     /**
-    A user-created custom queue. Use DispatchQueue.createSerial() or DispatchQueue.createConcurrent() to create the associated dispatch_queue_t object.
+    A user-created custom queue. Use DispatchQueue.createSerial() or DispatchQueue.createConcurrent() to create with an associated dispatch_queue_t object.
     */
     case Custom(dispatch_queue_t)
     
     /**
-    Returns the dispatch_queue_t object associated with this value.
-    
-    :returns: The dispatch_queue_t object associated with this value.
-    */
-    public func dispatchObject() -> dispatch_queue_t {
-        
-        switch self {
-            
-        case .Main:                         return dispatch_get_main_queue()
-        case .UserInteractive:              return dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.value), 0)
-        case .UserInitiated:                return dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.value), 0)
-        case .Default:                      return dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.value), 0)
-        case .Utility:                      return dispatch_get_global_queue(Int(QOS_CLASS_UTILITY.value), 0)
-        case .Background:                   return dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.value), 0)
-        case .Custom(let dispatchQueue):    return dispatchQueue
-        }
-    }
-    
-    /**
-    Creates a DispatchQueue.Custom to which blocks can be submitted serially.
+    Creates a custom queue to which blocks can be submitted serially.
     
     :param: label A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
-    :returns: A new serial DispatchQueue.Custom.
+    :returns: A new custom serial queue.
     */
-    public static func createSerial(label: String = "") -> GCDQueue {
+    public static func createSerial(label: String) -> GCDQueue {
         
-        return .Custom(dispatch_queue_create(label, DISPATCH_QUEUE_SERIAL))
+        return self.createCustom(isConcurrent: false, label: label, targetQueue: nil)
     }
     
     /**
-    Creates a DispatchQueue.Custom to which blocks can be submitted concurrently.
+    Creates a custom queue and specifies a target queue to which blocks can be submitted serially.
     
     :param: label A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
-    :returns: A new concurrent DispatchQueue.Custom.
+    :param: targetQueue The new target queue for the custom queue.
+    :returns: A new custom serial queue.
     */
-    public static func createConcurrent(label: String = "") -> GCDQueue {
+    public static func createSerial(label: String, targetQueue: GCDQueue) -> GCDQueue {
         
-        return .Custom(dispatch_queue_create(label, DISPATCH_QUEUE_CONCURRENT))
+        return self.createCustom(isConcurrent: false, label: label, targetQueue: targetQueue)
     }
     
     /**
-    Submits a block for asynchronous execution on a dispatch queue and returns immediately.
+    Creates a custom queue to which blocks can be submitted concurrently.
     
-    :param: closure The block to submit to the target dispatch queue.
+    :param: label A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
+    :returns: A new custom concurrent queue.
     */
-    public func async(closure: (Void) -> Void) {
+    public static func createConcurrent(label: String) -> GCDQueue {
         
-        dispatch_async(self.dispatchObject()) {
-            
-            autoreleasepool(closure)
-        }
+        return self.createCustom(isConcurrent: true, label: label, targetQueue: nil)
     }
     
     /**
-    Enqueue a block for execution at the specified time.
+    Creates a custom queue and specifies a target queue to which blocks can be submitted concurrently.
+    
+    :param: label A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
+    :param: targetQueue The new target queue for the custom queue.
+    :returns: A new custom concurrent queue.
+    */
+    public static func createConcurrent(label: String, targetQueue: GCDQueue) -> GCDQueue {
+        
+        return self.createCustom(isConcurrent: true, label: label, targetQueue: targetQueue)
+    }
+    
+    /**
+    Submits a closure for asynchronous execution and returns immediately.
+    
+    :param: closure The closure to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func async(closure: () -> ()) -> GCDBlock {
+        
+        return self.async(GCDBlock(closure))
+    }
+    
+    /**
+    Submits a block for asynchronous execution and returns immediately.
+    
+    :param: block The block to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func async(block: GCDBlock) -> GCDBlock {
+        
+        dispatch_async(self.dispatchQueue(), block.dispatchBlock())
+        return block
+    }
+    
+    /**
+    Submits a closure for execution and waits until that block completes.
+    
+    :param: closure The closure to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func sync(closure: () -> ()) -> GCDBlock {
+        
+        return self.sync(GCDBlock(closure))
+    }
+    
+    /**
+    Submits a block object for execution on a dispatch queue and waits until that block completes.
+    
+    :param: block The block to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func sync(block: GCDBlock) -> GCDBlock {
+        
+        dispatch_sync(self.dispatchQueue(), block.dispatchBlock())
+        return block
+    }
+    
+    /**
+    Enqueue a closure for execution after a specified delay.
+    
+    :param: delay The number of seconds delay before executing the closure
+    :param: closure The block to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func after(delay: NSTimeInterval, _ closure: () -> ()) -> GCDBlock {
+        
+        return self.after(delay, GCDBlock(closure))
+    }
+    
+    /**
+    Enqueue a block for execution after a specified delay.
     
     :param: delay The number of seconds delay before executing the block
-    :param: closure The block to submit to the target dispatch queue.
+    :param: block The block to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
     */
-    public func after(delay: NSTimeInterval, _ closure: (Void) -> Void) {
+    public func after(delay: NSTimeInterval, _ block: GCDBlock) -> GCDBlock {
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * NSTimeInterval(NSEC_PER_SEC))), self.dispatchObject()) {
-            
-            autoreleasepool(closure)
-        }
+        dispatch_after(
+            dispatch_time(DISPATCH_TIME_NOW, Int64(delay * NSTimeInterval(NSEC_PER_SEC))),
+            self.dispatchQueue(),
+            block.dispatchBlock())
+        return block
     }
     
     /**
-    Submits a block to a dispatch queue for multiple invocations.
+    Submits a barrier closure for asynchronous execution and returns immediately.
+    
+    :param: closure The closure to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func barrierAsync(closure: () -> ()) -> GCDBlock {
+        
+        return self.barrierAsync(GCDBlock(closure))
+    }
+    
+    /**
+    Submits a barrier block for asynchronous execution and returns immediately.
+    
+    :param: closure The block to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func barrierAsync(block: GCDBlock) -> GCDBlock {
+        
+        dispatch_barrier_async(self.dispatchQueue(), block.dispatchBlock())
+        return block
+    }
+    
+    /**
+    Submits a barrier closure for execution and waits until that block completes.
+    
+    :param: closure The closure to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func barrierSync(closure: () -> ()) -> GCDBlock {
+        
+        return self.barrierSync(GCDBlock(closure))
+    }
+    
+    /**
+    Submits a barrier block for execution and waits until that block completes.
+    
+    :param: closure The block to submit.
+    :returns: The block to submit. Useful when chaining blocks together.
+    */
+    public func barrierSync(block: GCDBlock) -> GCDBlock {
+        
+        dispatch_barrier_sync(self.dispatchQueue(), block.dispatchBlock())
+        return block
+    }
+    
+    /**
+    Submits a closure for multiple invocations.
     
     :param: iterations The number of iterations to perform.
-    :param: closure The block to submit to the target dispatch queue.
+    :param: closure The closure to submit.
     */
-    public func apply(iterations: UInt, _ closure: (iteration: UInt) -> Void) {
+    public func apply(iterations: UInt, _ closure: (iteration: UInt) -> ()) {
         
-        dispatch_apply(iterations, self.dispatchObject()) { (iteration: UInt) -> Void in
+        dispatch_apply(iterations, self.dispatchQueue()) {
+            (iteration: UInt) -> () in
             
             autoreleasepool {
                 
@@ -152,35 +403,39 @@ public enum GCDQueue {
     }
     
     /**
-    Submits a barrier block for asynchronous execution and returns immediately.
+    Returns the dispatch_queue_t object associated with this value.
     
-    :param: closure The block to submit to the target dispatch queue.
+    :returns: The dispatch_queue_t object associated with this value.
     */
-    public func barrierAsync(closure: (Void) -> Void) {
+    public func dispatchQueue() -> dispatch_queue_t {
         
-        dispatch_barrier_async(self.dispatchObject()) {
+        switch self {
             
-            autoreleasepool(closure)
+        case .Main:                     return dispatch_get_main_queue()
+        case .UserInteractive:          return dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.value), 0)
+        case .UserInitiated:            return dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.value), 0)
+        case .Default:                  return dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.value), 0)
+        case .Utility:                  return dispatch_get_global_queue(Int(QOS_CLASS_UTILITY.value), 0)
+        case .Background:               return dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.value), 0)
+        case .Custom(let rawObject):    return rawObject
         }
     }
     
-    /**
-    Submits a barrier block object for execution and waits until that block completes.
-    
-    :param: closure The block to submit to the target dispatch queue.
-    */
-    public func barrierSync(closure: (Void) -> Void) {
+    private static func createCustom(#isConcurrent: Bool, label: String, targetQueue: GCDQueue?) -> GCDQueue {
         
-        dispatch_barrier_sync(self.dispatchObject()) {
+        let queue = GCDQueue.Custom(dispatch_queue_create(label, (isConcurrent ? DISPATCH_QUEUE_CONCURRENT : DISPATCH_QUEUE_SERIAL)))
+        if let target = targetQueue {
             
-            autoreleasepool(closure)
+            dispatch_set_target_queue(queue.dispatchQueue(), target.dispatchQueue())
         }
+        return queue
     }
 }
 
 /**
-A group of block objects submitted to a queue for asynchronous invocation.
+A wrapper and utility class for dispatch_group_t.
 */
+@availability(iOS, introduced=8.0)
 public struct GCDGroup {
     
     /**
@@ -188,28 +443,21 @@ public struct GCDGroup {
     */
     public init() {
         
-        self.dispatchGroup = dispatch_group_create()
+        self.rawObject = dispatch_group_create()
     }
     
     /**
-    Returns the dispatch_group_t object associated with this value.
+    Submits a closure to a queue and associates the closure to the group.
     
-    :returns: The dispatch_group_t object associated with this value.
+    :returns: The group. Useful when chaining async invocations on the group.
     */
-    public func dispatchObject() -> dispatch_group_t {
+    public func async(queue: GCDQueue, _ closure: () -> ()) -> GCDGroup {
         
-        return self.dispatchGroup
-    }
-    
-    /**
-    Submits a block to a dispatch queue and associates the block with the specified dispatch group.
-    */
-    public func async(queue: GCDQueue, _ closure: (Void) -> Void) {
-        
-        dispatch_group_async(self.dispatchGroup, queue.dispatchObject()) {
+        dispatch_group_async(self.rawObject, queue.dispatchQueue()) {
             
             autoreleasepool(closure)
         }
+        return self
     }
     
     /**
@@ -217,7 +465,7 @@ public struct GCDGroup {
     */
     public func enter() {
         
-        dispatch_group_enter(self.dispatchGroup)
+        dispatch_group_enter(self.rawObject)
     }
     
     /**
@@ -225,57 +473,70 @@ public struct GCDGroup {
     */
     public func leave() {
         
-        dispatch_group_leave(self.dispatchGroup)
+        dispatch_group_leave(self.rawObject)
     }
     
     /**
-    Schedules a block object to be submitted to a queue when a group of previously submitted block objects have completed.
+    Schedules a closure to be submitted to a queue when a group of previously submitted blocks have completed.
     
-    :param: queue The queue to which the supplied block is submitted when the group completes.
-    :param: closure The block to submit to the target dispatch queue.
+    :param: queue The queue to which the supplied closure is submitted when the group completes.
+    :param: closure The closure to submit to the target queue.
     */
-    public func notify(queue: GCDQueue, _ closure: (Void) -> Void) {
+    public func notify(queue: GCDQueue, _ closure: () -> ()) {
         
-        dispatch_group_notify(self.dispatchGroup, queue.dispatchObject()) {
+        dispatch_group_notify(self.rawObject, queue.dispatchQueue()) {
             
             autoreleasepool(closure)
         }
     }
     
     /**
-    Waits synchronously for the previously submitted block objects to complete.
+    Waits synchronously for the previously submitted blocks to complete.
     */
     public func wait() {
         
-        dispatch_group_wait(self.dispatchGroup, DISPATCH_TIME_FOREVER)
+        dispatch_group_wait(self.rawObject, DISPATCH_TIME_FOREVER)
     }
     
     /**
-    Waits synchronously for the previously submitted block objects to complete; returns if the blocks do not complete before the specified timeout period has elapsed.
+    Waits synchronously for the previously submitted blocks to complete; returns if the blocks do not complete before the specified timeout period has elapsed.
     
     :param: timeout The number of seconds before timeout.
+    :returns: Returns zero on success, or non-zero if the timeout occurred.
     */
-    public func wait(timeout: NSTimeInterval) {
+    public func wait(timeout: NSTimeInterval) -> Int {
         
-        dispatch_group_wait(self.dispatchGroup, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
+        return dispatch_group_wait(self.rawObject, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
     }
     
     /**
-    Waits synchronously for the previously submitted block objects to complete; returns if the blocks do not complete before the specified date has elapsed.
+    Waits synchronously for the previously submitted blocks to complete; returns if the blocks do not complete before the specified date has elapsed.
     
     :param: date The timeout date.
+    :returns: Returns zero on success, or non-zero if the timeout occurred.
     */
-    public func wait(date: NSDate) {
+    public func wait(date: NSDate) -> Int {
         
-        self.wait(date.timeIntervalSinceNow)
+        return self.wait(date.timeIntervalSinceNow)
     }
     
-    private let dispatchGroup: dispatch_group_t
+    /**
+    Returns the dispatch_group_t object associated with this value.
+    
+    :returns: The dispatch_group_t object associated with this value.
+    */
+    public func dispatchGroup() -> dispatch_group_t {
+        
+        return self.rawObject
+    }
+    
+    private let rawObject: dispatch_group_t
 }
 
 /**
-A counting semaphore.
+A wrapper and utility class for dispatch_semaphore_t.
 */
+@availability(iOS, introduced=8.0)
 public struct GCDSemaphore {
     
     /**
@@ -283,7 +544,15 @@ public struct GCDSemaphore {
     */
     public init(_ value: Int) {
         
-        self.dispatchSemaphore = dispatch_semaphore_create(value)
+        self.rawObject = dispatch_semaphore_create(value)
+    }
+    
+    /**
+    Creates new counting semaphore with an initial value.
+    */
+    public init(_ value: UInt) {
+        
+        self.init(Int(value))
     }
     
     /**
@@ -295,33 +564,21 @@ public struct GCDSemaphore {
     }
     
     /**
-    Returns the dispatch_semaphore_t object associated with this value.
-    
-    :returns: The dispatch_semaphore_t object associated with this value.
-    */
-    public func dispatchObject() -> dispatch_semaphore_t {
-        
-        return self.dispatchSemaphore
-    }
-    
-    /**
     Signals (increments) a semaphore.
     
     :returns: This function returns non-zero if a thread is woken. Otherwise, zero is returned.
     */
     public func signal() -> Int {
         
-        return dispatch_semaphore_signal(self.dispatchSemaphore)
+        return dispatch_semaphore_signal(self.rawObject)
     }
     
     /**
     Waits for (decrements) a semaphore.
-    
-    :returns: Returns zero on success.
     */
-    public func wait() -> Int {
+    public func wait() {
         
-        return dispatch_semaphore_wait(self.dispatchSemaphore, DISPATCH_TIME_FOREVER)
+        dispatch_semaphore_wait(self.rawObject, DISPATCH_TIME_FOREVER)
     }
     
     /**
@@ -332,7 +589,7 @@ public struct GCDSemaphore {
     */
     public func wait(timeout: NSTimeInterval) -> Int {
         
-        return dispatch_semaphore_wait(self.dispatchSemaphore, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
+        return dispatch_semaphore_wait(self.rawObject, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
     }
     
     /**
@@ -346,5 +603,15 @@ public struct GCDSemaphore {
         return self.wait(date.timeIntervalSinceNow)
     }
     
-    private let dispatchSemaphore: dispatch_semaphore_t
+    /**
+    Returns the dispatch_semaphore_t object associated with this value.
+    
+    :returns: The dispatch_semaphore_t object associated with this value.
+    */
+    public func dispatchSemaphore() -> dispatch_semaphore_t {
+        
+        return self.rawObject
+    }
+    
+    private let rawObject: dispatch_semaphore_t
 }

@@ -11,101 +11,131 @@ import XCTest
 
 class DispatchKitTests: XCTestCase {
     
-    func testMainQueue() {
+    func testGCDBlocks() {
+        
+        var didStartWaiting = false
+        var finishedTasks = 0
+        let expectation1 = self.expectationWithDescription("dispatch block 1")
+        let expectation2 = self.expectationWithDescription("dispatch block 2")
+        let expectation3 = self.expectationWithDescription("dispatch block 3")
+        GCDBlock.async(.Background) {
+            
+            XCTAssertTrue(finishedTasks == 0)
+            XCTAssertTrue(didStartWaiting)
+            XCTAssertFalse(NSThread.isMainThread())
+            expectation1.fulfill()
+            
+            finishedTasks++
+        }
+        .notify(.Default) {
+            
+            XCTAssertTrue(finishedTasks == 1)
+            XCTAssertFalse(NSThread.isMainThread())
+            expectation2.fulfill()
+            
+            finishedTasks++
+        }
+        .notify(.Main) {
+            
+            XCTAssertTrue(finishedTasks == 2)
+            XCTAssertTrue(NSThread.isMainThread())
+            expectation3.fulfill()
+            
+            finishedTasks++
+        }
+        
+        didStartWaiting = true
+        self.waitForExpectationsWithTimeout(5.0, nil)
+        
+        XCTAssertTrue(finishedTasks == 3)
+    }
+    
+    func testGCDQueue() {
         
         let queue = GCDQueue.Main
-        XCTAssertNotNil(queue.dispatchObject());
-        XCTAssertEqual(queue.dispatchObject(), dispatch_get_main_queue())
+        XCTAssertNotNil(queue.dispatchQueue());
+        XCTAssertEqual(queue.dispatchQueue(), dispatch_get_main_queue())
         
         var didStartWaiting = false
         let dispatchExpectation = self.expectationWithDescription("main queue block")
-        GCDQueue.Main.async {
+        GCDQueue.Background.async {
             
             XCTAssertTrue(didStartWaiting)
-            XCTAssertTrue(NSThread.isMainThread())
+            XCTAssertFalse(NSThread.isMainThread())
             dispatchExpectation.fulfill()
         }
         
         didStartWaiting = true
-        self.waitForExpectationsWithTimeout(1.0, nil)
+        self.waitForExpectationsWithTimeout(5.0, nil)
     }
     
-    func testGlobalQueue() {
-        
-        XCTAssertNotNil(GCDQueue.Default.dispatchObject());
-        
-        var didStartWaiting = false
-        let dispatchExpectation = self.expectationWithDescription("global queue block")
-        GCDQueue.Default.async {
-            
-            XCTAssertTrue(didStartWaiting)
-            XCTAssertTrue(!NSThread.isMainThread())
-            dispatchExpectation.fulfill()
-        }
-        
-        didStartWaiting = true
-        self.waitForExpectationsWithTimeout(1.0, nil)
-    }
-    
-    func testDispatchGroup() {
+    func testGCDGroup() {
         
         let group = GCDGroup()
-        XCTAssertNotNil(group.dispatchObject());
+        XCTAssertNotNil(group.dispatchGroup());
         
         let expectation1 = self.expectationWithDescription("dispatch group block 1")
+        let expectation2 = self.expectationWithDescription("dispatch group block 2")
         group.async(.Main) {
             
             XCTAssertTrue(NSThread.isMainThread())
             expectation1.fulfill()
         }
-        
-        let expectation2 = self.expectationWithDescription("dispatch group block 2")
-        group.enter()
-        GCDQueue.Utility.after(3.0) {
+        .async(.Default) {
             
-            XCTAssertTrue(!NSThread.isMainThread())
+            XCTAssertFalse(NSThread.isMainThread())
             expectation2.fulfill()
-            group.leave()
         }
         
         let expectation3 = self.expectationWithDescription("dispatch group block 3")
         group.enter()
-        GCDQueue.Default.async {
+        GCDQueue.Utility.after(3.0) {
             
-            XCTAssertTrue(!NSThread.isMainThread())
+            XCTAssertFalse(NSThread.isMainThread())
             expectation3.fulfill()
             group.leave()
         }
         
         let expectation4 = self.expectationWithDescription("dispatch group block 4")
+        group.enter()
+        GCDQueue.Default.async {
+            
+            XCTAssertFalse(NSThread.isMainThread())
+            expectation4.fulfill()
+            group.leave()
+        }
+        
+        let expectation5 = self.expectationWithDescription("dispatch group block 5")
         group.notify(.Default) {
             
-            XCTAssertTrue(!NSThread.isMainThread())
-            expectation4.fulfill()
+            XCTAssertFalse(NSThread.isMainThread())
+            expectation5.fulfill()
         }
         
         self.waitForExpectationsWithTimeout(5.0, nil)
     }
     
-    func testSemaphore() {
+    func testGCDSemaphore() {
         
-        let semaphore = GCDSemaphore(1)
-        XCTAssertNotNil(semaphore.dispatchObject());
+        let numberOfTasks: UInt = 10
+        let semaphore = GCDSemaphore(numberOfTasks)
+        XCTAssertNotNil(semaphore.dispatchSemaphore());
         
-        var didStartWaiting = false
-        let expectation = self.expectationWithDescription("semaphore block")
-        GCDQueue.Default.after(3.0) {
+        var expectations: [XCTestExpectation] = [];
+        for i in 0 ..< numberOfTasks {
+        
+            expectations.append(self.expectationWithDescription("semaphore block \(i)"))
+        }
             
-            XCTAssertTrue(didStartWaiting)
-            XCTAssertTrue(!NSThread.isMainThread())
-            XCTAssertTrue(semaphore.signal() == 0)
-            expectation.fulfill()
+        GCDQueue.createConcurrent("testGCDSemaphore.queue").apply(numberOfTasks) { (iteration: UInt) -> () in
+            
+            expectations[Int(iteration)].fulfill()
+            semaphore.signal()
         }
         
-        didStartWaiting = true
-        XCTAssertTrue(semaphore.wait() == 0)
+        semaphore.wait()
         
-        self.waitForExpectationsWithTimeout(4.0, nil)
+        self.waitForExpectationsWithTimeout(0.0, nil)
     }
     
 }
