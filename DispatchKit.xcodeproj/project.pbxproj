@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F31115F19AF70EE00DF35D0 /* DispatchKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */; };
 		2FBBCADB19A9FE610070E4AB /* DispatchKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */; };
+		2FC48D4619B2EC5500CF1B76 /* GCDBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */; };
+		2FC48D4819B2EC6700CF1B76 /* GCDQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */; };
+		2FC48D4A19B2EC7800CF1B76 /* GCDGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */; };
+		2FC48D4C19B2EC8400CF1B76 /* GCDSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */; };
+		2FCDA06219B76700002F71EA /* DispatchKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCDA06119B766A2002F71EA /* DispatchKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,7 +26,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchKit.swift; sourceTree = "<group>"; };
 		2F31116019AF758600DF35D0 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2F31116219AF75AA00DF35D0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2FBBCACB19A9FE610070E4AB /* DispatchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DispatchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,6 +33,11 @@
 		2FBBCAD619A9FE610070E4AB /* DispatchKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DispatchKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBBCAD919A9FE610070E4AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchKitTests.swift; sourceTree = "<group>"; };
+		2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlock.swift; sourceTree = "<group>"; };
+		2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDQueue.swift; sourceTree = "<group>"; };
+		2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDGroup.swift; sourceTree = "<group>"; };
+		2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDSemaphore.swift; sourceTree = "<group>"; };
+		2FCDA06119B766A2002F71EA /* DispatchKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DispatchKit.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +81,11 @@
 		2FBBCACD19A9FE610070E4AB /* DispatchKit */ = {
 			isa = PBXGroup;
 			children = (
-				2F31115E19AF70EE00DF35D0 /* DispatchKit.swift */,
+				2FCDA06119B766A2002F71EA /* DispatchKit.h */,
+				2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */,
+				2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */,
+				2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */,
+				2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */,
 				2FBBCACE19A9FE610070E4AB /* Supporting Files */,
 			);
 			path = DispatchKit;
@@ -111,6 +123,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FCDA06219B76700002F71EA /* DispatchKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +223,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F31115F19AF70EE00DF35D0 /* DispatchKit.swift in Sources */,
+				2FC48D4A19B2EC7800CF1B76 /* GCDGroup.swift in Sources */,
+				2FC48D4619B2EC5500CF1B76 /* GCDBlock.swift in Sources */,
+				2FC48D4819B2EC6700CF1B76 /* GCDQueue.swift in Sources */,
+				2FC48D4C19B2EC8400CF1B76 /* GCDSemaphore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +344,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DispatchKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -345,6 +362,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DispatchKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

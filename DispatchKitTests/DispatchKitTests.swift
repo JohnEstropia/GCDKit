@@ -40,14 +40,10 @@ class DispatchKitTests: XCTestCase {
             XCTAssertTrue(finishedTasks == 2)
             XCTAssertTrue(NSThread.isMainThread())
             expectation3.fulfill()
-            
-            finishedTasks++
         }
         
         didStartWaiting = true
         self.waitForExpectationsWithTimeout(5.0, nil)
-        
-        XCTAssertTrue(finishedTasks == 3)
     }
     
     func testGCDQueue() {
