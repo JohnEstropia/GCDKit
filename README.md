@@ -51,7 +51,7 @@ let customSerialQueue: GCDQueue = .createSerial("mySerialQueue")
 let customConcurrentQueue: GCDQueue = .createConcurrent("myConcurrentQueue")
 ```
 
-In addition, custom queues created with `dispatch_queue_create(...)` typically target a default-priority default queue unless you use the `dispatch_set_target_queue(...)` API. For example, to raise the priority level of a created queue with the current SDK:
+In addition, custom queues created with `dispatch_queue_create(...)` typically target a default-priority global queue unless you use the `dispatch_set_target_queue(...)` API. For example, to raise the priority level of a created queue with the current SDK:
 
 ```swift
 let customConcurrentQueue = dispatch_queue_create("myConcurrentQueue", DISPATCH_QUEUE_CONCURRENT)
