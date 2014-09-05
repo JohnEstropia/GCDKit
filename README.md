@@ -1,13 +1,13 @@
-DispatchKit
+GCDKit
 ===========
 
-DispatchKit is Grand Central Dispatch simplified with swift.
+GCDKit is Grand Central Dispatch simplified with swift.
 
 ---
 
 ## Introduction
 
-DispatchKit implements the following constructs. To see how they work, jump right to the **Common Usage Patterns** section below.
+GCDKit implements the following constructs. To see how they work, jump right to the **Common Usage Patterns** section below.
 
 - `GCDQueue`: An abstraction of the `dispatch_queue_*` API. `GCDQueue`s are expressed as `enum`s, because we typically only need to deal with these queue types:
 
@@ -29,7 +29,7 @@ public enum GCDQueue {
 
 ## Common Usage Patterns
 
-Here are some common use cases you probably have used before and how you can write them using DispatchKit.
+Here are some common use cases and how you can write them using GCDKit.
 
 ### Creating and initializing queues
 
@@ -42,7 +42,7 @@ let customSerialQueue = dispatch_queue_create("mySerialQueue", DISPATCH_QUEUE_SE
 let customConcurrentQueue = dispatch_queue_create("myConcurrentQueue", DISPATCH_QUEUE_CONCURRENT)
 ```
 
-With DispatchKit:
+With GCDKit:
 
 ```swift
 let mainQueue: GCDQueue = .Main
@@ -58,7 +58,7 @@ let customConcurrentQueue = dispatch_queue_create("myConcurrentQueue", DISPATCH_
 dispatch_set_target_queue(customConcurrentQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0))
 ```
 
-With DispatchKit, you can immediately specify the target queue on creation:
+With GCDKit, you can immediately specify the target queue on creation:
 ```swift
 let customConcurrentQueue: GCDQueue = .createConcurrent("myConcurrentQueue", targetQueue: .UserInteractive)
 ```
@@ -76,7 +76,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
 }
 ```
 
-With DispatchKit you can either start a task chain from `GCDBlock.async(...)`:
+With GCDKit you can either start a task chain from `GCDBlock.async(...)`:
 
 ```swift
 GCDBlock.async(.Default) {
@@ -122,7 +122,7 @@ dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
 }
 ```
 
-With DispatchKit you can still use the usual `enter()`-`leave()` pairs and you can chain async calls to the dispatch group:
+With GCDKit you can still use the usual `enter()`-`leave()` pairs and you can chain async calls to the dispatch group:
 
 ```swift
 let dispatchGroup = GCDGroup()
@@ -159,7 +159,7 @@ dispatch_apply(numberOfIterations, dispatch_queue_create("myConcurrentQueue", DI
 dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
 ```
 
-With DispatchKit:
+With GCDKit:
 
 ```swift
 let numberOfIterations: UInt = 10
@@ -186,4 +186,4 @@ Feel free to report any issues or send suggestions!
 
 ## License
 
-DispatchKit is released under an MIT license. See the LICENSE file for more information
+GCDKit is released under an MIT license. See the LICENSE file for more information

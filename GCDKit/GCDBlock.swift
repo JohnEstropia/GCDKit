@@ -1,6 +1,6 @@
 //
 //  GCDBlock.swift
-//  DispatchKit
+//  GCDKit
 //
 //  Copyright (c) 2014 John Rommel Estropia
 //

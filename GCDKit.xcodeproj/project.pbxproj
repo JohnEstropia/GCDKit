@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FBBCADB19A9FE610070E4AB /* DispatchKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */; };
+		2FBBCADB19A9FE610070E4AB /* GCDKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBCADA19A9FE610070E4AB /* GCDKitTests.swift */; };
 		2FC48D4619B2EC5500CF1B76 /* GCDBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */; };
 		2FC48D4819B2EC6700CF1B76 /* GCDQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */; };
 		2FC48D4A19B2EC7800CF1B76 /* GCDGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */; };
 		2FC48D4C19B2EC8400CF1B76 /* GCDSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */; };
-		2FCDA06219B76700002F71EA /* DispatchKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCDA06119B766A2002F71EA /* DispatchKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2FCDA06219B76700002F71EA /* GCDKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCDA06119B766A2002F71EA /* GCDKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -21,23 +21,23 @@
 			containerPortal = 2FBBCAC219A9FE610070E4AB /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2FBBCACA19A9FE610070E4AB;
-			remoteInfo = DispatchKit;
+			remoteInfo = GCDKit;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2F31116019AF758600DF35D0 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2F31116219AF75AA00DF35D0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2FBBCACB19A9FE610070E4AB /* DispatchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DispatchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FBBCACB19A9FE610070E4AB /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBBCACF19A9FE610070E4AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2FBBCAD619A9FE610070E4AB /* DispatchKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DispatchKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FBBCAD619A9FE610070E4AB /* GCDKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GCDKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBBCAD919A9FE610070E4AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchKitTests.swift; sourceTree = "<group>"; };
+		2FBBCADA19A9FE610070E4AB /* GCDKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDKitTests.swift; sourceTree = "<group>"; };
 		2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlock.swift; sourceTree = "<group>"; };
 		2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDQueue.swift; sourceTree = "<group>"; };
 		2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDGroup.swift; sourceTree = "<group>"; };
 		2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDSemaphore.swift; sourceTree = "<group>"; };
-		2FCDA06119B766A2002F71EA /* DispatchKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DispatchKit.h; sourceTree = "<group>"; };
+		2FCDA06119B766A2002F71EA /* GCDKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDKit.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +63,8 @@
 			children = (
 				2F31116019AF758600DF35D0 /* LICENSE */,
 				2F31116219AF75AA00DF35D0 /* README.md */,
-				2FBBCACD19A9FE610070E4AB /* DispatchKit */,
-				2FBBCAD719A9FE610070E4AB /* DispatchKitTests */,
+				2FBBCACD19A9FE610070E4AB /* GCDKit */,
+				2FBBCAD719A9FE610070E4AB /* GCDKitTests */,
 				2FBBCACC19A9FE610070E4AB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,23 +72,23 @@
 		2FBBCACC19A9FE610070E4AB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2FBBCACB19A9FE610070E4AB /* DispatchKit.framework */,
-				2FBBCAD619A9FE610070E4AB /* DispatchKitTests.xctest */,
+				2FBBCACB19A9FE610070E4AB /* GCDKit.framework */,
+				2FBBCAD619A9FE610070E4AB /* GCDKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2FBBCACD19A9FE610070E4AB /* DispatchKit */ = {
+		2FBBCACD19A9FE610070E4AB /* GCDKit */ = {
 			isa = PBXGroup;
 			children = (
-				2FCDA06119B766A2002F71EA /* DispatchKit.h */,
+				2FCDA06119B766A2002F71EA /* GCDKit.h */,
 				2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */,
 				2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */,
 				2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */,
 				2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */,
 				2FBBCACE19A9FE610070E4AB /* Supporting Files */,
 			);
-			path = DispatchKit;
+			path = GCDKit;
 			sourceTree = "<group>";
 		};
 		2FBBCACE19A9FE610070E4AB /* Supporting Files */ = {
@@ -99,13 +99,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2FBBCAD719A9FE610070E4AB /* DispatchKitTests */ = {
+		2FBBCAD719A9FE610070E4AB /* GCDKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				2FBBCADA19A9FE610070E4AB /* DispatchKitTests.swift */,
+				2FBBCADA19A9FE610070E4AB /* GCDKitTests.swift */,
 				2FBBCAD819A9FE610070E4AB /* Supporting Files */,
 			);
-			path = DispatchKitTests;
+			path = GCDKitTests;
 			sourceTree = "<group>";
 		};
 		2FBBCAD819A9FE610070E4AB /* Supporting Files */ = {
@@ -123,16 +123,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FCDA06219B76700002F71EA /* DispatchKit.h in Headers */,
+				2FCDA06219B76700002F71EA /* GCDKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		2FBBCACA19A9FE610070E4AB /* DispatchKit */ = {
+		2FBBCACA19A9FE610070E4AB /* GCDKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2FBBCADE19A9FE610070E4AB /* Build configuration list for PBXNativeTarget "DispatchKit" */;
+			buildConfigurationList = 2FBBCADE19A9FE610070E4AB /* Build configuration list for PBXNativeTarget "GCDKit" */;
 			buildPhases = (
 				2FBBCAC619A9FE610070E4AB /* Sources */,
 				2FBBCAC719A9FE610070E4AB /* Frameworks */,
@@ -143,14 +143,14 @@
 			);
 			dependencies = (
 			);
-			name = DispatchKit;
-			productName = DispatchKit;
-			productReference = 2FBBCACB19A9FE610070E4AB /* DispatchKit.framework */;
+			name = GCDKit;
+			productName = GCDKit;
+			productReference = 2FBBCACB19A9FE610070E4AB /* GCDKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		2FBBCAD519A9FE610070E4AB /* DispatchKitTests */ = {
+		2FBBCAD519A9FE610070E4AB /* GCDKitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2FBBCAE119A9FE610070E4AB /* Build configuration list for PBXNativeTarget "DispatchKitTests" */;
+			buildConfigurationList = 2FBBCAE119A9FE610070E4AB /* Build configuration list for PBXNativeTarget "GCDKitTests" */;
 			buildPhases = (
 				2FBBCAD219A9FE610070E4AB /* Sources */,
 				2FBBCAD319A9FE610070E4AB /* Frameworks */,
@@ -161,9 +161,9 @@
 			dependencies = (
 				2F5BBAD019AA302D0061C57C /* PBXTargetDependency */,
 			);
-			name = DispatchKitTests;
-			productName = DispatchKitTests;
-			productReference = 2FBBCAD619A9FE610070E4AB /* DispatchKitTests.xctest */;
+			name = GCDKitTests;
+			productName = GCDKitTests;
+			productReference = 2FBBCAD619A9FE610070E4AB /* GCDKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -183,7 +183,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2FBBCAC519A9FE610070E4AB /* Build configuration list for PBXProject "DispatchKit" */;
+			buildConfigurationList = 2FBBCAC519A9FE610070E4AB /* Build configuration list for PBXProject "GCDKit" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -195,8 +195,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2FBBCACA19A9FE610070E4AB /* DispatchKit */,
-				2FBBCAD519A9FE610070E4AB /* DispatchKitTests */,
+				2FBBCACA19A9FE610070E4AB /* GCDKit */,
+				2FBBCAD519A9FE610070E4AB /* GCDKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -234,7 +234,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FBBCADB19A9FE610070E4AB /* DispatchKitTests.swift in Sources */,
+				2FBBCADB19A9FE610070E4AB /* GCDKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +243,7 @@
 /* Begin PBXTargetDependency section */
 		2F5BBAD019AA302D0061C57C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2FBBCACA19A9FE610070E4AB /* DispatchKit */;
+			target = 2FBBCACA19A9FE610070E4AB /* GCDKit */;
 			targetProxy = 2F5BBACF19AA302D0061C57C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -342,11 +342,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = DispatchKit/Info.plist;
+				INFOPLIST_FILE = GCDKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GCDKit;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -360,11 +360,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = DispatchKit/Info.plist;
+				INFOPLIST_FILE = GCDKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GCDKit;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -380,9 +380,9 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = DispatchKitTests/Info.plist;
+				INFOPLIST_FILE = GCDKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GCDKitTests;
 			};
 			name = Debug;
 		};
@@ -393,16 +393,16 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = DispatchKitTests/Info.plist;
+				INFOPLIST_FILE = GCDKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GCDKitTests;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2FBBCAC519A9FE610070E4AB /* Build configuration list for PBXProject "DispatchKit" */ = {
+		2FBBCAC519A9FE610070E4AB /* Build configuration list for PBXProject "GCDKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FBBCADC19A9FE610070E4AB /* Debug */,
@@ -411,7 +411,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2FBBCADE19A9FE610070E4AB /* Build configuration list for PBXNativeTarget "DispatchKit" */ = {
+		2FBBCADE19A9FE610070E4AB /* Build configuration list for PBXNativeTarget "GCDKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FBBCADF19A9FE610070E4AB /* Debug */,
@@ -420,7 +420,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2FBBCAE119A9FE610070E4AB /* Build configuration list for PBXNativeTarget "DispatchKitTests" */ = {
+		2FBBCAE119A9FE610070E4AB /* Build configuration list for PBXNativeTarget "GCDKitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FBBCAE219A9FE610070E4AB /* Debug */,

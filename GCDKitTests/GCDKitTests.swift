@@ -1,15 +1,15 @@
 //
-//  DispatchKitTests.swift
-//  DispatchKitTests
+//  GCDKitTests.swift
+//  GCDKitTests
 //
 //  Created by John Rommel Estropia on 2014/08/24.
 //  Copyright (c) 2014 John Rommel Estropia. All rights reserved.
 //
 
-import DispatchKit
+import GCDKit
 import XCTest
 
-class DispatchKitTests: XCTestCase {
+class GCDKitTests: XCTestCase {
     
     func testGCDBlocks() {
         

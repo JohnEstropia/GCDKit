@@ -1,6 +1,6 @@
 //
-//  DispatchKit.h
-//  DispatchKit
+//  GCDKit.h
+//  GCDKit
 //
 //  Copyright (c) 2014 John Rommel Estropia
 //
@@ -25,12 +25,12 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for DispatchKit.
-FOUNDATION_EXPORT double DispatchKitVersionNumber;
+//! Project version number for GCDKit.
+FOUNDATION_EXPORT double GCDKitVersionNumber;
 
-//! Project version string for DispatchKit.
-FOUNDATION_EXPORT const unsigned char DispatchKitVersionString[];
+//! Project version string for GCDKit.
+FOUNDATION_EXPORT const unsigned char GCDKitVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <DispatchKit/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <GCDKit/PublicHeader.h>
 
 
