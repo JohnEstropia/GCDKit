@@ -54,20 +54,6 @@ public struct GCDGroup {
     }
     
     /**
-    Submits a closure to a queue for multiple invocations and associates them to the group.
-    
-    :returns: The group. Useful when chaining async invocations or for waiting on the group's completion.
-    */
-    public func apply(queue: GCDQueue, iterations: UInt, _ closure: () -> ()) -> GCDGroup {
-        
-        for _ in 0 ..< iterations {
-            
-            self.async(queue, closure)
-        }
-        return self
-    }
-    
-    /**
     Explicitly indicates that a block has entered the group.
     */
     public func enter() {

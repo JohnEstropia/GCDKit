@@ -261,7 +261,7 @@ public enum GCDQueue {
             dispatch_suspend(rawObject)
             
         default:
-            assertionFailure("Only custom serial and concurrent queues can be suspended.")
+            assertionFailure("Global queues cannot be suspended or resumed.")
         }
     }
     
@@ -276,7 +276,7 @@ public enum GCDQueue {
             dispatch_resume(rawObject)
             
         default:
-            assertionFailure("Only custom serial and concurrent queues can be resumed.")
+            assertionFailure("Global queues cannot be suspended or resumed.")
         }
     }
     

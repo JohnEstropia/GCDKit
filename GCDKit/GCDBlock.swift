@@ -41,7 +41,6 @@ public struct GCDBlock {
         self.rawObject = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS) {
             
             autoreleasepool(closure)
-            
         }
     }
     
