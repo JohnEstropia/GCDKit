@@ -25,6 +25,8 @@
 
 import Foundation
 
+private var _GCDQueue_Specific: Void?
+
 /**
 A wrapper and utility class for dispatch_queue_t.
 */
@@ -281,6 +283,24 @@ public enum GCDQueue {
     }
     
     /**
+    Checks if the queue is the current execution context. Global queues other than the main queue are not supported and will always return nil.
+    
+    :returns: true if the queue is the current execution context, or false if it is not. Global queues other than the main queue are not supported and will always return nil.
+    */
+    public func isCurrent() -> Bool? {
+        
+        switch self {
+            
+        case .Main:
+            return NSThread.isMainThread()
+        case .Custom(let rawObject):
+            return dispatch_queue_get_specific(rawObject, &_GCDQueue_Specific)
+                == unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self)
+        default: return nil
+        }
+    }
+    
+    /**
     Returns the dispatch_queue_t object associated with this value.
     
     :returns: The dispatch_queue_t object associated with this value.
@@ -302,9 +322,17 @@ public enum GCDQueue {
     private static func createCustom(#isConcurrent: Bool, label: String, targetQueue: GCDQueue?) -> GCDQueue {
         
         let queue = GCDQueue.Custom(dispatch_queue_create(label, (isConcurrent ? DISPATCH_QUEUE_CONCURRENT : DISPATCH_QUEUE_SERIAL)))
+        
+        let rawObject = queue.dispatchQueue()
+        dispatch_queue_set_specific(
+            rawObject,
+            &_GCDQueue_Specific,
+            unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self),
+            nil)
+        
         if let target = targetQueue {
             
-            dispatch_set_target_queue(queue.dispatchQueue(), target.dispatchQueue())
+            dispatch_set_target_queue(rawObject, target.dispatchQueue())
         }
         return queue
     }
