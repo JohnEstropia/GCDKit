@@ -23,7 +23,7 @@ class GCDKitTests: XCTestCase {
             XCTAssertTrue(finishedTasks == 0)
             XCTAssertTrue(didStartWaiting)
             XCTAssertFalse(NSThread.isMainThread())
-            XCTAssertNil(GCDQueue.Background.isCurrent())
+            XCTAssertNil(GCDQueue.Background.isCurrentExecutionContext())
             expectation1.fulfill()
             
             finishedTasks++
@@ -32,7 +32,7 @@ class GCDKitTests: XCTestCase {
             
             XCTAssertTrue(finishedTasks == 1)
             XCTAssertFalse(NSThread.isMainThread())
-            XCTAssertNil(GCDQueue.Default.isCurrent())
+            XCTAssertNil(GCDQueue.Default.isCurrentExecutionContext())
             expectation2.fulfill()
             
             finishedTasks++
@@ -41,7 +41,7 @@ class GCDKitTests: XCTestCase {
             
             XCTAssertTrue(finishedTasks == 2)
             XCTAssertTrue(NSThread.isMainThread())
-            XCTAssertTrue(GCDQueue.Main.isCurrent() ?? false)
+            XCTAssertTrue(GCDQueue.Main.isCurrentExecutionContext() ?? false)
             expectation3.fulfill()
         }
         
@@ -129,7 +129,7 @@ class GCDKitTests: XCTestCase {
         let queue = GCDQueue.createConcurrent("testGCDSemaphore.queue")
         queue.apply(numberOfTasks) { (iteration: UInt) -> () in
             
-            XCTAssertTrue(queue.isCurrent() ?? false)
+            XCTAssertTrue(queue.isCurrentExecutionContext() ?? false)
             expectations[Int(iteration)].fulfill()
             semaphore.signal()
         }

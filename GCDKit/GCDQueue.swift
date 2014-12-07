@@ -287,7 +287,7 @@ public enum GCDQueue {
     
     :returns: true if the queue is the current execution context, or false if it is not. Global queues other than the main queue are not supported and will always return nil.
     */
-    public func isCurrent() -> Bool? {
+    public func isCurrentExecutionContext() -> Bool? {
         
         switch self {
             
