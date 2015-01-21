@@ -120,7 +120,7 @@ public enum GCDQueue {
     :param: closure The closure to submit.
     :returns: The block to submit. Useful when chaining blocks together.
     */
-    public func async(closure: () -> ()) -> GCDBlock {
+    public func async(closure: GCDClosure) -> GCDBlock {
         
         return self.async(GCDBlock(closure))
     }
@@ -143,7 +143,7 @@ public enum GCDQueue {
     :param: closure The closure to submit.
     :returns: The block to submit. Useful when chaining blocks together.
     */
-    public func sync(closure: () -> ()) -> GCDBlock {
+    public func sync(closure: GCDClosure) -> GCDBlock {
         
         return self.sync(GCDBlock(closure))
     }
@@ -167,7 +167,7 @@ public enum GCDQueue {
     :param: closure The block to submit.
     :returns: The block to submit. Useful when chaining blocks together.
     */
-    public func after(delay: NSTimeInterval, _ closure: () -> ()) -> GCDBlock {
+    public func after(delay: NSTimeInterval, _ closure: GCDClosure) -> GCDBlock {
         
         return self.after(delay, GCDBlock(closure))
     }
@@ -194,7 +194,7 @@ public enum GCDQueue {
     :param: closure The closure to submit.
     :returns: The block to submit. Useful when chaining blocks together.
     */
-    public func barrierAsync(closure: () -> ()) -> GCDBlock {
+    public func barrierAsync(closure: GCDClosure) -> GCDBlock {
         
         return self.barrierAsync(GCDBlock(closure))
     }
@@ -217,7 +217,7 @@ public enum GCDQueue {
     :param: closure The closure to submit.
     :returns: The block to submit. Useful when chaining blocks together.
     */
-    public func barrierSync(closure: () -> ()) -> GCDBlock {
+    public func barrierSync(closure: GCDClosure) -> GCDBlock {
         
         return self.barrierSync(GCDBlock(closure))
     }
@@ -309,13 +309,20 @@ public enum GCDQueue {
         
         switch self {
             
-        case .Main:                     return dispatch_get_main_queue()
-        case .UserInteractive:          return dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.value), 0)
-        case .UserInitiated:            return dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.value), 0)
-        case .Default:                  return dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.value), 0)
-        case .Utility:                  return dispatch_get_global_queue(Int(QOS_CLASS_UTILITY.value), 0)
-        case .Background:               return dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.value), 0)
-        case .Custom(let rawObject):    return rawObject
+        case .Main:
+            return dispatch_get_main_queue()
+        case .UserInteractive:
+            return dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.value), 0)
+        case .UserInitiated:
+            return dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.value), 0)
+        case .Default:
+            return dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.value), 0)
+        case .Utility:
+            return dispatch_get_global_queue(Int(QOS_CLASS_UTILITY.value), 0)
+        case .Background:
+            return dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.value), 0)
+        case .Custom(let rawObject):
+            return rawObject
         }
     }
     

@@ -25,6 +25,9 @@
 
 import Foundation
 
+
+public typealias GCDClosure = () -> ()
+
 /**
 A wrapper and utility class for dispatch_block_t.
 */
@@ -36,7 +39,7 @@ public struct GCDBlock {
     
     :param: closure The closure to be associated with the block.
     */
-    public init(closure: () -> ()) {
+    public init(closure: GCDClosure) {
         
         self.rawObject = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS) {
             
@@ -51,7 +54,7 @@ public struct GCDBlock {
     :param: closure The closure to submit to the target queue.
     :returns: The block to submit to the queue. Useful when chaining blocks together.
     */
-    public static func async(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+    public static func async(queue: GCDQueue, closure: GCDClosure) -> GCDBlock {
         
         return queue.async(closure)
     }
@@ -63,7 +66,7 @@ public struct GCDBlock {
     :param: closure The closure to submit to the target queue.
     :returns: The block to submit to the queue. Useful when chaining blocks together.
     */
-    public static func sync(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+    public static func sync(queue: GCDQueue, closure: GCDClosure) -> GCDBlock {
         
         return queue.sync(closure)
     }
@@ -76,7 +79,7 @@ public struct GCDBlock {
     :param: closure The closure to submit to the target queue.
     :returns: The block to submit to the queue. Useful when chaining blocks together.
     */
-    public static func after(queue: GCDQueue, delay: NSTimeInterval, _ closure: () -> ()) -> GCDBlock {
+    public static func after(queue: GCDQueue, delay: NSTimeInterval, _ closure: GCDClosure) -> GCDBlock {
         
         return queue.after(delay, closure)
     }
@@ -88,7 +91,7 @@ public struct GCDBlock {
     :param: closure The closure to submit to the target queue.
     :returns: The block to submit to the queue. Useful when chaining blocks together.
     */
-    public static func barrierAsync(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+    public static func barrierAsync(queue: GCDQueue, closure: GCDClosure) -> GCDBlock {
         
         return queue.barrierAsync(closure)
     }
@@ -100,7 +103,7 @@ public struct GCDBlock {
     :param: closure The closure to submit to the target queue.
     :returns: The block to submit to the queue. Useful when chaining blocks together.
     */
-    public static func barrierSync(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+    public static func barrierSync(queue: GCDQueue, closure: GCDClosure) -> GCDBlock {
         
         return queue.barrierSync(closure)
     }
@@ -120,7 +123,7 @@ public struct GCDBlock {
     :param: closure The notification closure to submit when the block completes.
     :returns: The notification block. Useful when chaining blocks together.
     */
-    public func notify(queue: GCDQueue, closure: () -> ()) -> GCDBlock {
+    public func notify(queue: GCDQueue, closure: GCDClosure) -> GCDBlock {
         
         let block = GCDBlock(closure)
         dispatch_block_notify(self.rawObject, queue.dispatchQueue(), block.rawObject)
