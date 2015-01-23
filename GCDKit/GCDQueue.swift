@@ -294,7 +294,7 @@ public enum GCDQueue {
         case .Main:
             return NSThread.isMainThread()
         case .Custom(let rawObject):
-            return dispatch_queue_get_specific(rawObject, &_GCDQueue_Specific)
+            return dispatch_get_specific(&_GCDQueue_Specific)
                 == unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self)
         default: return nil
         }
