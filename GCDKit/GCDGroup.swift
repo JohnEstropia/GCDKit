@@ -44,7 +44,7 @@ public struct GCDGroup {
     
     :returns: The group. Useful when chaining async invocations on the group.
     */
-    public func async(queue: GCDQueue, _ closure: () -> ()) -> GCDGroup {
+    public func async(queue: GCDQueue, _ closure: () -> Void) -> GCDGroup {
         
         dispatch_group_async(self.rawObject, queue.dispatchQueue()) {
             
@@ -75,7 +75,7 @@ public struct GCDGroup {
     :param: queue The queue to which the supplied closure is submitted when the group completes.
     :param: closure The closure to submit to the target queue.
     */
-    public func notify(queue: GCDQueue, _ closure: () -> ()) {
+    public func notify(queue: GCDQueue, _ closure: () -> Void) {
         
         dispatch_group_notify(self.rawObject, queue.dispatchQueue()) {
             

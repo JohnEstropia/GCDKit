@@ -127,7 +127,7 @@ class GCDKitTests: XCTestCase {
         }
         
         let queue = GCDQueue.createConcurrent("testGCDSemaphore.queue")
-        queue.apply(numberOfTasks) { (iteration: UInt) -> () in
+        queue.apply(numberOfTasks) { (iteration: UInt) -> Void in
             
             XCTAssertTrue(queue.isCurrentExecutionContext() ?? false)
             expectations[Int(iteration)].fulfill()

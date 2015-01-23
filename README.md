@@ -150,7 +150,7 @@ let numberOfIterations: UInt = 10
 let semaphore = dispatch_semaphore_create(Int(numberOfIterations))
 
 dispatch_apply(numberOfIterations, dispatch_queue_create("myConcurrentQueue", DISPATCH_QUEUE_CONCURRENT)) {
-    (iteration: UInt) -> () in
+    (iteration: UInt) -> Void in
 
     // do work for iteration
     dispatch_semaphore_signal(semaphore)
@@ -166,7 +166,7 @@ let numberOfIterations: UInt = 10
 let semaphore = GCDSemaphore(numberOfIterations)
 
 GCDQueue.createConcurrent("myConcurrentQueue").apply(numberOfIterations) {
-    (iteration: UInt) -> () in
+    (iteration: UInt) -> Void in
 
     // do work for iteration
     semaphore.signal()
