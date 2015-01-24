@@ -23,7 +23,7 @@ class GCDKitTests: XCTestCase {
             XCTAssertTrue(finishedTasks == 0)
             XCTAssertTrue(didStartWaiting)
             XCTAssertFalse(NSThread.isMainThread())
-            XCTAssertNil(GCDQueue.Background.isCurrentExecutionContext())
+            XCTAssertTrue(GCDQueue.Background.isCurrentExecutionContext())
             expectation1.fulfill()
             
             finishedTasks++
@@ -32,7 +32,7 @@ class GCDKitTests: XCTestCase {
             
             XCTAssertTrue(finishedTasks == 1)
             XCTAssertFalse(NSThread.isMainThread())
-            XCTAssertNil(GCDQueue.Default.isCurrentExecutionContext())
+            XCTAssertTrue(GCDQueue.Default.isCurrentExecutionContext())
             expectation2.fulfill()
             
             finishedTasks++
@@ -41,7 +41,7 @@ class GCDKitTests: XCTestCase {
             
             XCTAssertTrue(finishedTasks == 2)
             XCTAssertTrue(NSThread.isMainThread())
-            XCTAssertTrue(GCDQueue.Main.isCurrentExecutionContext() ?? false)
+            XCTAssertTrue(GCDQueue.Main.isCurrentExecutionContext())
             expectation3.fulfill()
         }
         
@@ -54,6 +54,20 @@ class GCDKitTests: XCTestCase {
         let queue = GCDQueue.Main
         XCTAssertNotNil(queue.dispatchQueue());
         XCTAssertEqual(queue.dispatchQueue(), dispatch_get_main_queue())
+        
+        let allQueues: [GCDQueue] = [.Main, .UserInteractive, .UserInitiated, .Default, .Utility, .Background, .createSerial("serial"), .createConcurrent("serial")]
+        var allQueuesExpectations = [XCTestExpectation]()
+        for queue in allQueues {
+            
+            let dispatchExpectation = self.expectationWithDescription("main queue block")
+            allQueuesExpectations.append(dispatchExpectation)
+            
+            queue.async {
+                
+                XCTAssertTrue(queue.isCurrentExecutionContext())
+                dispatchExpectation.fulfill()
+            }
+        }
         
         var didStartWaiting = false
         let dispatchExpectation = self.expectationWithDescription("main queue block")
@@ -129,7 +143,7 @@ class GCDKitTests: XCTestCase {
         let queue = GCDQueue.createConcurrent("testGCDSemaphore.queue")
         queue.apply(numberOfTasks) { (iteration: UInt) -> Void in
             
-            XCTAssertTrue(queue.isCurrentExecutionContext() ?? false)
+            XCTAssertTrue(queue.isCurrentExecutionContext())
             expectations[Int(iteration)].fulfill()
             semaphore.signal()
         }

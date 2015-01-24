@@ -285,20 +285,33 @@ public enum GCDQueue {
     /**
     Checks if the queue is the current execution context. Global queues other than the main queue are not supported and will always return nil.
     
-    :returns: true if the queue is the current execution context, or false if it is not. Global queues other than the main queue are not supported and will always return nil.
+    :returns: true if the queue is the current execution context, or false if it is not.
     */
-    public func isCurrentExecutionContext() -> Bool? {
+    public func isCurrentExecutionContext() -> Bool {
         
         switch self {
             
         case .Main:
             return NSThread.isMainThread()
             
+        case .UserInteractive:
+            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_USER_INTERACTIVE.value
+            
+        case .UserInitiated:
+            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_USER_INITIATED.value
+
+        case .Default:
+            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_DEFAULT.value
+            
+        case .Utility:
+            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_UTILITY.value
+            
+        case .Background:
+            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_BACKGROUND.value
+            
         case .Custom(let rawObject):
             return dispatch_get_specific(&_GCDQueue_Specific)
                 == unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self)
-            
-        default: return nil
         }
     }
     
