@@ -120,7 +120,7 @@ public enum GCDQueue {
     :param: closure The closure to submit.
     :returns: The block to submit. Useful when chaining blocks together.
     */
-    public func async(closure: GCDClosure) -> GCDBlock {
+    public func async(closure: () -> Void) -> GCDBlock {
         
         return self.async(GCDBlock(closure))
     }
