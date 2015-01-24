@@ -352,3 +352,17 @@ public enum GCDQueue {
         return queue
     }
 }
+
+public func ==(lhs: GCDQueue, rhs: GCDQueue) -> Bool {
+    
+    switch (lhs, rhs) {
+        
+    case (.Custom(let lhsRawObject), .Custom(let rhsRawObject)):
+        return lhsRawObject === rhsRawObject
+        
+    default:
+        return lhs == rhs
+    }
+}
+
+extension GCDQueue: Equatable { }
