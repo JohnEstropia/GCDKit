@@ -289,30 +289,14 @@ public enum GCDQueue {
     */
     public func isCurrentExecutionContext() -> Bool {
         
-        switch self {
-            
-        case .Main:
-            return NSThread.isMainThread()
-            
-        case .UserInteractive:
-            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_USER_INTERACTIVE.value
-            
-        case .UserInitiated:
-            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_USER_INITIATED.value
-
-        case .Default:
-            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_DEFAULT.value
-            
-        case .Utility:
-            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_UTILITY.value
-            
-        case .Background:
-            return dispatch_queue_get_qos_class(self.dispatchQueue(), nil).value == QOS_CLASS_BACKGROUND.value
-            
-        case .Custom(let rawObject):
-            return dispatch_get_specific(&_GCDQueue_Specific)
-                == unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self)
-        }
+        let rawObject = self.dispatchQueue()
+        dispatch_queue_set_specific(
+            rawObject,
+            &_GCDQueue_Specific,
+            unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self),
+            nil)
+        
+        return dispatch_get_specific(&_GCDQueue_Specific) == unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self)
     }
     
     /**
@@ -328,19 +312,19 @@ public enum GCDQueue {
             return dispatch_get_main_queue()
             
         case .UserInteractive:
-            return dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.value), 0)
+            return dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
             
         case .UserInitiated:
-            return dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.value), 0)
+            return dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
             
         case .Default:
-            return dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.value), 0)
+            return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
             
         case .Utility:
-            return dispatch_get_global_queue(Int(QOS_CLASS_UTILITY.value), 0)
+            return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
             
         case .Background:
-            return dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.value), 0)
+            return dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
             
         case .Custom(let rawObject):
             return rawObject
@@ -351,16 +335,9 @@ public enum GCDQueue {
         
         let queue = GCDQueue.Custom(dispatch_queue_create(label, (isConcurrent ? DISPATCH_QUEUE_CONCURRENT : DISPATCH_QUEUE_SERIAL)))
         
-        let rawObject = queue.dispatchQueue()
-        dispatch_queue_set_specific(
-            rawObject,
-            &_GCDQueue_Specific,
-            unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self),
-            nil)
-        
         if let target = targetQueue {
             
-            dispatch_set_target_queue(rawObject, target.dispatchQueue())
+            dispatch_set_target_queue(queue.dispatchQueue(), target.dispatchQueue())
         }
         return queue
     }
@@ -370,12 +347,54 @@ public func ==(lhs: GCDQueue, rhs: GCDQueue) -> Bool {
     
     switch (lhs, rhs) {
         
+    case (.Main, .Main):
+        return true
+        
+    case (.UserInteractive, .UserInteractive):
+        return true
+        
+    case (.UserInitiated, .UserInitiated):
+        return true
+        
+    case (.Default, .Default):
+        return true
+        
+    case (.Utility, .Utility):
+        return true
+        
+    case (.Background, .Background):
+        return true
+        
     case (.Custom(let lhsRawObject), .Custom(let rhsRawObject)):
         return lhsRawObject === rhsRawObject
         
     default:
-        return lhs == rhs
+        return false
     }
 }
 
 extension GCDQueue: Equatable { }
+
+extension GCDQueue: Printable {
+    
+    public var description: String {
+        
+        switch self {
+            
+        case .Main: return "Main"
+            
+        case .UserInteractive: return "UserInteractive"
+            
+        case .UserInitiated: return "UserInitiated"
+            
+        case .Default: return "Default"
+            
+        case .Utility: return "Utility"
+            
+        case .Background: return "Background"
+            
+        case .Custom(let rawObject): return "Custom(\(rawObject))"
+            
+        }
+    }
+}

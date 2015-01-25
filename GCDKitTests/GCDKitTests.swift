@@ -65,6 +65,21 @@ class GCDKitTests: XCTestCase {
             queue.async {
                 
                 XCTAssertTrue(queue.isCurrentExecutionContext())
+                if !queue.isCurrentExecutionContext() {
+                    
+                    NSLog("** \(queue) \(qos_class_self().value)")
+                }
+                for otherQueue in allQueues {
+                    
+                    if queue != otherQueue {
+                        
+                        XCTAssertFalse(otherQueue.isCurrentExecutionContext())
+                        if otherQueue.isCurrentExecutionContext() {
+                            
+                            NSLog("** \(queue): \(otherQueue) \(qos_class_self().value)")
+                        }
+                    }
+                }
                 dispatchExpectation.fulfill()
             }
         }
@@ -134,7 +149,7 @@ class GCDKitTests: XCTestCase {
         let semaphore = GCDSemaphore(numberOfTasks)
         XCTAssertNotNil(semaphore.dispatchSemaphore());
         
-        var expectations: [XCTestExpectation] = [];
+        var expectations = [XCTestExpectation]();
         for i in 0 ..< numberOfTasks {
         
             expectations.append(self.expectationWithDescription("semaphore block \(i)"))
@@ -153,4 +168,45 @@ class GCDKitTests: XCTestCase {
         self.waitForExpectationsWithTimeout(0.0, nil)
     }
     
+    func testGCDTimer() {
+        
+        var runningExpectations = [XCTestExpectation]()
+        let numberOfTicksToTest = 10
+        for i in 0..<numberOfTicksToTest {
+            
+            runningExpectations.append(self.expectationWithDescription("timer tick \(i)"))
+        }
+        let suspendExpectation = self.expectationWithDescription("timer suspended")
+        
+        var previousTimestamp = NSDate().timeIntervalSince1970
+        var iteration = 0.0
+        let timer = GCDTimer.createAutoStart(.Default, interval: (1.0 * (iteration + 1.0))) { (timer) -> Void in
+            
+            XCTAssertTrue(GCDQueue.Default.isCurrentExecutionContext())
+            
+            let currentTimestamp = NSDate().timeIntervalSince1970
+            XCTAssertGreaterThanOrEqual(currentTimestamp - previousTimestamp, (1.0 * (iteration + 1.0)), "Timer fired before expected time")
+            XCTAssertTrue(timer.isRunning, "Timer's isRunning property is not true")
+            
+            previousTimestamp = currentTimestamp
+            
+            if Int(iteration) < runningExpectations.count {
+                
+                runningExpectations[Int(iteration)].fulfill()
+            }
+            else {
+                
+                timer.suspend()
+                XCTAssertFalse(timer.isRunning, "Timer's isRunning property is not false")
+                suspendExpectation.fulfill()
+            }
+            
+            iteration++
+            timer.setTimeInterval(1.0 * (iteration + 1.0))
+        }
+        XCTAssertTrue(timer.isRunning, "Timer's isRunning property is not true")
+        
+        let numberOfTicks = NSTimeInterval(numberOfTicksToTest) + 1
+        self.waitForExpectationsWithTimeout((numberOfTicks * (numberOfTicks / 2.0 + 1.0)) + 5.0, nil)
+    }
 }

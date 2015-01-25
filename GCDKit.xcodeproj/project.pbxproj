@@ -13,6 +13,7 @@
 		2FC48D4A19B2EC7800CF1B76 /* GCDGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */; };
 		2FC48D4C19B2EC8400CF1B76 /* GCDSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */; };
 		2FCDA06219B76700002F71EA /* GCDKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCDA06119B766A2002F71EA /* GCDKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B5D1D3101A73BE7F003B866E /* GCDTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDGroup.swift; sourceTree = "<group>"; };
 		2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDSemaphore.swift; sourceTree = "<group>"; };
 		2FCDA06119B766A2002F71EA /* GCDKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDKit.h; sourceTree = "<group>"; };
+		B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */,
 				2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */,
 				2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */,
+				B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */,
 				2FBBCACE19A9FE610070E4AB /* Supporting Files */,
 			);
 			path = GCDKit;
@@ -226,6 +229,7 @@
 				2FC48D4A19B2EC7800CF1B76 /* GCDGroup.swift in Sources */,
 				2FC48D4619B2EC5500CF1B76 /* GCDBlock.swift in Sources */,
 				2FC48D4819B2EC6700CF1B76 /* GCDQueue.swift in Sources */,
+				B5D1D3101A73BE7F003B866E /* GCDTimer.swift in Sources */,
 				2FC48D4C19B2EC8400CF1B76 /* GCDSemaphore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
