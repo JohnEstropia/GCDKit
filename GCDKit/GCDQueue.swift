@@ -253,36 +253,6 @@ public enum GCDQueue {
     }
     
     /**
-    Suspends the invocation of blocks on this queue. Note that suspending and resuming is only allowed for custom serial/concurrent queues.
-    */
-    public func suspend() {
-        
-        switch self {
-            
-        case .Custom(let rawObject):
-            dispatch_suspend(rawObject)
-            
-        default:
-            assertionFailure("Global queues cannot be suspended or resumed.")
-        }
-    }
-    
-    /**
-    Resume the invocation of blocks on this queue. Note that suspending and resuming is only allowed for custom serial/concurrent queues.
-    */
-    public func resume() {
-        
-        switch self {
-            
-        case .Custom(let rawObject):
-            dispatch_resume(rawObject)
-            
-        default:
-            assertionFailure("Global queues cannot be suspended or resumed.")
-        }
-    }
-    
-    /**
     Checks if the queue is the current execution context. Global queues other than the main queue are not supported and will always return nil.
     
     :returns: true if the queue is the current execution context, or false if it is not.
