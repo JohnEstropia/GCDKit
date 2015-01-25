@@ -125,3 +125,10 @@ public struct GCDGroup {
     
     private let rawObject: dispatch_group_t
 }
+
+public func ==(lhs: GCDGroup, rhs: GCDGroup) -> Bool {
+    
+    return lhs.dispatchGroup() == rhs.dispatchGroup()
+}
+
+extension GCDGroup: Equatable { }

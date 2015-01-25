@@ -107,3 +107,10 @@ public struct GCDSemaphore {
     
     private let rawObject: dispatch_semaphore_t
 }
+
+public func ==(lhs: GCDSemaphore, rhs: GCDSemaphore) -> Bool {
+    
+    return lhs.dispatchSemaphore() === rhs.dispatchSemaphore()
+}
+
+extension GCDSemaphore: Equatable { }
