@@ -36,7 +36,7 @@ public struct GCDBlock {
     
     :param: closure The closure to be associated with the block.
     */
-    public init(closure: () -> Void) {
+    public init(_ closure: () -> Void) {
         
         self.rawObject = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS) {
             
