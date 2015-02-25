@@ -240,14 +240,13 @@ public enum GCDQueue {
     :param: iterations The number of iterations to perform.
     :param: closure The closure to submit.
     */
-    public func apply(iterations: UInt, _ closure: (iteration: UInt) -> Void) {
+    public func apply<T: UnsignedIntegerType>(iterations: T, _ closure: (iteration: T) -> Void) {
         
-        dispatch_apply(iterations, self.dispatchQueue()) {
-            (iteration: UInt) -> Void in
+        dispatch_apply(numericCast(iterations), self.dispatchQueue()) { (iteration) -> Void in
             
             autoreleasepool {
                 
-                closure(iteration: iteration)
+                closure(iteration: numericCast(iteration))
             }
         }
     }
