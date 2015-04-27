@@ -68,13 +68,28 @@ class GCDKitTests: XCTestCase {
     
     func testGCDQueue() {
         
-        let queue = GCDQueue.Main
-        XCTAssertNotNil(queue.dispatchQueue());
-        XCTAssertEqual(queue.dispatchQueue(), dispatch_get_main_queue())
+        let mainQueue = GCDQueue.Main
+        XCTAssertNotNil(mainQueue.dispatchQueue());
+        XCTAssertEqual(mainQueue.dispatchQueue(), dispatch_get_main_queue())
         
         let allQueues: [GCDQueue] = [.Main, .UserInteractive, .UserInitiated, .Default, .Utility, .Background, .createSerial("serial"), .createConcurrent("serial")]
         var allQueuesExpectations = [XCTestExpectation]()
         for queue in allQueues {
+            
+            if queue != .Main {
+                
+                queue.sync {
+                    
+                    XCTAssertTrue(queue.isCurrentExecutionContext())
+                    for otherQueue in allQueues {
+                        
+                        if queue != otherQueue {
+                            
+                            XCTAssertFalse(otherQueue.isCurrentExecutionContext())
+                        }
+                    }
+                }
+            }
             
             let dispatchExpectation = self.expectationWithDescription("main queue block")
             allQueuesExpectations.append(dispatchExpectation)
@@ -82,19 +97,11 @@ class GCDKitTests: XCTestCase {
             queue.async {
                 
                 XCTAssertTrue(queue.isCurrentExecutionContext())
-                if !queue.isCurrentExecutionContext() {
-                    
-                    NSLog("** \(queue) \(qos_class_self().value)")
-                }
                 for otherQueue in allQueues {
                     
                     if queue != otherQueue {
                         
                         XCTAssertFalse(otherQueue.isCurrentExecutionContext())
-                        if otherQueue.isCurrentExecutionContext() {
-                            
-                            NSLog("** \(queue): \(otherQueue) \(qos_class_self().value)")
-                        }
                     }
                 }
                 dispatchExpectation.fulfill()
@@ -195,17 +202,17 @@ class GCDKitTests: XCTestCase {
         }
         let suspendExpectation = self.expectationWithDescription("timer suspended")
         
-        var previousTimestamp = NSDate().timeIntervalSince1970
-        var iteration = 0.0
-        let timer = GCDTimer.createAutoStart(.Default, interval: (1.0 * (iteration + 1.0))) { (timer) -> Void in
+        var previousTimestamp = CFAbsoluteTimeGetCurrent()
+        var iteration = 0
+        let timer = GCDTimer.createAutoStart(.Default, interval: Double(iteration + 1)) { (timer) -> Void in
             
             XCTAssertTrue(GCDQueue.Default.isCurrentExecutionContext())
             
-            let currentTimestamp = NSDate().timeIntervalSince1970
-            XCTAssertGreaterThanOrEqual(currentTimestamp - previousTimestamp, (1.0 * (iteration + 1.0)), "Timer fired before expected time")
+            let currentTimestamp = CFAbsoluteTimeGetCurrent()
+            let elapsed = currentTimestamp - previousTimestamp
+            let expected = Double(iteration + 1)
+            XCTAssertGreaterThanOrEqual(elapsed + Double(0.001), expected, "Timer fired before expected time")
             XCTAssertTrue(timer.isRunning, "Timer's isRunning property is not true")
-            
-            previousTimestamp = currentTimestamp
             
             if Int(iteration) < runningExpectations.count {
                 
@@ -219,7 +226,9 @@ class GCDKitTests: XCTestCase {
             }
             
             iteration++
-            timer.setTimer(1.0 * (iteration + 1.0))
+            
+            previousTimestamp = CFAbsoluteTimeGetCurrent()
+            timer.setTimer(Double(iteration + 1))
         }
         XCTAssertTrue(timer.isRunning, "Timer's isRunning property is not true")
         
