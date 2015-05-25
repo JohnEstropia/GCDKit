@@ -258,11 +258,11 @@ public enum GCDQueue {
     */
     public func isCurrentExecutionContext() -> Bool {
         
-        let rawObject = self.dispatchQueue()
-        let rawPointer = unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self)
+        let dispatchQueue = self.dispatchQueue()
+        let rawPointer = UnsafeMutablePointer<Void>(bitPattern: ObjectIdentifier(dispatchQueue).uintValue)
         
         dispatch_queue_set_specific(
-            rawObject,
+            dispatchQueue,
             &_GCDQueue_Specific,
             rawPointer,
             nil)
