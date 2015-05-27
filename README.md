@@ -1,7 +1,7 @@
 GCDKit
 ===========
 
-GCDKit is Grand Central Dispatch simplified with swift.
+GCDKit is Grand Central Dispatch simplified with Swift.
 
 ---
 
