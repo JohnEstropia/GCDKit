@@ -345,27 +345,3 @@ public func ==(lhs: GCDQueue, rhs: GCDQueue) -> Bool {
 }
 
 extension GCDQueue: Equatable { }
-
-extension GCDQueue: CustomStringConvertible {
-    
-    public var description: String {
-        
-        switch self {
-            
-        case .Main: return "Main"
-            
-        case .UserInteractive: return "UserInteractive"
-            
-        case .UserInitiated: return "UserInitiated"
-            
-        case .Default: return "Default"
-            
-        case .Utility: return "Utility"
-            
-        case .Background: return "Background"
-            
-        case .Custom(let rawObject): return "Custom(\(rawObject))"
-            
-        }
-    }
-}
