@@ -28,7 +28,7 @@ import Foundation
 /**
 A wrapper and utility class for dispatch_semaphore_t.
 */
-@availability(iOS, introduced=8.0)
+@available(iOS, introduced=8.0)
 public struct GCDSemaphore {
     
     /**
@@ -58,7 +58,7 @@ public struct GCDSemaphore {
     /**
     Signals (increments) a semaphore.
     
-    :returns: This function returns non-zero if a thread is woken. Otherwise, zero is returned.
+    - returns: This function returns non-zero if a thread is woken. Otherwise, zero is returned.
     */
     public func signal() -> Int {
         
@@ -76,8 +76,8 @@ public struct GCDSemaphore {
     /**
     Waits for (decrements) a semaphore.
     
-    :param: timeout The number of seconds before timeout.
-    :returns: Returns zero on success, or non-zero if the timeout occurred.
+    - parameter timeout: The number of seconds before timeout.
+    - returns: Returns zero on success, or non-zero if the timeout occurred.
     */
     public func wait(timeout: NSTimeInterval) -> Int {
         
@@ -87,8 +87,8 @@ public struct GCDSemaphore {
     /**
     Waits for (decrements) a semaphore.
     
-    :param: date The timeout date.
-    :returns: Returns zero on success, or non-zero if the timeout occurred.
+    - parameter date: The timeout date.
+    - returns: Returns zero on success, or non-zero if the timeout occurred.
     */
     public func wait(date: NSDate) -> Int {
         
@@ -98,7 +98,7 @@ public struct GCDSemaphore {
     /**
     Returns the dispatch_semaphore_t object associated with this value.
     
-    :returns: The dispatch_semaphore_t object associated with this value.
+    - returns: The dispatch_semaphore_t object associated with this value.
     */
     public func dispatchSemaphore() -> dispatch_semaphore_t {
         

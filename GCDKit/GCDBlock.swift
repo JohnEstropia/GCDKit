@@ -28,13 +28,13 @@ import Foundation
 /**
 A wrapper and utility class for dispatch_block_t.
 */
-@availability(iOS, introduced=8.0)
+@available(iOS, introduced=8.0)
 public struct GCDBlock {
     
     /**
     Create a new block object on the heap from a closure.
     
-    :param: closure The closure to be associated with the block.
+    - parameter closure: The closure to be associated with the block.
     */
     public init(_ closure: () -> Void) {
         
@@ -47,9 +47,9 @@ public struct GCDBlock {
     /**
     Submits a closure for asynchronous execution on a queue and returns immediately.
     
-    :param: queue The queue to which the supplied block will be submitted.
-    :param: closure The closure to submit to the target queue.
-    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    - parameter queue: The queue to which the supplied block will be submitted.
+    - parameter closure: The closure to submit to the target queue.
+    - returns: The block to submit to the queue. Useful when chaining blocks together.
     */
     public static func async(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
         
@@ -59,9 +59,9 @@ public struct GCDBlock {
     /**
     Submits a closure for execution on a queue and waits until that block completes.
     
-    :param: queue The queue to which the supplied block will be submitted.
-    :param: closure The closure to submit to the target queue.
-    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    - parameter queue: The queue to which the supplied block will be submitted.
+    - parameter closure: The closure to submit to the target queue.
+    - returns: The block to submit to the queue. Useful when chaining blocks together.
     */
     public static func sync(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
         
@@ -71,10 +71,10 @@ public struct GCDBlock {
     /**
     Enqueue a closure for execution at the specified time.
     
-    :param: queue The queue to which the supplied block will be submitted.
-    :param: delay The number of seconds delay before executing the block
-    :param: closure The closure to submit to the target queue.
-    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    - parameter queue: The queue to which the supplied block will be submitted.
+    - parameter delay: The number of seconds delay before executing the block
+    - parameter closure: The closure to submit to the target queue.
+    - returns: The block to submit to the queue. Useful when chaining blocks together.
     */
     public static func after(queue: GCDQueue, delay: NSTimeInterval, _ closure: () -> Void) -> GCDBlock {
         
@@ -84,9 +84,9 @@ public struct GCDBlock {
     /**
     Submits a barrier closure for asynchronous execution and returns immediately.
     
-    :param: queue The queue to which the supplied block will be submitted.
-    :param: closure The closure to submit to the target queue.
-    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    - parameter queue: The queue to which the supplied block will be submitted.
+    - parameter closure: The closure to submit to the target queue.
+    - returns: The block to submit to the queue. Useful when chaining blocks together.
     */
     public static func barrierAsync(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
         
@@ -96,9 +96,9 @@ public struct GCDBlock {
     /**
     Submits a barrier closure object for execution and waits until that block completes.
     
-    :param: queue The queue to which the supplied block will be submitted.
-    :param: closure The closure to submit to the target queue.
-    :returns: The block to submit to the queue. Useful when chaining blocks together.
+    - parameter queue: The queue to which the supplied block will be submitted.
+    - parameter closure: The closure to submit to the target queue.
+    - returns: The block to submit to the queue. Useful when chaining blocks together.
     */
     public static func barrierSync(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
         
@@ -116,9 +116,9 @@ public struct GCDBlock {
     /**
     Schedule a notification closure to be submitted to a queue when the execution of the block has completed.
     
-    :param: queue The queue to which the supplied notification closure will be submitted when the block completes.
-    :param: closure The notification closure to submit when the block completes.
-    :returns: The notification block. Useful when chaining blocks together.
+    - parameter queue: The queue to which the supplied notification closure will be submitted when the block completes.
+    - parameter closure: The notification closure to submit when the block completes.
+    - returns: The notification block. Useful when chaining blocks together.
     */
     public func notify(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
         
@@ -147,8 +147,8 @@ public struct GCDBlock {
     /**
     Wait synchronously until execution of the block has completed or until the specified timeout has elapsed.
     
-    :param: timeout The number of seconds before timeout.
-    :returns: Returns zero on success, or non-zero if the timeout occurred.
+    - parameter timeout: The number of seconds before timeout.
+    - returns: Returns zero on success, or non-zero if the timeout occurred.
     */
     public func wait(timeout: NSTimeInterval) -> Int {
         
@@ -158,8 +158,8 @@ public struct GCDBlock {
     /**
     Wait synchronously until execution of the block has completed or until the specified timeout has elapsed.
     
-    :param: date The timeout date.
-    :returns: Returns zero on success, or non-zero if the timeout occurred.
+    - parameter date: The timeout date.
+    - returns: Returns zero on success, or non-zero if the timeout occurred.
     */
     public func wait(date: NSDate) -> Int {
         
@@ -169,7 +169,7 @@ public struct GCDBlock {
     /**
     Returns the dispatch_block_t object associated with this value.
     
-    :returns: The dispatch_block_t object associated with this value.
+    - returns: The dispatch_block_t object associated with this value.
     */
     public func dispatchBlock() -> dispatch_block_t {
         

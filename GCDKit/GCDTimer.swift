@@ -42,16 +42,16 @@ private extension NSTimeInterval {
 /**
 A wrapper and utility class for dispatch_source_t of type DISPATCH_SOURCE_TYPE_TIMER.
 */
-@availability(iOS, introduced=8.0)
+@available(iOS, introduced=8.0)
 public final class GCDTimer {
     
     /**
     Creates a suspended timer. Call the resume() method to start the timer.
     
-    :param: queue The queue to which the timer will execute the closure on.
-    :param: interval The tick duration for the timer in seconds.
-    :param: closure The closure to submit to the timer queue.
-    :returns: The created suspended timer.
+    - parameter queue: The queue to which the timer will execute the closure on.
+    - parameter interval: The tick duration for the timer in seconds.
+    - parameter closure: The closure to submit to the timer queue.
+    - returns: The created suspended timer.
     */
     public class func createSuspended(queue: GCDQueue, interval: NSTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
         
@@ -64,10 +64,10 @@ public final class GCDTimer {
     /**
     Creates an auto-start timer. The resume() method does not need to be called after this method returns.
     
-    :param: queue The queue to which the timer will execute the closure on.
-    :param: interval The tick duration for the timer in seconds.
-    :param: closure The closure to submit to the timer queue.
-    :returns: The created auto-start timer.
+    - parameter queue: The queue to which the timer will execute the closure on.
+    - parameter interval: The tick duration for the timer in seconds.
+    - parameter closure: The closure to submit to the timer queue.
+    - returns: The created auto-start timer.
     */
     public class func createAutoStart(queue: GCDQueue, interval: NSTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
         
@@ -148,7 +148,7 @@ public final class GCDTimer {
     /**
     Sets a timer using an absolute time according to the wall clock.
     */
-    public func setWallTimer(#startDate: NSDate, interval: NSTimeInterval){
+    public func setWallTimer(startDate startDate: NSDate, interval: NSTimeInterval){
         
         self.setWallTimer(startDate: startDate, interval: interval, leeway: 0.0)
     }
@@ -156,7 +156,7 @@ public final class GCDTimer {
     /**
     Sets a timer using an absolute time according to the wall clock.
     */
-    public func setWallTimer(#startDate: NSDate, interval: NSTimeInterval, leeway: NSTimeInterval){
+    public func setWallTimer(startDate startDate: NSDate, interval: NSTimeInterval, leeway: NSTimeInterval){
         
         var walltime = startDate.timeIntervalSince1970.toTimeSpec()
         let deltaTime = interval * NSTimeInterval(NSEC_PER_SEC)
@@ -197,7 +197,7 @@ public final class GCDTimer {
     /**
     Returns the dispatch_source_t object associated with the timer.
     
-    :returns: The dispatch_source_t object associated with the timer.
+    - returns: The dispatch_source_t object associated with the timer.
     */
     public func dispatchSource() -> dispatch_source_t {
         

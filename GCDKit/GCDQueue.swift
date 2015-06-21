@@ -30,7 +30,7 @@ private var _GCDQueue_Specific: Void?
 /**
 A wrapper and utility class for dispatch_queue_t.
 */
-@availability(iOS, introduced=8.0)
+@available(iOS, introduced=8.0)
 public enum GCDQueue {
     
     /**
@@ -71,8 +71,8 @@ public enum GCDQueue {
     /**
     Creates a custom queue to which blocks can be submitted serially.
     
-    :param: label A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
-    :returns: A new custom serial queue.
+    - parameter label: A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
+    - returns: A new custom serial queue.
     */
     public static func createSerial(label: String) -> GCDQueue {
         
@@ -82,9 +82,9 @@ public enum GCDQueue {
     /**
     Creates a custom queue and specifies a target queue to which blocks can be submitted serially.
     
-    :param: label A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
-    :param: targetQueue The new target queue for the custom queue.
-    :returns: A new custom serial queue.
+    - parameter label: A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
+    - parameter targetQueue: The new target queue for the custom queue.
+    - returns: A new custom serial queue.
     */
     public static func createSerial(label: String, targetQueue: GCDQueue) -> GCDQueue {
         
@@ -94,8 +94,8 @@ public enum GCDQueue {
     /**
     Creates a custom queue to which blocks can be submitted concurrently.
     
-    :param: label A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
-    :returns: A new custom concurrent queue.
+    - parameter label: A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
+    - returns: A new custom concurrent queue.
     */
     public static func createConcurrent(label: String) -> GCDQueue {
         
@@ -105,9 +105,9 @@ public enum GCDQueue {
     /**
     Creates a custom queue and specifies a target queue to which blocks can be submitted concurrently.
     
-    :param: label A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
-    :param: targetQueue The new target queue for the custom queue.
-    :returns: A new custom concurrent queue.
+    - parameter label: A string label to attach to the queue to uniquely identify it in debugging tools such as Instruments, sample, stackshots, and crash reports.
+    - parameter targetQueue: The new target queue for the custom queue.
+    - returns: A new custom concurrent queue.
     */
     public static func createConcurrent(label: String, targetQueue: GCDQueue) -> GCDQueue {
         
@@ -117,8 +117,8 @@ public enum GCDQueue {
     /**
     Submits a closure for asynchronous execution and returns immediately.
     
-    :param: closure The closure to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter closure: The closure to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func async(closure: () -> Void) -> GCDBlock {
         
@@ -128,8 +128,8 @@ public enum GCDQueue {
     /**
     Submits a block for asynchronous execution and returns immediately.
     
-    :param: block The block to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter block: The block to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func async(block: GCDBlock) -> GCDBlock {
         
@@ -140,8 +140,8 @@ public enum GCDQueue {
     /**
     Submits a closure for execution and waits until that block completes.
     
-    :param: closure The closure to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter closure: The closure to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func sync(closure: () -> Void) -> GCDBlock {
         
@@ -151,8 +151,8 @@ public enum GCDQueue {
     /**
     Submits a block object for execution on a dispatch queue and waits until that block completes.
     
-    :param: block The block to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter block: The block to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func sync(block: GCDBlock) -> GCDBlock {
         
@@ -163,9 +163,9 @@ public enum GCDQueue {
     /**
     Enqueue a closure for execution after a specified delay.
     
-    :param: delay The number of seconds delay before executing the closure
-    :param: closure The block to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter delay: The number of seconds delay before executing the closure
+    - parameter closure: The block to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func after(delay: NSTimeInterval, _ closure: () -> Void) -> GCDBlock {
         
@@ -175,9 +175,9 @@ public enum GCDQueue {
     /**
     Enqueue a block for execution after a specified delay.
     
-    :param: delay The number of seconds delay before executing the block
-    :param: block The block to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter delay: The number of seconds delay before executing the block
+    - parameter block: The block to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func after(delay: NSTimeInterval, _ block: GCDBlock) -> GCDBlock {
         
@@ -191,8 +191,8 @@ public enum GCDQueue {
     /**
     Submits a barrier closure for asynchronous execution and returns immediately.
     
-    :param: closure The closure to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter closure: The closure to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func barrierAsync(closure: () -> Void) -> GCDBlock {
         
@@ -202,8 +202,8 @@ public enum GCDQueue {
     /**
     Submits a barrier block for asynchronous execution and returns immediately.
     
-    :param: closure The block to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter closure: The block to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func barrierAsync(block: GCDBlock) -> GCDBlock {
         
@@ -214,8 +214,8 @@ public enum GCDQueue {
     /**
     Submits a barrier closure for execution and waits until that block completes.
     
-    :param: closure The closure to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter closure: The closure to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func barrierSync(closure: () -> Void) -> GCDBlock {
         
@@ -225,8 +225,8 @@ public enum GCDQueue {
     /**
     Submits a barrier block for execution and waits until that block completes.
     
-    :param: closure The block to submit.
-    :returns: The block to submit. Useful when chaining blocks together.
+    - parameter closure: The block to submit.
+    - returns: The block to submit. Useful when chaining blocks together.
     */
     public func barrierSync(block: GCDBlock) -> GCDBlock {
         
@@ -237,8 +237,8 @@ public enum GCDQueue {
     /**
     Submits a closure for multiple invocations.
     
-    :param: iterations The number of iterations to perform.
-    :param: closure The closure to submit.
+    - parameter iterations: The number of iterations to perform.
+    - parameter closure: The closure to submit.
     */
     public func apply<T: UnsignedIntegerType>(iterations: T, _ closure: (iteration: T) -> Void) {
         
@@ -254,7 +254,7 @@ public enum GCDQueue {
     /**
     Checks if the queue is the current execution context. Global queues other than the main queue are not supported and will always return nil.
     
-    :returns: true if the queue is the current execution context, or false if it is not.
+    - returns: true if the queue is the current execution context, or false if it is not.
     */
     public func isCurrentExecutionContext() -> Bool {
         
@@ -273,7 +273,7 @@ public enum GCDQueue {
     /**
     Returns the dispatch_queue_t object associated with this value.
     
-    :returns: The dispatch_queue_t object associated with this value.
+    - returns: The dispatch_queue_t object associated with this value.
     */
     public func dispatchQueue() -> dispatch_queue_t {
         
@@ -302,7 +302,7 @@ public enum GCDQueue {
         }
     }
     
-    private static func createCustom(#isConcurrent: Bool, label: String, targetQueue: GCDQueue?) -> GCDQueue {
+    private static func createCustom(isConcurrent isConcurrent: Bool, label: String, targetQueue: GCDQueue?) -> GCDQueue {
         
         let queue = GCDQueue.Custom(dispatch_queue_create(label, (isConcurrent ? DISPATCH_QUEUE_CONCURRENT : DISPATCH_QUEUE_SERIAL)))
         
@@ -346,7 +346,7 @@ public func ==(lhs: GCDQueue, rhs: GCDQueue) -> Bool {
 
 extension GCDQueue: Equatable { }
 
-extension GCDQueue: Printable {
+extension GCDQueue: CustomStringConvertible {
     
     public var description: String {
         

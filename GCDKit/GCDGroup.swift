@@ -28,7 +28,7 @@ import Foundation
 /**
 A wrapper and utility class for dispatch_group_t.
 */
-@availability(iOS, introduced=8.0)
+@available(iOS, introduced=8.0)
 public struct GCDGroup {
     
     /**
@@ -42,7 +42,7 @@ public struct GCDGroup {
     /**
     Submits a closure to a queue and associates the closure to the group.
     
-    :returns: The group. Useful when chaining async invocations on the group.
+    - returns: The group. Useful when chaining async invocations on the group.
     */
     public func async(queue: GCDQueue, _ closure: () -> Void) -> GCDGroup {
         
@@ -72,8 +72,8 @@ public struct GCDGroup {
     /**
     Schedules a closure to be submitted to a queue when a group of previously submitted blocks have completed.
     
-    :param: queue The queue to which the supplied closure is submitted when the group completes.
-    :param: closure The closure to submit to the target queue.
+    - parameter queue: The queue to which the supplied closure is submitted when the group completes.
+    - parameter closure: The closure to submit to the target queue.
     */
     public func notify(queue: GCDQueue, _ closure: () -> Void) {
         
@@ -94,8 +94,8 @@ public struct GCDGroup {
     /**
     Waits synchronously for the previously submitted blocks to complete; returns if the blocks do not complete before the specified timeout period has elapsed.
     
-    :param: timeout The number of seconds before timeout.
-    :returns: Returns zero on success, or non-zero if the timeout occurred.
+    - parameter timeout: The number of seconds before timeout.
+    - returns: Returns zero on success, or non-zero if the timeout occurred.
     */
     public func wait(timeout: NSTimeInterval) -> Int {
         
@@ -105,8 +105,8 @@ public struct GCDGroup {
     /**
     Waits synchronously for the previously submitted blocks to complete; returns if the blocks do not complete before the specified date has elapsed.
     
-    :param: date The timeout date.
-    :returns: Returns zero on success, or non-zero if the timeout occurred.
+    - parameter date: The timeout date.
+    - returns: Returns zero on success, or non-zero if the timeout occurred.
     */
     public func wait(date: NSDate) -> Int {
         
@@ -116,7 +116,7 @@ public struct GCDGroup {
     /**
     Returns the dispatch_group_t object associated with this value.
     
-    :returns: The dispatch_group_t object associated with this value.
+    - returns: The dispatch_group_t object associated with this value.
     */
     public func dispatchGroup() -> dispatch_group_t {
         
