@@ -28,7 +28,7 @@ import Foundation
 /**
 A wrapper and utility class for dispatch_block_t.
 */
-@available(iOS, introduced=8.0)
+@available(iOS, introduced=7.0)
 public struct GCDBlock {
     
     /**
@@ -38,9 +38,19 @@ public struct GCDBlock {
     */
     public init(_ closure: () -> Void) {
         
-        self.rawObject = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS) {
+        if #available(iOS 8.0, *) {
             
-            autoreleasepool(closure)
+            self.rawObject = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS) {
+                
+                autoreleasepool(closure)
+            }
+        }
+        else {
+            
+            self.rawObject = {
+                
+                autoreleasepool(closure)
+            }
         }
     }
     
@@ -120,6 +130,7 @@ public struct GCDBlock {
     - parameter closure: The notification closure to submit when the block completes.
     - returns: The notification block. Useful when chaining blocks together.
     */
+    @available(iOS 8.0, *)
     public func notify(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
         
         let block = GCDBlock(closure)
@@ -131,14 +142,17 @@ public struct GCDBlock {
     /**
     Asynchronously cancel the block.
     */
+    @available(iOS 8.0, *)
     public func cancel() {
         
         dispatch_block_cancel(self.rawObject)
     }
     
     /**
-    Wait synchronously until execution of the block has completed.
+    Wait synchronously until execution of the block@available(iOS 8.0, *)
+     has completed.
     */
+    @available(iOS 8.0, *)
     public func wait() {
         
         dispatch_block_wait(self.rawObject, DISPATCH_TIME_FOREVER)
@@ -150,6 +164,7 @@ public struct GCDBlock {
     - parameter timeout: The number of seconds before timeout.
     - returns: Returns zero on success, or non-zero if the timeout occurred.
     */
+    @available(iOS 8.0, *)
     public func wait(timeout: NSTimeInterval) -> Int {
         
         return dispatch_block_wait(self.rawObject, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
@@ -161,6 +176,7 @@ public struct GCDBlock {
     - parameter date: The timeout date.
     - returns: Returns zero on success, or non-zero if the timeout occurred.
     */
+    @available(iOS 8.0, *)
     public func wait(date: NSDate) -> Int {
         
         return self.wait(date.timeIntervalSinceNow)

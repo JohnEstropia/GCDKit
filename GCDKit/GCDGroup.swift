@@ -28,7 +28,7 @@ import Foundation
 /**
 A wrapper and utility class for dispatch_group_t.
 */
-@available(iOS, introduced=8.0)
+@available(iOS, introduced=7.0)
 public struct GCDGroup {
     
     /**
