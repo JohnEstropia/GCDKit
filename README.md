@@ -177,8 +177,7 @@ semaphore.wait()
 
 ## To-do list
 
-- suspending and resuming queues
-- `dispatch_source_*` and `dispatch_timer_*` wrappers
+- `dispatch_source_*` wrappers
 - `dispatch_io_*`  (?)
 - `dispatch_data_*` (?)
 
