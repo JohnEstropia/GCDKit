@@ -30,41 +30,6 @@ class GCDKitTests: XCTestCase {
     
     func testGCDBlocks() {
         
-        print("QOS_CLASS_USER_INTERACTIVE")
-        print(QOS_CLASS_USER_INTERACTIVE)
-        print("DISPATCH_QUEUE_PRIORITY_HIGH")
-        print(DISPATCH_QUEUE_PRIORITY_HIGH)
-        
-        print("QOS_CLASS_USER_INITIATED")
-        print(QOS_CLASS_USER_INITIATED)
-        print("DISPATCH_QUEUE_PRIORITY_HIGH")
-        print(DISPATCH_QUEUE_PRIORITY_HIGH)
-        
-        print("QOS_CLASS_DEFAULT")
-        print(QOS_CLASS_DEFAULT)
-        print("DISPATCH_QUEUE_PRIORITY_DEFAULT")
-        print(DISPATCH_QUEUE_PRIORITY_DEFAULT)
-        
-        print("QOS_CLASS_UTILITY")
-        print(QOS_CLASS_UTILITY)
-        print("DISPATCH_QUEUE_PRIORITY_LOW")
-        print(DISPATCH_QUEUE_PRIORITY_LOW)
-        
-        print("QOS_CLASS_BACKGROUND")
-        print(QOS_CLASS_BACKGROUND)
-        print("DISPATCH_QUEUE_PRIORITY_BACKGROUND")
-        print(DISPATCH_QUEUE_PRIORITY_BACKGROUND)
-        
-        for i in 0...20 {
-            
-            if let queue = dispatch_get_global_queue(i, 0) {
-                
-                print(i)
-                print(queue)
-            }
-        }
-        
-        
         var didStartWaiting = false
         var finishedTasks = 0
         let expectation1 = self.expectationWithDescription("dispatch block 1")
