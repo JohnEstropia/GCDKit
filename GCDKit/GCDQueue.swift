@@ -39,12 +39,12 @@ public enum GCDQueue {
     case Main
     
     /**
-    A system-defined global concurrent queue with a User Interactive quality of service class.
+    A system-defined global concurrent queue with a User Interactive quality of service class. On iOS 7, UserInteractive is equivalent to UserInitiated.
     */
     case UserInteractive
     
     /**
-    A system-defined global concurrent queue with a User Initiated quality of service class.
+    A system-defined global concurrent queue with a User Initiated quality of service class. On iOS 7, UserInteractive is equivalent to UserInitiated.
     */
     case UserInitiated
     
@@ -373,6 +373,13 @@ public func ==(lhs: GCDQueue, rhs: GCDQueue) -> Bool {
         
     case (.Custom(let lhsRawObject), .Custom(let rhsRawObject)):
         return lhsRawObject === rhsRawObject
+        
+    case (.UserInitiated, .UserInteractive), (.UserInteractive, .UserInitiated):
+        if #available(iOS 8.0, *) {
+            
+            return false
+        }
+        return true
         
     default:
         return false
