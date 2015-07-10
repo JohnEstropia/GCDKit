@@ -30,7 +30,7 @@ private var _GCDQueue_Specific: Void?
 /**
 A wrapper and utility class for dispatch_queue_t.
 */
-@available(iOS, introduced=8.0)
+@available(iOS, introduced=7.0)
 public enum GCDQueue {
     
     /**
@@ -39,12 +39,12 @@ public enum GCDQueue {
     case Main
     
     /**
-    A system-defined global concurrent queue with a User Interactive quality of service class.
+    A system-defined global concurrent queue with a User Interactive quality of service class. On iOS 7, UserInteractive is equivalent to UserInitiated.
     */
     case UserInteractive
     
     /**
-    A system-defined global concurrent queue with a User Initiated quality of service class.
+    A system-defined global concurrent queue with a User Initiated quality of service class. On iOS 7, UserInteractive is equivalent to UserInitiated.
     */
     case UserInitiated
     
@@ -283,19 +283,54 @@ public enum GCDQueue {
             return dispatch_get_main_queue()
             
         case .UserInteractive:
-            return dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
+            if #available(iOS 8.0, *) {
+                
+                return dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
+            }
+            else {
+                
+                return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+            }
             
         case .UserInitiated:
-            return dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+            if #available(iOS 8.0, *) {
+                
+                return dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+            }
+            else {
+                
+                return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+            }
             
         case .Default:
-            return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
+            if #available(iOS 8.0, *) {
+                
+                return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
+            }
+            else {
+                
+                return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+            }
             
         case .Utility:
-            return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
+            if #available(iOS 8.0, *) {
+                
+                return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
+            }
+            else {
+                
+                return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
+            }
             
         case .Background:
-            return dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+            if #available(iOS 8.0, *) {
+                
+                return dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+            }
+            else {
+                
+                return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
+            }
             
         case .Custom(let rawObject):
             return rawObject
@@ -338,6 +373,13 @@ public func ==(lhs: GCDQueue, rhs: GCDQueue) -> Bool {
         
     case (.Custom(let lhsRawObject), .Custom(let rhsRawObject)):
         return lhsRawObject === rhsRawObject
+        
+    case (.UserInitiated, .UserInteractive), (.UserInteractive, .UserInitiated):
+        if #available(iOS 8.0, *) {
+            
+            return false
+        }
+        return true
         
     default:
         return false

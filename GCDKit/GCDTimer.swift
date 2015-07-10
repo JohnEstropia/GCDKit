@@ -42,7 +42,7 @@ private extension NSTimeInterval {
 /**
 A wrapper and utility class for dispatch_source_t of type DISPATCH_SOURCE_TYPE_TIMER.
 */
-@available(iOS, introduced=8.0)
+@available(iOS, introduced=7.0)
 public final class GCDTimer {
     
     /**
