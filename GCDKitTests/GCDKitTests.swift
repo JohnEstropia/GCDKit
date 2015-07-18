@@ -28,6 +28,7 @@ import XCTest
 
 class GCDKitTests: XCTestCase {
     
+    @available(iOS 8.0, *)
     func testGCDBlocks() {
         
         var didStartWaiting = false
