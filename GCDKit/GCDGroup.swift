@@ -128,7 +128,7 @@ public struct GCDGroup {
 
 public func ==(lhs: GCDGroup, rhs: GCDGroup) -> Bool {
     
-    return lhs.dispatchGroup() == rhs.dispatchGroup()
+    return lhs.dispatchGroup() === rhs.dispatchGroup()
 }
 
 extension GCDGroup: Equatable { }

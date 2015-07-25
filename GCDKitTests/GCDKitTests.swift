@@ -71,7 +71,7 @@ class GCDKitTests: XCTestCase {
         
         let mainQueue = GCDQueue.Main
         XCTAssertNotNil(mainQueue.dispatchQueue());
-        XCTAssertEqual(mainQueue.dispatchQueue(), dispatch_get_main_queue())
+        XCTAssertTrue(mainQueue.dispatchQueue().isEqual(dispatch_get_main_queue()))
         
         let allQueues: [GCDQueue] = [.Main, .UserInteractive, .UserInitiated, .Default, .Utility, .Background, .createSerial("serial"), .createConcurrent("serial")]
         var allQueuesExpectations = [XCTestExpectation]()

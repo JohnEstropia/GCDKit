@@ -26,19 +26,6 @@
 import Foundation
 
 
-private extension NSTimeInterval {
-    
-    private func toTimeSpec() -> timespec {
-        
-        var seconds: NSTimeInterval = 0.0
-        let fractionalPart = modf(self, &seconds)
-        
-        let nanoSeconds = fractionalPart * NSTimeInterval(NSEC_PER_SEC)
-        return timespec(tv_sec: __darwin_time_t(seconds), tv_nsec: Int(nanoSeconds))
-    }
-}
-
-
 /**
 A wrapper and utility class for dispatch_source_t of type DISPATCH_SOURCE_TYPE_TIMER.
 */
@@ -225,4 +212,17 @@ public final class GCDTimer {
     private let rawObject: dispatch_source_t
     private let barrierQueue: dispatch_queue_t
     private var isSuspended: Bool
+}
+
+
+private extension NSTimeInterval {
+    
+    private func toTimeSpec() -> timespec {
+        
+        var seconds: NSTimeInterval = 0.0
+        let fractionalPart = modf(self, &seconds)
+        
+        let nanoSeconds = fractionalPart * NSTimeInterval(NSEC_PER_SEC)
+        return timespec(tv_sec: __darwin_time_t(seconds), tv_nsec: Int(nanoSeconds))
+    }
 }
