@@ -7,6 +7,9 @@
 
 GCDKit is Grand Central Dispatch simplified with Swift.
 
+- for Swift 1.2: Use version [1.0.1](https://github.com/JohnEstropia/GCDKit/releases/tag/1.0.1)
+- for Swift 2.0: Use the master branch
+
 ---
 
 ## Introduction
