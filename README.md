@@ -1,7 +1,7 @@
 # GCDKit
-[![Version](https://img.shields.io/cocoapods/v/CoreStore.svg?style=flat)](http://cocoadocs.org/docsets/GCDKit)
-[![Platform](https://img.shields.io/cocoapods/p/CoreStore.svg?style=flat)](http://cocoadocs.org/docsets/GCDKit)
-[![License](https://img.shields.io/cocoapods/l/CoreStore.svg?style=flat)](https://raw.githubusercontent.com/JohnEstropia/GCDKit/master/LICENSE)
+[![Version](https://img.shields.io/cocoapods/v/GCDKit.svg?style=flat)](http://cocoadocs.org/docsets/GCDKit)
+[![Platform](https://img.shields.io/cocoapods/p/GCDKit.svg?style=flat)](http://cocoadocs.org/docsets/GCDKit)
+[![License](https://img.shields.io/cocoapods/l/GCDKit.svg?style=flat)](https://raw.githubusercontent.com/JohnEstropia/GCDKit/master/LICENSE)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 
