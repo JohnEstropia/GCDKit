@@ -159,11 +159,16 @@ public final class GCDTimer {
     */
     public func setEventHandler(eventHandler: (timer: GCDTimer) -> Void) {
         
-        dispatch_source_set_event_handler(self.rawObject) {
+        dispatch_source_set_event_handler(self.rawObject) { [weak self] in
+            
+            guard let strongSelf = self else {
+                
+                return
+            }
             
             autoreleasepool {
                 
-                eventHandler(timer: self)
+                eventHandler(timer: strongSelf)
             }
         }
     }
@@ -203,7 +208,7 @@ public final class GCDTimer {
     
     deinit {
         
-        self.setEventHandler { (timer) -> Void in }
+        self.setEventHandler { (_) -> Void in }
         self.resume()
         dispatch_source_cancel(self.rawObject)
     }
