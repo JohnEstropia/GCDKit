@@ -23,204 +23,204 @@
 //  SOFTWARE.
 //
 
+import Foundation
 import GCDKit
 import XCTest
 
 class GCDKitTests: XCTestCase {
-    
-    @available(iOS 8.0, *)
     func testGCDBlocks() {
-        
+//        @available(OSX 10.10, iOS 8.0, *)
         var didStartWaiting = false
         var finishedTasks = 0
         let expectation1 = self.expectationWithDescription("dispatch block 1")
         let expectation2 = self.expectationWithDescription("dispatch block 2")
         let expectation3 = self.expectationWithDescription("dispatch block 3")
         GCDBlock.async(.Background) {
-            
+
             XCTAssertTrue(finishedTasks == 0)
             XCTAssertTrue(didStartWaiting)
             XCTAssertFalse(NSThread.isMainThread())
             XCTAssertTrue(GCDQueue.Background.isCurrentExecutionContext())
             expectation1.fulfill()
-            
+
             finishedTasks++
+            }
+            .notify(.Default) {
+
+                XCTAssertTrue(finishedTasks == 1)
+                XCTAssertFalse(NSThread.isMainThread())
+                XCTAssertTrue(GCDQueue.Default.isCurrentExecutionContext())
+                expectation2.fulfill()
+
+                finishedTasks++
+            }.notify(.Main) {
+
+                XCTAssertTrue(finishedTasks == 2)
+                XCTAssertTrue(NSThread.isMainThread())
+                XCTAssertTrue(GCDQueue.Main.isCurrentExecutionContext())
+                expectation3.fulfill()
         }
-        .notify(.Default) {
-            
-            XCTAssertTrue(finishedTasks == 1)
-            XCTAssertFalse(NSThread.isMainThread())
-            XCTAssertTrue(GCDQueue.Default.isCurrentExecutionContext())
-            expectation2.fulfill()
-            
-            finishedTasks++
-        }
-        .notify(.Main) {
-            
-            XCTAssertTrue(finishedTasks == 2)
-            XCTAssertTrue(NSThread.isMainThread())
-            XCTAssertTrue(GCDQueue.Main.isCurrentExecutionContext())
-            expectation3.fulfill()
-        }
-        
+
         didStartWaiting = true
         self.waitForExpectationsWithTimeout(5.0, handler: nil)
     }
-    
+
     func testGCDQueue() {
-        
+
         let mainQueue = GCDQueue.Main
         XCTAssertNotNil(mainQueue.dispatchQueue());
         XCTAssertTrue(mainQueue.dispatchQueue().isEqual(dispatch_get_main_queue()))
-        
+
         let allQueues: [GCDQueue] = [.Main, .UserInteractive, .UserInitiated, .Default, .Utility, .Background, .createSerial("serial"), .createConcurrent("serial")]
         var allQueuesExpectations = [XCTestExpectation]()
         for queue in allQueues {
-            
+
             if queue != .Main {
-                
+
                 queue.sync {
-                    
+
                     XCTAssertTrue(queue.isCurrentExecutionContext())
                     for otherQueue in allQueues {
-                        
+
                         if queue != otherQueue {
-                            
+
                             XCTAssertFalse(otherQueue.isCurrentExecutionContext())
                         }
                     }
                 }
             }
-            
+
             let dispatchExpectation = self.expectationWithDescription("main queue block")
             allQueuesExpectations.append(dispatchExpectation)
-            
+
             queue.async {
-                
+
                 XCTAssertTrue(queue.isCurrentExecutionContext())
                 for otherQueue in allQueues {
-                    
+
                     if queue != otherQueue {
-                        
+
                         XCTAssertFalse(otherQueue.isCurrentExecutionContext())
                     }
                 }
                 dispatchExpectation.fulfill()
-            }
+                }.notify(.Main, closure: { () -> Void in
+
+                })
         }
-        
+
         var didStartWaiting = false
         let dispatchExpectation = self.expectationWithDescription("main queue block")
         GCDQueue.Background.async {
-            
+
             XCTAssertTrue(didStartWaiting)
             XCTAssertFalse(NSThread.isMainThread())
             dispatchExpectation.fulfill()
         }
-        
+
         didStartWaiting = true
         self.waitForExpectationsWithTimeout(5.0, handler: nil)
     }
-    
+
     func testGCDGroup() {
-        
+
         let group = GCDGroup()
         XCTAssertNotNil(group.dispatchGroup());
-        
+
         let expectation1 = self.expectationWithDescription("dispatch group block 1")
         let expectation2 = self.expectationWithDescription("dispatch group block 2")
         group.async(.Main) {
-            
+
             XCTAssertTrue(NSThread.isMainThread())
             expectation1.fulfill()
+            }
+            .async(.Default) {
+
+                XCTAssertFalse(NSThread.isMainThread())
+                expectation2.fulfill()
         }
-        .async(.Default) {
-            
-            XCTAssertFalse(NSThread.isMainThread())
-            expectation2.fulfill()
-        }
-        
+
         let expectation3 = self.expectationWithDescription("dispatch group block 3")
         group.enter()
         GCDQueue.Utility.after(3.0) {
-            
+
             XCTAssertFalse(NSThread.isMainThread())
             expectation3.fulfill()
             group.leave()
         }
-        
+
         let expectation4 = self.expectationWithDescription("dispatch group block 4")
         group.enter()
         GCDQueue.Default.async {
-            
+
             XCTAssertFalse(NSThread.isMainThread())
             expectation4.fulfill()
             group.leave()
         }
-        
+
         let expectation5 = self.expectationWithDescription("dispatch group block 5")
         group.notify(.Default) {
-            
+
             XCTAssertFalse(NSThread.isMainThread())
             expectation5.fulfill()
         }
-        
+
         self.waitForExpectationsWithTimeout(5.0, handler: nil)
     }
-    
+
     func testGCDSemaphore() {
-        
+
         let numberOfTasks: UInt = 10
         let semaphore = GCDSemaphore(numberOfTasks)
         XCTAssertNotNil(semaphore.dispatchSemaphore());
-        
+
         var expectations = [XCTestExpectation]();
         for i in 0 ..< numberOfTasks {
-        
+
             expectations.append(self.expectationWithDescription("semaphore block \(i)"))
         }
-        
+
         let queue = GCDQueue.createConcurrent("testGCDSemaphore.queue")
         queue.apply(numberOfTasks) { (iteration: UInt) -> Void in
-            
+
             XCTAssertTrue(queue.isCurrentExecutionContext())
             expectations[Int(iteration)].fulfill()
             semaphore.signal()
         }
-        
+
         semaphore.wait()
-        
+
         self.waitForExpectationsWithTimeout(0.0, handler: nil)
     }
-    
+
     func testGCDTimer() {
-        
+
         var runningExpectations = [XCTestExpectation]()
         let numberOfTicksToTest = 10
         for i in 0..<numberOfTicksToTest {
-            
+
             runningExpectations.append(self.expectationWithDescription("timer tick \(i)"))
         }
         let suspendExpectation = self.expectationWithDescription("timer suspended")
-        
+
         var previousTimestamp = CFAbsoluteTimeGetCurrent()
         var iteration = 0
         let timer = GCDTimer.createAutoStart(.Default, interval: Double(iteration + 1)) { (timer) -> Void in
-            
+
             XCTAssertTrue(GCDQueue.Default.isCurrentExecutionContext())
-            
+
             let currentTimestamp = CFAbsoluteTimeGetCurrent()
             let elapsed = currentTimestamp - previousTimestamp
             let expected = Double(iteration + 1)
             XCTAssertGreaterThanOrEqual(elapsed + Double(0.001), expected, "Timer fired before expected time")
             XCTAssertTrue(timer.isRunning, "Timer's isRunning property is not true")
-            
+
             if Int(iteration) < runningExpectations.count {
-                
+
                 runningExpectations[Int(iteration)].fulfill()
             }
             else {
-                
+
                 timer.suspend()
                 XCTAssertFalse(timer.isRunning, "Timer's isRunning property is not false")
                 suspendExpectation.fulfill()
