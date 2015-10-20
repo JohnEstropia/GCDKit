@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2FBBCAD519A9FE610070E4AB"
-               BuildableName = "GCDKitTests.xctest"
-               BlueprintName = "GCDKitTests"
+               BuildableName = "GCDKitTests iOS.xctest"
+               BlueprintName = "GCDKitTests iOS"
                ReferencedContainer = "container:GCDKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2FBBCAD519A9FE610070E4AB"
-               BuildableName = "GCDKitTests.xctest"
-               BlueprintName = "GCDKitTests"
+               BuildableName = "GCDKitTests iOS.xctest"
+               BlueprintName = "GCDKitTests iOS"
                ReferencedContainer = "container:GCDKit.xcodeproj">
             </BuildableReference>
          </TestableReference>

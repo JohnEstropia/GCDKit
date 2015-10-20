@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5BE274CA1BCFB0DC000B68C0"
-               BuildableName = "GCDKit OS X.framework"
-               BlueprintName = "GCDKit OS X"
+               BlueprintIdentifier = "B563212A1BD6359A006C9394"
+               BuildableName = "GCDKit.framework"
+               BlueprintName = "GCDKit OSX"
+               ReferencedContainer = "container:GCDKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B563213F1BD63D14006C9394"
+               BuildableName = "GCDKitTests OSX.xctest"
+               BlueprintName = "GCDKitTests OSX"
                ReferencedContainer = "container:GCDKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +46,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5BE274D31BCFB0DC000B68C0"
-               BuildableName = "GCDKit OS XTests.xctest"
-               BlueprintName = "GCDKit OS XTests"
+               BlueprintIdentifier = "B563213F1BD63D14006C9394"
+               BuildableName = "GCDKitTests OSX.xctest"
+               BlueprintName = "GCDKitTests OSX"
                ReferencedContainer = "container:GCDKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +56,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5BE274CA1BCFB0DC000B68C0"
-            BuildableName = "GCDKit OS X.framework"
-            BlueprintName = "GCDKit OS X"
+            BlueprintIdentifier = "B563212A1BD6359A006C9394"
+            BuildableName = "GCDKit.framework"
+            BlueprintName = "GCDKit OSX"
             ReferencedContainer = "container:GCDKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +78,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5BE274CA1BCFB0DC000B68C0"
-            BuildableName = "GCDKit OS X.framework"
-            BlueprintName = "GCDKit OS X"
+            BlueprintIdentifier = "B563212A1BD6359A006C9394"
+            BuildableName = "GCDKit.framework"
+            BlueprintName = "GCDKit OSX"
             ReferencedContainer = "container:GCDKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +96,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5BE274CA1BCFB0DC000B68C0"
-            BuildableName = "GCDKit OS X.framework"
-            BlueprintName = "GCDKit OS X"
+            BlueprintIdentifier = "B563212A1BD6359A006C9394"
+            BuildableName = "GCDKit.framework"
+            BlueprintName = "GCDKit OSX"
             ReferencedContainer = "container:GCDKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
