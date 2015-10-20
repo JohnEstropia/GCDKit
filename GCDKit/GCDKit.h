@@ -23,14 +23,9 @@
 //  SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-//! Project version number for GCDKit.
 FOUNDATION_EXPORT double GCDKitVersionNumber;
-
-//! Project version string for GCDKit.
 FOUNDATION_EXPORT const unsigned char GCDKitVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <GCDKit/PublicHeader.h>
 
 
