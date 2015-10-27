@@ -70,6 +70,32 @@ public struct GCDGroup {
     }
     
     /**
+    Explicitly indicates that a block has entered the group.
+    - returns: Returns a once-token that may be passed to `leaveOnce()`
+    */
+    public func enterOnce() -> Int32 {
+        
+        dispatch_group_enter(self.rawObject)
+        return 1
+    }
+    
+    /**
+    Explicitly indicates that a block in the group has completed. This method accepts a `onceToken` which `GCDGroup` can used to prevent multiple calls `dispatch_group_leave()` which may crash the app.
+
+    - parameter onceToken: The address of the value returned from `enterOnce()`.
+    - returns: Returns `true` if `dispatch_group_leave()` was called, or `false` if not.
+    */
+    public func leaveOnce(inout onceToken: Int32) -> Bool {
+        
+        if OSAtomicCompareAndSwapInt(1, 0, &onceToken) {
+            
+            dispatch_group_leave(self.rawObject)
+            return true
+        }
+        return false
+    }
+    
+    /**
     Schedules a closure to be submitted to a queue when a group of previously submitted blocks have completed.
     
     - parameter queue: The queue to which the supplied closure is submitted when the group completes.
