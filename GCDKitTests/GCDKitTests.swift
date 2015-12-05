@@ -167,26 +167,16 @@ class GCDKitTests: XCTestCase {
         
         let expectation6 = self.expectationWithDescription("dispatch group block 6")
         let expectation7 = self.expectationWithDescription("dispatch group block 7")
-        let expectation8 = self.expectationWithDescription("dispatch group block 8")
         var onceToken = group.enterOnce()
-        GCDQueue.createConcurrent("concurrent").apply(3 as UInt) { (iteration) -> Void in
+        GCDQueue.createConcurrent("concurrent").apply(2 as UInt) { (iteration) -> Void in
             
             if group.leaveOnce(&onceToken) {
                 
-                XCTAssertEqual(iteration,  0)
                 expectation6.fulfill()
             }
             else {
                 
-                XCTAssertGreaterThan(iteration, 0)
-                if iteration == 1 {
-                    
-                    expectation7.fulfill()
-                }
-                else if iteration == 2 {
-                    
-                    expectation8.fulfill()
-                }
+                expectation7.fulfill()
             }
         }
 
