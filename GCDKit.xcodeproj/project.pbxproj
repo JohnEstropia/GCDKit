@@ -27,6 +27,7 @@
 		B563215C1BD640C5006C9394 /* GCDSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */; };
 		B563215D1BD640C5006C9394 /* GCDTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */; };
 		B5D1D3101A73BE7F003B866E /* GCDTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */; };
+		B5E45DDA1C143C2000D1BB46 /* GCDKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B563212B1BD6359A006C9394 /* GCDKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5E45DDA1C143C2000D1BB46 /* GCDKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +270,7 @@
 			name = "GCDKitTests OSX";
 			productName = "GCDKit OSX Tests";
 			productReference = B56321401BD63D14006C9394 /* GCDKitTests OSX.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		B563214F1BD6408F006C9394 /* GCDKit watchOS */ = {
 			isa = PBXNativeTarget;
