@@ -28,9 +28,9 @@ import GCDKit
 import XCTest
 
 class GCDKitTests: XCTestCase {
+    
     func testGCDBlocks() {
-//        @available(OSX 10.10, iOS 8.0, *)
-        var didStartWaiting = false
+        
         var finishedTasks = 0
         let expectation1 = self.expectationWithDescription("dispatch block 1")
         let expectation2 = self.expectationWithDescription("dispatch block 2")
@@ -38,7 +38,6 @@ class GCDKitTests: XCTestCase {
         GCDBlock.async(.Background) {
 
             XCTAssertTrue(finishedTasks == 0)
-            XCTAssertTrue(didStartWaiting)
             XCTAssertFalse(NSThread.isMainThread())
             XCTAssertTrue(GCDQueue.Background.isCurrentExecutionContext())
             expectation1.fulfill()
@@ -61,7 +60,6 @@ class GCDKitTests: XCTestCase {
                 expectation3.fulfill()
         }
 
-        didStartWaiting = true
         self.waitForExpectationsWithTimeout(60, handler: nil)
     }
 
@@ -109,16 +107,13 @@ class GCDKitTests: XCTestCase {
                 })
         }
 
-        var didStartWaiting = false
         let dispatchExpectation = self.expectationWithDescription("main queue block")
         GCDQueue.Background.async {
 
-            XCTAssertTrue(didStartWaiting)
             XCTAssertFalse(NSThread.isMainThread())
             dispatchExpectation.fulfill()
         }
 
-        didStartWaiting = true
         self.waitForExpectationsWithTimeout(60, handler: nil)
     }
 
