@@ -24,8 +24,10 @@
 //
 
 import Foundation
-import GCDKit
 import XCTest
+
+@testable
+import GCDKit
 
 class GCDKitTests: XCTestCase {
     
