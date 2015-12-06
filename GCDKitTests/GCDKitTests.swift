@@ -62,7 +62,7 @@ class GCDKitTests: XCTestCase {
         }
 
         didStartWaiting = true
-        self.waitForExpectationsWithTimeout(5.0, handler: nil)
+        self.waitForExpectationsWithTimeout(60, handler: nil)
     }
 
     func testGCDQueue() {
@@ -119,7 +119,7 @@ class GCDKitTests: XCTestCase {
         }
 
         didStartWaiting = true
-        self.waitForExpectationsWithTimeout(5.0, handler: nil)
+        self.waitForExpectationsWithTimeout(60, handler: nil)
     }
 
     func testGCDGroup() {
@@ -180,7 +180,7 @@ class GCDKitTests: XCTestCase {
             }
         }
 
-        self.waitForExpectationsWithTimeout(5.0, handler: nil)
+        self.waitForExpectationsWithTimeout(60, handler: nil)
     }
 
     func testGCDSemaphore() {
@@ -249,6 +249,6 @@ class GCDKitTests: XCTestCase {
         XCTAssertTrue(timer.isRunning, "Timer's isRunning property is not true")
         
         let numberOfTicks = NSTimeInterval(numberOfTicksToTest) + 1
-        self.waitForExpectationsWithTimeout((numberOfTicks * (numberOfTicks / 2.0 + 1.0)) + 5.0, handler: nil)
+        self.waitForExpectationsWithTimeout((numberOfTicks * (numberOfTicks / 2.0 + 1.0)) + 20.0, handler: nil)
     }
 }
