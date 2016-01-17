@@ -13,6 +13,14 @@
 		2FC48D4A19B2EC7800CF1B76 /* GCDGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */; };
 		2FC48D4C19B2EC8400CF1B76 /* GCDSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */; };
 		2FCDA06219B76700002F71EA /* GCDKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCDA06119B766A2002F71EA /* GCDKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		82BA18701C4BB93100A0916E /* GCDKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BA18661C4BB93000A0916E /* GCDKit.framework */; };
+		82BA187D1C4BBA5A00A0916E /* GCDKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCDA06119B766A2002F71EA /* GCDKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		82BA187E1C4BBA6100A0916E /* GCDBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */; };
+		82BA187F1C4BBA6100A0916E /* GCDGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */; };
+		82BA18801C4BBA6100A0916E /* GCDQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */; };
+		82BA18811C4BBA6100A0916E /* GCDSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */; };
+		82BA18821C4BBA6100A0916E /* GCDTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */; };
+		82BA18831C4BBA7200A0916E /* GCDKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBBCADA19A9FE610070E4AB /* GCDKitTests.swift */; };
 		B56321341BD638D6006C9394 /* GCDKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCDA06119B766A2002F71EA /* GCDKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B56321351BD638DB006C9394 /* GCDBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */; };
 		B56321361BD638DD006C9394 /* GCDGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */; };
@@ -38,6 +46,13 @@
 			remoteGlobalIDString = 2FBBCACA19A9FE610070E4AB;
 			remoteInfo = GCDKit;
 		};
+		82BA18711C4BB93100A0916E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2FBBCAC219A9FE610070E4AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82BA18651C4BB93000A0916E;
+			remoteInfo = "GCDKit tvOS";
+		};
 		B56321481BD63E1F006C9394 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2FBBCAC219A9FE610070E4AB /* Project object */;
@@ -60,6 +75,8 @@
 		2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDGroup.swift; sourceTree = "<group>"; };
 		2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDSemaphore.swift; sourceTree = "<group>"; };
 		2FCDA06119B766A2002F71EA /* GCDKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDKit.h; sourceTree = "<group>"; };
+		82BA18661C4BB93000A0916E /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82BA186F1C4BB93100A0916E /* GCDKitTests tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GCDKitTests tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B563212B1BD6359A006C9394 /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B56321401BD63D14006C9394 /* GCDKitTests OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GCDKitTests OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B56321501BD6408F006C9394 /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +96,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82BA18621C4BB93000A0916E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82BA186C1C4BB93100A0916E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82BA18701C4BB93100A0916E /* GCDKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +158,8 @@
 				B563212B1BD6359A006C9394 /* GCDKit.framework */,
 				B56321401BD63D14006C9394 /* GCDKitTests OSX.xctest */,
 				B56321501BD6408F006C9394 /* GCDKit.framework */,
+				82BA18661C4BB93000A0916E /* GCDKit.framework */,
+				82BA186F1C4BB93100A0916E /* GCDKitTests tvOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,6 +212,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FCDA06219B76700002F71EA /* GCDKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82BA18631C4BB93000A0916E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82BA187D1C4BBA5A00A0916E /* GCDKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +276,42 @@
 			name = "GCDKitTests iOS";
 			productName = GCDKitTests;
 			productReference = 2FBBCAD619A9FE610070E4AB /* GCDKitTests iOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		82BA18651C4BB93000A0916E /* GCDKit tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82BA187B1C4BB93100A0916E /* Build configuration list for PBXNativeTarget "GCDKit tvOS" */;
+			buildPhases = (
+				82BA18611C4BB93000A0916E /* Sources */,
+				82BA18621C4BB93000A0916E /* Frameworks */,
+				82BA18631C4BB93000A0916E /* Headers */,
+				82BA18641C4BB93000A0916E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GCDKit tvOS";
+			productName = "GCDKit tvOS";
+			productReference = 82BA18661C4BB93000A0916E /* GCDKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		82BA186E1C4BB93100A0916E /* GCDKitTests tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82BA187C1C4BB93100A0916E /* Build configuration list for PBXNativeTarget "GCDKitTests tvOS" */;
+			buildPhases = (
+				82BA186B1C4BB93100A0916E /* Sources */,
+				82BA186C1C4BB93100A0916E /* Frameworks */,
+				82BA186D1C4BB93100A0916E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82BA18721C4BB93100A0916E /* PBXTargetDependency */,
+			);
+			name = "GCDKitTests tvOS";
+			productName = "GCDKit tvOSTests";
+			productReference = 82BA186F1C4BB93100A0916E /* GCDKitTests tvOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		B563212A1BD6359A006C9394 /* GCDKit OSX */ = {
@@ -296,7 +374,7 @@
 		2FBBCAC219A9FE610070E4AB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "John Rommel Estropia";
 				TargetAttributes = {
@@ -305,6 +383,12 @@
 					};
 					2FBBCAD519A9FE610070E4AB = {
 						CreatedOnToolsVersion = 6.0;
+					};
+					82BA18651C4BB93000A0916E = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					82BA186E1C4BB93100A0916E = {
+						CreatedOnToolsVersion = 7.2;
 					};
 					B563212A1BD6359A006C9394 = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -331,6 +415,8 @@
 			targets = (
 				2FBBCACA19A9FE610070E4AB /* GCDKit iOS */,
 				2FBBCAD519A9FE610070E4AB /* GCDKitTests iOS */,
+				82BA18651C4BB93000A0916E /* GCDKit tvOS */,
+				82BA186E1C4BB93100A0916E /* GCDKitTests tvOS */,
 				B563212A1BD6359A006C9394 /* GCDKit OSX */,
 				B563213F1BD63D14006C9394 /* GCDKitTests OSX */,
 				B563214F1BD6408F006C9394 /* GCDKit watchOS */,
@@ -347,6 +433,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2FBBCAD419A9FE610070E4AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82BA18641C4BB93000A0916E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82BA186D1C4BB93100A0916E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -397,6 +497,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82BA18611C4BB93000A0916E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82BA187F1C4BBA6100A0916E /* GCDGroup.swift in Sources */,
+				82BA18801C4BBA6100A0916E /* GCDQueue.swift in Sources */,
+				82BA187E1C4BBA6100A0916E /* GCDBlock.swift in Sources */,
+				82BA18821C4BBA6100A0916E /* GCDTimer.swift in Sources */,
+				82BA18811C4BBA6100A0916E /* GCDSemaphore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82BA186B1C4BB93100A0916E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82BA18831C4BBA7200A0916E /* GCDKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B56321261BD6359A006C9394 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -436,6 +556,11 @@
 			isa = PBXTargetDependency;
 			target = 2FBBCACA19A9FE610070E4AB /* GCDKit iOS */;
 			targetProxy = 2F5BBACF19AA302D0061C57C /* PBXContainerItemProxy */;
+		};
+		82BA18721C4BB93100A0916E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82BA18651C4BB93000A0916E /* GCDKit tvOS */;
+			targetProxy = 82BA18711C4BB93100A0916E /* PBXContainerItemProxy */;
 		};
 		B56321491BD63E1F006C9394 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -595,6 +720,78 @@
 			};
 			name = Release;
 		};
+		82BA18771C4BB93100A0916E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/GCDKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = source.open.GCDKit;
+				PRODUCT_NAME = GCDKit;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		82BA18781C4BB93100A0916E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/GCDKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = source.open.GCDKit;
+				PRODUCT_NAME = GCDKit;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		82BA18791C4BB93100A0916E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = GCDKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "source.open.GCDKit-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		82BA187A1C4BB93100A0916E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = GCDKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "source.open.GCDKit-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
 		B56321311BD6359A006C9394 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -736,6 +933,24 @@
 			buildConfigurations = (
 				2FBBCAE219A9FE610070E4AB /* Debug */,
 				2FBBCAE319A9FE610070E4AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82BA187B1C4BB93100A0916E /* Build configuration list for PBXNativeTarget "GCDKit tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82BA18771C4BB93100A0916E /* Debug */,
+				82BA18781C4BB93100A0916E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82BA187C1C4BB93100A0916E /* Build configuration list for PBXNativeTarget "GCDKitTests tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82BA18791C4BB93100A0916E /* Debug */,
+				82BA187A1C4BB93100A0916E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
