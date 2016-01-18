@@ -1,5 +1,5 @@
 # GCDKit
-[![Build Status](https://travis-ci.org/JohnEstropia/GCDKit.svg)](https://travis-ci.org/JohnEstropia/GCDKit)
+[![Build Status](https://travis-ci.org/JohnEstropia/GCDKit/master.svg)](https://travis-ci.org/JohnEstropia/GCDKit)
 [![Version](https://img.shields.io/cocoapods/v/GCDKit.svg?style=flat)](http://cocoadocs.org/docsets/GCDKit)
 [![Platform](https://img.shields.io/cocoapods/p/GCDKit.svg?style=flat)](http://cocoadocs.org/docsets/GCDKit)
 [![License](https://img.shields.io/cocoapods/l/GCDKit.svg?style=flat)](https://raw.githubusercontent.com/JohnEstropia/GCDKit/master/LICENSE)
