@@ -43,7 +43,7 @@ class GCDKitTests: XCTestCase {
             XCTAssertTrue(GCDQueue.Background.isCurrentExecutionContext())
             expectation1.fulfill()
 
-            finishedTasks++
+            finishedTasks += 1
             }
             .notify(.Default) {
 
@@ -52,7 +52,7 @@ class GCDKitTests: XCTestCase {
                 XCTAssertTrue(GCDQueue.Default.isCurrentExecutionContext())
                 expectation2.fulfill()
 
-                finishedTasks++
+                finishedTasks += 1
             }.notify(.Main) {
 
                 XCTAssertTrue(finishedTasks == 2)
@@ -237,7 +237,7 @@ class GCDKitTests: XCTestCase {
                 suspendExpectation.fulfill()
             }
             
-            iteration++
+            iteration += 1
             
             previousTimestamp = CFAbsoluteTimeGetCurrent()
             timer.setTimer(Double(iteration + 1))
