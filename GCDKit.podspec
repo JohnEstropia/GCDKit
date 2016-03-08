@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = "GCDKit"
-    s.version = "1.1.8"
+    s.version = "1.2.0"
     s.license = "MIT"
     s.summary = "GCDKit is Grand Central Dispatch simplified with Swift"
     s.homepage = "https://github.com/JohnEstropia/GCDKit"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     s.watchos.deployment_target = "2.0"
     s.tvos.deployment_target = "9.0"
 
-    s.source_files = "GCDKit", "GCDKit/**/*.{swift}"
+    s.source_files = "Sources", "Sources/**/*.{swift}"
     s.frameworks = "Foundation"
     s.requires_arc = true
 end

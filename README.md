@@ -1,15 +1,17 @@
 # GCDKit
-[![Build Status](https://img.shields.io/travis/JohnEstropia/GCDKit/master.svg)](https://travis-ci.org/JohnEstropia/GCDKit)
+[![Build Status](https://img.shields.io/travis/JohnEstropia/GCDKit/master.svg?style=flat)](https://travis-ci.org/JohnEstropia/GCDKit)
 [![Version](https://img.shields.io/cocoapods/v/GCDKit.svg?style=flat)](http://cocoadocs.org/docsets/GCDKit)
 [![Platform](https://img.shields.io/cocoapods/p/GCDKit.svg?style=flat)](http://cocoadocs.org/docsets/GCDKit)
 [![License](https://img.shields.io/cocoapods/l/GCDKit.svg?style=flat)](https://raw.githubusercontent.com/JohnEstropia/GCDKit/master/LICENSE)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange.svg?style=flat)](https://swift.org/package-manager/)
+
 
 
 GCDKit is Grand Central Dispatch simplified with Swift.
 
 - for Swift 1.2: Use version [1.0.1](https://github.com/JohnEstropia/GCDKit/releases/tag/1.0.1)
-- for Swift 2.1: Use the master branch
+- for Swift 2.1 / 2.2: Use the master branch
 
 ---
 
@@ -183,11 +185,7 @@ GCDQueue.createConcurrent("myConcurrentQueue").apply(numberOfIterations) {
 semaphore.wait()
 ```
 
-## To-do list
-
-- `dispatch_source_*` wrappers
-- `dispatch_io_*`  (?)
-- `dispatch_data_*` (?)
+## Contributions
 
 Feel free to report any issues or send suggestions!
 
