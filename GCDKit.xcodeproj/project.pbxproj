@@ -90,7 +90,6 @@
 		B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTimer.swift; sourceTree = "<group>"; };
 		B5D9C8F91B16121D00E64F0E /* GCDKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = GCDKit.podspec; sourceTree = SOURCE_ROOT; };
 		B5D9E2EB1CA2B2C5007A9D52 /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5D9E2EC1CA2B2C5007A9D52 /* GCDKit iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GCDKit iOS copy-Info.plist"; path = "/Users/johnestropia/Documents/XCode Projects/GCDKit/GCDKit iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,7 +163,6 @@
 				2FBBCACD19A9FE610070E4AB /* Sources */,
 				2FBBCAD719A9FE610070E4AB /* GCDKitTests */,
 				2FBBCACC19A9FE610070E4AB /* Products */,
-				B5D9E2EC1CA2B2C5007A9D52 /* GCDKit iOS copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
