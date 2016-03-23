@@ -35,6 +35,12 @@
 		B563215C1BD640C5006C9394 /* GCDSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */; };
 		B563215D1BD640C5006C9394 /* GCDTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */; };
 		B5D1D3101A73BE7F003B866E /* GCDTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */; };
+		B5D9E2DF1CA2B2C5007A9D52 /* GCDGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4919B2EC7800CF1B76 /* GCDGroup.swift */; };
+		B5D9E2E01CA2B2C5007A9D52 /* GCDBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4519B2EC5500CF1B76 /* GCDBlock.swift */; };
+		B5D9E2E11CA2B2C5007A9D52 /* GCDQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4719B2EC6700CF1B76 /* GCDQueue.swift */; };
+		B5D9E2E21CA2B2C5007A9D52 /* GCDTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */; };
+		B5D9E2E31CA2B2C5007A9D52 /* GCDSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC48D4B19B2EC8400CF1B76 /* GCDSemaphore.swift */; };
+		B5D9E2E61CA2B2C5007A9D52 /* GCDKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCDA06119B766A2002F71EA /* GCDKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B5E45DDA1C143C2000D1BB46 /* GCDKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B563212B1BD6359A006C9394 /* GCDKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +89,8 @@
 		B56321501BD6408F006C9394 /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTimer.swift; sourceTree = "<group>"; };
 		B5D9C8F91B16121D00E64F0E /* GCDKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = GCDKit.podspec; sourceTree = SOURCE_ROOT; };
+		B5D9E2EB1CA2B2C5007A9D52 /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5D9E2EC1CA2B2C5007A9D52 /* GCDKit iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GCDKit iOS copy-Info.plist"; path = "/Users/johnestropia/Documents/XCode Projects/GCDKit/GCDKit iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +145,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B5D9E2E41CA2B2C5007A9D52 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -149,6 +164,7 @@
 				2FBBCACD19A9FE610070E4AB /* Sources */,
 				2FBBCAD719A9FE610070E4AB /* GCDKitTests */,
 				2FBBCACC19A9FE610070E4AB /* Products */,
+				B5D9E2EC1CA2B2C5007A9D52 /* GCDKit iOS copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -162,6 +178,7 @@
 				B56321501BD6408F006C9394 /* GCDKit.framework */,
 				82BA18661C4BB93000A0916E /* GCDKit.framework */,
 				82BA186F1C4BB93100A0916E /* GCDKitTests tvOS.xctest */,
+				B5D9E2EB1CA2B2C5007A9D52 /* GCDKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -238,6 +255,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B56321581BD640BE006C9394 /* GCDKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5D9E2E51CA2B2C5007A9D52 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5D9E2E61CA2B2C5007A9D52 /* GCDKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +395,24 @@
 			productReference = B56321501BD6408F006C9394 /* GCDKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		B5D9E2DD1CA2B2C5007A9D52 /* GCDKit iOS7 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5D9E2E81CA2B2C5007A9D52 /* Build configuration list for PBXNativeTarget "GCDKit iOS7" */;
+			buildPhases = (
+				B5D9E2DE1CA2B2C5007A9D52 /* Sources */,
+				B5D9E2E41CA2B2C5007A9D52 /* Frameworks */,
+				B5D9E2E51CA2B2C5007A9D52 /* Headers */,
+				B5D9E2E71CA2B2C5007A9D52 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GCDKit iOS7";
+			productName = GCDKit;
+			productReference = B5D9E2EB1CA2B2C5007A9D52 /* GCDKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -416,6 +459,7 @@
 			projectRoot = "";
 			targets = (
 				2FBBCACA19A9FE610070E4AB /* GCDKit iOS */,
+				B5D9E2DD1CA2B2C5007A9D52 /* GCDKit iOS7 */,
 				2FBBCAD519A9FE610070E4AB /* GCDKitTests iOS */,
 				82BA18651C4BB93000A0916E /* GCDKit tvOS */,
 				82BA186E1C4BB93100A0916E /* GCDKitTests tvOS */,
@@ -470,6 +514,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B563214E1BD6408F006C9394 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5D9E2E71CA2B2C5007A9D52 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -551,6 +602,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B5D9E2DE1CA2B2C5007A9D52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5D9E2DF1CA2B2C5007A9D52 /* GCDGroup.swift in Sources */,
+				B5D9E2E01CA2B2C5007A9D52 /* GCDBlock.swift in Sources */,
+				B5D9E2E11CA2B2C5007A9D52 /* GCDQueue.swift in Sources */,
+				B5D9E2E21CA2B2C5007A9D52 /* GCDTimer.swift in Sources */,
+				B5D9E2E31CA2B2C5007A9D52 /* GCDSemaphore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -608,10 +671,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Sources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-D USE_FRAMEWORKS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.johnestropia.GCDKit;
+				PRODUCT_NAME = GCDKit;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -652,9 +719,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Sources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_SWIFT_FLAGS = "-D USE_FRAMEWORKS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.johnestropia.GCDKit;
+				PRODUCT_NAME = GCDKit;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -673,11 +744,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.johnestropia.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = GCDKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -692,11 +760,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.johnestropia.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = GCDKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -737,11 +802,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.johnestropia.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = GCDKit;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -758,11 +820,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.johnestropia.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = GCDKit;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -808,11 +867,8 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.johnestropia.GCDKit;
-				PRODUCT_NAME = GCDKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -831,11 +887,8 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.johnestropia.GCDKit;
-				PRODUCT_NAME = GCDKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -879,11 +932,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.johnestropia.GCDKit;
-				PRODUCT_NAME = GCDKit;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -900,14 +950,46 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.johnestropia.GCDKit;
-				PRODUCT_NAME = GCDKit;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		B5D9E2E91CA2B2C5007A9D52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B5D9E2EA1CA2B2C5007A9D52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -982,6 +1064,15 @@
 			buildConfigurations = (
 				B56321561BD6408F006C9394 /* Debug */,
 				B56321571BD6408F006C9394 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5D9E2E81CA2B2C5007A9D52 /* Build configuration list for PBXNativeTarget "GCDKit iOS7" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5D9E2E91CA2B2C5007A9D52 /* Debug */,
+				B5D9E2EA1CA2B2C5007A9D52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -15,4 +15,5 @@ Pod::Spec.new do |s|
     s.source_files = "Sources", "Sources/**/*.{swift}"
     s.frameworks = "Foundation"
     s.requires_arc = true
+    s.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-D USE_FRAMEWORKS' }
 end

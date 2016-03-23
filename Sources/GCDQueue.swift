@@ -277,29 +277,92 @@ public enum GCDQueue {
     */
     public func dispatchQueue() -> dispatch_queue_t {
         
-        switch self {
+        #if USE_FRAMEWORKS
             
-        case .Main:
-            return dispatch_get_main_queue()
+            switch self {
+                
+            case .Main:
+                return dispatch_get_main_queue()
+                
+            case .UserInteractive:
+                return dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
+                
+            case .UserInitiated:
+                return dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+                
+            case .Default:
+                return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
+                
+            case .Utility:
+                return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
+                
+            case .Background:
+                return dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+                
+            case .Custom(let rawObject):
+                return rawObject
+            }
+        #else
             
-        case .UserInteractive:
-            return dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
-            
-        case .UserInitiated:
-            return dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
-            
-        case .Default:
-            return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
-            
-        case .Utility:
-            return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
-            
-        case .Background:
-            return dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-            
-        case .Custom(let rawObject):
-            return rawObject
-        }
+            switch self {
+                
+            case .Main:
+                return dispatch_get_main_queue()
+                
+            case .UserInteractive:
+                if #available(iOS 8.0, *) {
+                    
+                    return dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
+                }
+                else {
+                    
+                    return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+                }
+                
+            case .UserInitiated:
+                if #available(iOS 8.0, *) {
+                    
+                    return dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+                }
+                else {
+                    
+                    return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+                }
+                
+            case .Default:
+                if #available(iOS 8.0, *) {
+                    
+                    return dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
+                }
+                else {
+                    
+                    return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                }
+                
+            case .Utility:
+                if #available(iOS 8.0, *) {
+                    
+                    return dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
+                }
+                else {
+                    
+                    return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
+                }
+                
+            case .Background:
+                if #available(iOS 8.0, *) {
+                    
+                    return dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+                }
+                else {
+                    
+                    return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
+                }
+                
+            case .Custom(let rawObject):
+                return rawObject
+            }
+        #endif
     }
     
     private static func createCustom(isConcurrent isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
@@ -343,6 +406,19 @@ public func ==(lhs: GCDQueue, rhs: GCDQueue) -> Bool {
         
     case (.Custom(let lhsRawObject), .Custom(let rhsRawObject)):
         return lhsRawObject === rhsRawObject
+
+    case (.UserInitiated, .UserInteractive), (.UserInteractive, .UserInitiated):
+        #if USE_FRAMEWORKS
+            
+            return false
+        #else
+            
+            if #available(iOS 8.0, *) {
+                
+                return false
+            }
+            return true
+        #endif
         
     default:
         return false
