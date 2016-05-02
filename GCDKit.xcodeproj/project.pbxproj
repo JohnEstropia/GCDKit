@@ -89,7 +89,7 @@
 		B56321501BD6408F006C9394 /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D1D30F1A73BE7F003B866E /* GCDTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTimer.swift; sourceTree = "<group>"; };
 		B5D9C8F91B16121D00E64F0E /* GCDKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = GCDKit.podspec; sourceTree = SOURCE_ROOT; };
-		B5D9E2EB1CA2B2C5007A9D52 /* GCDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5D9E2EB1CA2B2C5007A9D52 /* GCDKit_iOS7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDKit_iOS7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +176,7 @@
 				B56321501BD6408F006C9394 /* GCDKit.framework */,
 				82BA18661C4BB93000A0916E /* GCDKit.framework */,
 				82BA186F1C4BB93100A0916E /* GCDKitTests tvOS.xctest */,
-				B5D9E2EB1CA2B2C5007A9D52 /* GCDKit.framework */,
+				B5D9E2EB1CA2B2C5007A9D52 /* GCDKit_iOS7.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -408,7 +408,7 @@
 			);
 			name = "GCDKit iOS7";
 			productName = GCDKit;
-			productReference = B5D9E2EB1CA2B2C5007A9D52 /* GCDKit.framework */;
+			productReference = B5D9E2EB1CA2B2C5007A9D52 /* GCDKit_iOS7.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -968,6 +968,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_NAME = GCDKit_iOS7;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -986,6 +987,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_NAME = GCDKit_iOS7;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
