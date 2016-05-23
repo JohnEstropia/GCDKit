@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B5D9E2DD1CA2B2C5007A9D52"
-               BuildableName = "GCDKit.framework"
+               BuildableName = "GCDKit_iOS7.framework"
                BlueprintName = "GCDKit iOS7"
                ReferencedContainer = "container:GCDKit.xcodeproj">
             </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B5D9E2DD1CA2B2C5007A9D52"
-            BuildableName = "GCDKit.framework"
+            BuildableName = "GCDKit_iOS7.framework"
             BlueprintName = "GCDKit iOS7"
             ReferencedContainer = "container:GCDKit.xcodeproj">
          </BuildableReference>
@@ -88,7 +88,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B5D9E2DD1CA2B2C5007A9D52"
-            BuildableName = "GCDKit.framework"
+            BuildableName = "GCDKit_iOS7.framework"
             BlueprintName = "GCDKit iOS7"
             ReferencedContainer = "container:GCDKit.xcodeproj">
          </BuildableReference>
