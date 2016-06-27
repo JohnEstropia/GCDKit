@@ -114,6 +114,19 @@ class GCDKitTests: XCTestCase {
             XCTAssertFalse(NSThread.isMainThread())
             dispatchExpectation.fulfill()
         }
+        
+        let suspendExpectation = self.expectationWithDescription("suspend queue expectation")
+        let suspendQueue = GCDQueue.createConcurrent("suspend")
+        suspendQueue.suspend()
+        var resumed = false
+        suspendQueue.async {
+            XCTAssertTrue(resumed)
+            suspendExpectation.fulfill()
+        }
+        mainQueue.after(1) {
+            resumed = true
+            suspendQueue.resume()
+        }
 
         self.waitForExpectationsWithTimeout(60, handler: nil)
     }
