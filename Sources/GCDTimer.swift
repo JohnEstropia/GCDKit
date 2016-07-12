@@ -29,7 +29,6 @@ import Foundation
 /**
 A wrapper and utility class for dispatch_source_t of type DISPATCH_SOURCE_TYPE_TIMER.
 */
-@available(iOS, introduced=7.0)
 public final class GCDTimer {
     
     /**
@@ -40,7 +39,7 @@ public final class GCDTimer {
     - parameter closure: The closure to submit to the timer queue.
     - returns: The created suspended timer.
     */
-    public class func createSuspended(queue: GCDQueue, interval: NSTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
+    public class func createSuspended(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
         
         let timer = GCDTimer(queue: queue)
         timer.setTimer(interval)
@@ -56,7 +55,7 @@ public final class GCDTimer {
     - parameter closure: The closure to submit to the timer queue.
     - returns: The created auto-start timer.
     */
-    public class func createAutoStart(queue: GCDQueue, interval: NSTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
+    public class func createAutoStart(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
         
         let timer = GCDTimer(queue: queue)
         timer.setTimer(interval)
@@ -71,7 +70,7 @@ public final class GCDTimer {
     public func resume() {
         
         var isSuspended = false
-        dispatch_barrier_sync(self.barrierQueue) {
+        self.barrierQueue.sync {
             
             isSuspended = self.isSuspended
             if isSuspended {
@@ -85,7 +84,7 @@ public final class GCDTimer {
             return
         }
         
-        dispatch_resume(self.rawObject)
+        self.rawObject.resume()
     }
     
     /**
@@ -94,7 +93,7 @@ public final class GCDTimer {
     public func suspend() {
         
         var isSuspended = false
-        dispatch_barrier_sync(self.barrierQueue) {
+        self.barrierQueue.sync {
             
             isSuspended = self.isSuspended
             if !isSuspended {
@@ -108,67 +107,63 @@ public final class GCDTimer {
             return
         }
         
-        dispatch_suspend(self.rawObject)
+        self.rawObject.suspend()
     }
     
     /**
     Sets a timer relative to the default clock.
     */
-    public func setTimer(interval: NSTimeInterval) {
+    public func setTimer(_ interval: DispatchTimeInterval) {
         
-        self.setTimer(interval, leeway: 0.0)
+        self.setTimer(interval, leeway: .microseconds(0))
     }
     
     /**
     Sets a timer relative to the default clock.
     */
-    public func setTimer(interval: NSTimeInterval, leeway: NSTimeInterval) {
+    public func setTimer(_ interval: DispatchTimeInterval, leeway: DispatchTimeInterval) {
         
-        let deltaTime = interval * NSTimeInterval(NSEC_PER_SEC)
-        dispatch_source_set_timer(
-            self.rawObject,
-            dispatch_time(DISPATCH_TIME_NOW, Int64(deltaTime)),
-            UInt64(deltaTime),
-            UInt64(leeway * NSTimeInterval(NSEC_PER_SEC)))
+        self.rawObject.scheduleRepeating(
+            deadline: DispatchTime.now() + interval,
+            interval: interval,
+            leeway: leeway
+        )
     }
     
     /**
     Sets a timer using an absolute time according to the wall clock.
     */
-    public func setWallTimer(startDate startDate: NSDate, interval: NSTimeInterval){
+    public func setWallTimer(startDate: Date, interval: DispatchTimeInterval) {
         
-        self.setWallTimer(startDate: startDate, interval: interval, leeway: 0.0)
+        self.setWallTimer(startDate: startDate, interval: interval, leeway: .microseconds(0))
     }
     
     /**
     Sets a timer using an absolute time according to the wall clock.
     */
-    public func setWallTimer(startDate startDate: NSDate, interval: NSTimeInterval, leeway: NSTimeInterval){
+    public func setWallTimer(startDate: Date, interval: DispatchTimeInterval, leeway: DispatchTimeInterval) {
         
-        var walltime = startDate.timeIntervalSince1970.toTimeSpec()
-        let deltaTime = interval * NSTimeInterval(NSEC_PER_SEC)
-        dispatch_source_set_timer(
-            self.rawObject,
-            dispatch_walltime(&walltime, Int64(deltaTime)),
-            UInt64(deltaTime),
-            UInt64(leeway * NSTimeInterval(NSEC_PER_SEC)))
+        self.rawObject.scheduleRepeating(
+            wallDeadline: DispatchWallTime(time: startDate.timeIntervalSince1970.toTimeSpec()),
+            interval: interval,
+            leeway: leeway
+        )
     }
     
     /**
     Sets the event handler for the timer.
     */
-    public func setEventHandler(eventHandler: (timer: GCDTimer) -> Void) {
+    public func setEventHandler(_ eventHandler: (timer: GCDTimer) -> Void) {
         
-        dispatch_source_set_event_handler(self.rawObject) { [weak self] in
+        self.rawObject.setEventHandler { [weak self] in
             
-            guard let strongSelf = self else {
+            guard let `self` = self else {
                 
                 return
             }
-            
             autoreleasepool {
                 
-                eventHandler(timer: strongSelf)
+                eventHandler(timer: `self`)
             }
         }
     }
@@ -179,7 +174,7 @@ public final class GCDTimer {
     public var isRunning: Bool {
         
         var isSuspended = false
-        dispatch_barrier_sync(self.barrierQueue) {
+        self.barrierQueue.sync {
             
             isSuspended = self.isSuspended
         }
@@ -191,18 +186,18 @@ public final class GCDTimer {
     
     - returns: The dispatch_source_t object associated with the timer.
     */
-    public func dispatchSource() -> dispatch_source_t {
+    public func dispatchSource() -> DispatchSourceTimer {
         
         return self.rawObject
     }
     
     private init(queue: GCDQueue) {
         
-        let dispatchTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue.dispatchQueue())
+        let dispatchTimer = DispatchSource.timer(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: queue.dispatchQueue())
         
         self.queue = queue
         self.rawObject = dispatchTimer
-        self.barrierQueue = dispatch_queue_create("com.GCDTimer.barrierQueue", DISPATCH_QUEUE_CONCURRENT)
+        self.barrierQueue = DispatchQueue(label: "com.GCDTimer.barrierQueue", attributes: DispatchQueueAttributes.concurrent)
         self.isSuspended = true
     }
     
@@ -210,24 +205,24 @@ public final class GCDTimer {
         
         self.setEventHandler { (_) -> Void in }
         self.resume()
-        dispatch_source_cancel(self.rawObject)
+        self.rawObject.cancel()
     }
     
     private let queue: GCDQueue
-    private let rawObject: dispatch_source_t
-    private let barrierQueue: dispatch_queue_t
+    private let rawObject: DispatchSourceTimer
+    private let barrierQueue: DispatchQueue
     private var isSuspended: Bool
 }
 
 
-private extension NSTimeInterval {
+private extension TimeInterval {
     
     private func toTimeSpec() -> timespec {
         
-        var seconds: NSTimeInterval = 0.0
+        var seconds: TimeInterval = 0.0
         let fractionalPart = modf(self, &seconds)
         
-        let nanoSeconds = fractionalPart * NSTimeInterval(NSEC_PER_SEC)
+        let nanoSeconds = fractionalPart * TimeInterval(NSEC_PER_SEC)
         return timespec(tv_sec: __darwin_time_t(seconds), tv_nsec: Int(nanoSeconds))
     }
 }

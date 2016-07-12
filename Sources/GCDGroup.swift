@@ -26,133 +26,129 @@
 import Foundation
 
 /**
-A wrapper and utility class for dispatch_group_t.
-*/
-@available(iOS, introduced=7.0)
+ A wrapper and utility class for dispatch_group_t.
+ */
 public struct GCDGroup {
     
     /**
-    Creates a new group with which block objects can be associated.
-    */
+     Creates a new group with which block objects can be associated.
+     */
     public init() {
         
-        self.rawObject = dispatch_group_create()
+        self.rawObject = DispatchGroup()
     }
     
     /**
-    Submits a closure to a queue and associates the closure to the group.
-    
-    - returns: The group. Useful when chaining async invocations on the group.
-    */
-    public func async(queue: GCDQueue, _ closure: () -> Void) -> GCDGroup {
+     Submits a closure to a queue and associates the closure to the group.
+     
+     - returns: The group. Useful when chaining async invocations on the group.
+     */
+    @discardableResult
+    public func async(_ queue: GCDQueue, _ closure: () -> Void) -> GCDGroup {
         
-        dispatch_group_async(self.rawObject, queue.dispatchQueue()) {
-            
-            autoreleasepool(closure)
-        }
+        queue.dispatchQueue().async(group: self.rawObject, execute: closure)
         return self
     }
     
     /**
-    Explicitly indicates that a block has entered the group.
-    */
+     Explicitly indicates that a block has entered the group.
+     */
     public func enter() {
         
-        dispatch_group_enter(self.rawObject)
+        self.rawObject.enter()
     }
     
     /**
-    Explicitly indicates that a block in the group has completed.
-    */
+     Explicitly indicates that a block in the group has completed.
+     */
     public func leave() {
         
-        dispatch_group_leave(self.rawObject)
+        self.rawObject.leave()
     }
     
     /**
-    Explicitly indicates that a block has entered the group.
-    - returns: Returns a once-token that may be passed to `leaveOnce()`
-    */
+     Explicitly indicates that a block has entered the group.
+     - returns: Returns a once-token that may be passed to `leaveOnce()`
+     */
     public func enterOnce() -> Int32 {
         
-        dispatch_group_enter(self.rawObject)
+        self.rawObject.enter()
         return 1
     }
     
     /**
-    Explicitly indicates that a block in the group has completed. This method accepts a `onceToken` which `GCDGroup` can used to prevent multiple calls `dispatch_group_leave()` which may crash the app.
-
-    - parameter onceToken: The address of the value returned from `enterOnce()`.
-    - returns: Returns `true` if `dispatch_group_leave()` was called, or `false` if not.
-    */
-    public func leaveOnce(inout onceToken: Int32) -> Bool {
+     Explicitly indicates that a block in the group has completed. This method accepts a `onceToken` which `GCDGroup` can used to prevent multiple calls `dispatch_group_leave()` which may crash the app.
+     
+     - parameter onceToken: The address of the value returned from `enterOnce()`.
+     - returns: Returns `true` if `dispatch_group_leave()` was called, or `false` if not.
+     */
+    @discardableResult
+    public func leaveOnce(_ onceToken: inout Int32) -> Bool {
         
         if OSAtomicCompareAndSwapInt(1, 0, &onceToken) {
             
-            dispatch_group_leave(self.rawObject)
+            self.rawObject.leave()
             return true
         }
         return false
     }
     
     /**
-    Schedules a closure to be submitted to a queue when a group of previously submitted blocks have completed.
-    
-    - parameter queue: The queue to which the supplied closure is submitted when the group completes.
-    - parameter closure: The closure to submit to the target queue.
-    */
-    public func notify(queue: GCDQueue, _ closure: () -> Void) {
+     Schedules a closure to be submitted to a queue when a group of previously submitted blocks have completed.
+     
+     - parameter queue: The queue to which the supplied closure is submitted when the group completes.
+     - parameter closure: The closure to submit to the target queue.
+     */
+    @discardableResult
+    public func notify(_ queue: GCDQueue, _ closure: () -> Void) {
         
-        dispatch_group_notify(self.rawObject, queue.dispatchQueue()) {
-            
-            autoreleasepool(closure)
-        }
+        self.rawObject.notify(queue: queue.dispatchQueue(), execute: closure)
     }
     
     /**
-    Waits synchronously for the previously submitted blocks to complete.
-    */
+     Waits synchronously for the previously submitted blocks to complete.
+     */
     public func wait() {
         
-        dispatch_group_wait(self.rawObject, DISPATCH_TIME_FOREVER)
+        _ = self.rawObject.wait(timeout: DispatchTime.distantFuture)
     }
     
     /**
-    Waits synchronously for the previously submitted blocks to complete; returns if the blocks do not complete before the specified timeout period has elapsed.
-    
-    - parameter timeout: The number of seconds before timeout.
-    - returns: Returns zero on success, or non-zero if the timeout occurred.
-    */
-    public func wait(timeout: NSTimeInterval) -> Int {
+     Waits synchronously for the previously submitted blocks to complete; returns if the blocks do not complete before the specified timeout period has elapsed.
+     
+     - parameter timeout: The number of seconds before timeout.
+     - returns: Returns `.Success` on success, or `.TimedOut` if the timeout occurred.
+     */
+    public func wait(_ timeout: TimeInterval) -> DispatchTimeoutResult {
         
-        return dispatch_group_wait(self.rawObject, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
+        return self.rawObject.wait(timeout: DispatchTime.now() + timeout)
     }
     
     /**
-    Waits synchronously for the previously submitted blocks to complete; returns if the blocks do not complete before the specified date has elapsed.
-    
-    - parameter date: The timeout date.
-    - returns: Returns zero on success, or non-zero if the timeout occurred.
-    */
-    public func wait(date: NSDate) -> Int {
+     Waits synchronously for the previously submitted blocks to complete; returns if the blocks do not complete before the specified date has elapsed.
+     
+     - parameter date: The timeout date.
+     - returns: Returns `.Success` on success, or `.TimedOut` if the timeout occurred.
+     */
+    public func wait(_ date: Date) -> DispatchTimeoutResult {
         
         return self.wait(date.timeIntervalSinceNow)
     }
     
     /**
-    Returns the dispatch_group_t object associated with this value.
-    
-    - returns: The dispatch_group_t object associated with this value.
-    */
-    public func dispatchGroup() -> dispatch_group_t {
+     Returns the dispatch_group_t object associated with this value.
+     
+     - returns: The dispatch_group_t object associated with this value.
+     */
+    public func dispatchGroup() -> DispatchGroup {
         
         return self.rawObject
     }
     
-    private let rawObject: dispatch_group_t
+    private let rawObject: DispatchGroup
 }
 
-public func ==(lhs: GCDGroup, rhs: GCDGroup) -> Bool {
+public func == (lhs: GCDGroup, rhs: GCDGroup) -> Bool {
     
     return lhs.dispatchGroup() === rhs.dispatchGroup()
 }

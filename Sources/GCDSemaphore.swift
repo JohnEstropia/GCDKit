@@ -28,7 +28,6 @@ import Foundation
 /**
 A wrapper and utility class for dispatch_semaphore_t.
 */
-@available(iOS, introduced=7.0)
 public struct GCDSemaphore {
     
     /**
@@ -36,7 +35,7 @@ public struct GCDSemaphore {
     */
     public init(_ value: Int) {
         
-        self.rawObject = dispatch_semaphore_create(value)
+        self.rawObject = DispatchSemaphore(value: value)
     }
     
     /**
@@ -62,7 +61,7 @@ public struct GCDSemaphore {
     */
     public func signal() -> Int {
         
-        return dispatch_semaphore_signal(self.rawObject)
+        return self.rawObject.signal()
     }
     
     /**
@@ -70,27 +69,27 @@ public struct GCDSemaphore {
     */
     public func wait() {
         
-        dispatch_semaphore_wait(self.rawObject, DISPATCH_TIME_FOREVER)
+        self.rawObject.wait()
     }
     
     /**
     Waits for (decrements) a semaphore.
     
-    - parameter timeout: The number of seconds before timeout.
-    - returns: Returns zero on success, or non-zero if the timeout occurred.
+     - parameter timeout: The number of seconds before timeout.
+     - returns: Returns `.Success` on success, or `.TimedOut` if the timeout occurred.
     */
-    public func wait(timeout: NSTimeInterval) -> Int {
+    public func wait(_ timeout: TimeInterval) -> DispatchTimeoutResult {
         
-        return dispatch_semaphore_wait(self.rawObject, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
+        return self.rawObject.wait(timeout: DispatchTime.now() + timeout)
     }
     
     /**
     Waits for (decrements) a semaphore.
     
-    - parameter date: The timeout date.
-    - returns: Returns zero on success, or non-zero if the timeout occurred.
+     - parameter date: The timeout date.
+     - returns: Returns `.Success` on success, or `.TimedOut` if the timeout occurred.
     */
-    public func wait(date: NSDate) -> Int {
+    public func wait(_ date: Date) -> DispatchTimeoutResult {
         
         return self.wait(date.timeIntervalSinceNow)
     }
@@ -100,15 +99,15 @@ public struct GCDSemaphore {
     
     - returns: The dispatch_semaphore_t object associated with this value.
     */
-    public func dispatchSemaphore() -> dispatch_semaphore_t {
+    public func dispatchSemaphore() -> DispatchSemaphore {
         
         return self.rawObject
     }
     
-    private let rawObject: dispatch_semaphore_t
+    private let rawObject: DispatchSemaphore
 }
 
-public func ==(lhs: GCDSemaphore, rhs: GCDSemaphore) -> Bool {
+public func == (lhs: GCDSemaphore, rhs: GCDSemaphore) -> Bool {
     
     return lhs.dispatchSemaphore() === rhs.dispatchSemaphore()
 }
