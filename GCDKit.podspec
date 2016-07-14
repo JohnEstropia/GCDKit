@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = "GCDKit"
-    s.version = "1.2.5"
+    s.version = "1.2.6"
     s.license = "MIT"
     s.summary = "GCDKit is Grand Central Dispatch simplified with Swift"
     s.homepage = "https://github.com/JohnEstropia/GCDKit"
