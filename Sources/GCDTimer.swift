@@ -133,15 +133,15 @@ public final class GCDTimer {
     /**
     Sets a timer using an absolute time according to the wall clock.
     */
-    public func setWallTimer(startDate: Date, interval: DispatchTimeInterval) {
+    public func setWallTimer(_ startDate: Date, interval: DispatchTimeInterval) {
         
-        self.setWallTimer(startDate: startDate, interval: interval, leeway: .microseconds(0))
+        self.setWallTimer(startDate, interval: interval, leeway: .microseconds(0))
     }
     
     /**
     Sets a timer using an absolute time according to the wall clock.
     */
-    public func setWallTimer(startDate: Date, interval: DispatchTimeInterval, leeway: DispatchTimeInterval) {
+    public func setWallTimer(_ startDate: Date, interval: DispatchTimeInterval, leeway: DispatchTimeInterval) {
         
         self.rawObject.scheduleRepeating(
             wallDeadline: DispatchWallTime(time: startDate.timeIntervalSince1970.toTimeSpec()),

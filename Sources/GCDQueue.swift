@@ -75,7 +75,7 @@ public enum GCDQueue {
      */
     public static func createSerial(_ label: String? = nil) -> GCDQueue {
         
-        return self.createCustom(isConcurrent: false, label: label, targetQueue: nil)
+        return self.createCustom(false, label: label, targetQueue: nil)
     }
     
     /**
@@ -87,7 +87,7 @@ public enum GCDQueue {
      */
     public static func createSerial(_ label: String? = nil, targetQueue: GCDQueue) -> GCDQueue {
         
-        return self.createCustom(isConcurrent: false, label: label, targetQueue: targetQueue)
+        return self.createCustom(false, label: label, targetQueue: targetQueue)
     }
     
     /**
@@ -98,7 +98,7 @@ public enum GCDQueue {
      */
     public static func createConcurrent(_ label: String? = nil) -> GCDQueue {
         
-        return self.createCustom(isConcurrent: true, label: label, targetQueue: nil)
+        return self.createCustom(true, label: label, targetQueue: nil)
     }
     
     /**
@@ -110,7 +110,7 @@ public enum GCDQueue {
      */
     public static func createConcurrent(_ label: String? = nil, targetQueue: GCDQueue) -> GCDQueue {
         
-        return self.createCustom(isConcurrent: true, label: label, targetQueue: targetQueue)
+        return self.createCustom(true, label: label, targetQueue: targetQueue)
     }
     
     /**
@@ -308,7 +308,7 @@ public enum GCDQueue {
         }
     }
     
-    private static func createCustom(isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
+    private static func createCustom(_ isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
         
         let queue = GCDQueue.custom(
             DispatchQueue(

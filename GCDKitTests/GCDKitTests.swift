@@ -33,13 +33,13 @@ class GCDKitTests: XCTestCase {
     func testGCDBlocks() {
         
         var finishedTasks = 0
-        let expectation1 = self.expectation(withDescription: "dispatch block 1")
-        let expectation2 = self.expectation(withDescription: "dispatch block 2")
-        let expectation3 = self.expectation(withDescription: "dispatch block 3")
+        let expectation1 = self.expectation(description: "dispatch block 1")
+        let expectation2 = self.expectation(description: "dispatch block 2")
+        let expectation3 = self.expectation(description: "dispatch block 3")
         GCDBlock.async(.background) {
 
             XCTAssertTrue(finishedTasks == 0)
-            XCTAssertFalse(Thread.isMainThread())
+            XCTAssertFalse(Thread.isMainThread)
             XCTAssertTrue(GCDQueue.background.isCurrentExecutionContext())
             expectation1.fulfill()
 
@@ -48,7 +48,7 @@ class GCDKitTests: XCTestCase {
             .notify(.default) {
 
                 XCTAssertTrue(finishedTasks == 1)
-                XCTAssertFalse(Thread.isMainThread())
+                XCTAssertFalse(Thread.isMainThread)
                 XCTAssertTrue(GCDQueue.default.isCurrentExecutionContext())
                 expectation2.fulfill()
 
@@ -56,12 +56,12 @@ class GCDKitTests: XCTestCase {
             }.notify(.main) {
 
                 XCTAssertTrue(finishedTasks == 2)
-                XCTAssertTrue(Thread.isMainThread())
+                XCTAssertTrue(Thread.isMainThread)
                 XCTAssertTrue(GCDQueue.main.isCurrentExecutionContext())
                 expectation3.fulfill()
         }
 
-        self.waitForExpectations(withTimeout: 60, handler: nil)
+        self.waitForExpectations(timeout: 60, handler: nil)
     }
 
     func testGCDQueue() {
@@ -89,7 +89,7 @@ class GCDKitTests: XCTestCase {
                 }
             }
 
-            let dispatchExpectation = self.expectation(withDescription: "main queue block")
+            let dispatchExpectation = self.expectation(description: "main queue block")
             allQueuesExpectations.append(dispatchExpectation)
 
             queue.async {
@@ -108,14 +108,14 @@ class GCDKitTests: XCTestCase {
                 })
         }
 
-        let dispatchExpectation = self.expectation(withDescription: "main queue block")
+        let dispatchExpectation = self.expectation(description: "main queue block")
         GCDQueue.background.async {
 
-            XCTAssertFalse(Thread.isMainThread())
+            XCTAssertFalse(Thread.isMainThread)
             dispatchExpectation.fulfill()
         }
 
-        self.waitForExpectations(withTimeout: 60, handler: nil)
+        self.waitForExpectations(timeout: 60, handler: nil)
     }
 
     func testGCDGroup() {
@@ -123,46 +123,46 @@ class GCDKitTests: XCTestCase {
         let group = GCDGroup()
         XCTAssertNotNil(group.dispatchGroup());
 
-        let expectation1 = self.expectation(withDescription: "dispatch group block 1")
-        let expectation2 = self.expectation(withDescription: "dispatch group block 2")
+        let expectation1 = self.expectation(description: "dispatch group block 1")
+        let expectation2 = self.expectation(description: "dispatch group block 2")
         group.async(.main) {
 
-            XCTAssertTrue(Thread.isMainThread())
+            XCTAssertTrue(Thread.isMainThread)
             expectation1.fulfill()
             }
             .async(.default) {
 
-                XCTAssertFalse(Thread.isMainThread())
+                XCTAssertFalse(Thread.isMainThread)
                 expectation2.fulfill()
         }
 
-        let expectation3 = self.expectation(withDescription: "dispatch group block 3")
+        let expectation3 = self.expectation(description: "dispatch group block 3")
         group.enter()
         GCDQueue.utility.after(3.0) {
 
-            XCTAssertFalse(Thread.isMainThread())
+            XCTAssertFalse(Thread.isMainThread)
             expectation3.fulfill()
             group.leave()
         }
 
-        let expectation4 = self.expectation(withDescription: "dispatch group block 4")
+        let expectation4 = self.expectation(description: "dispatch group block 4")
         group.enter()
         GCDQueue.default.async {
 
-            XCTAssertFalse(Thread.isMainThread())
+            XCTAssertFalse(Thread.isMainThread)
             expectation4.fulfill()
             group.leave()
         }
 
-        let expectation5 = self.expectation(withDescription: "dispatch group block 5")
+        let expectation5 = self.expectation(description: "dispatch group block 5")
         group.notify(.default) {
 
-            XCTAssertFalse(Thread.isMainThread())
+            XCTAssertFalse(Thread.isMainThread)
             expectation5.fulfill()
         }
         
-        let expectation6 = self.expectation(withDescription: "dispatch group block 6")
-        let expectation7 = self.expectation(withDescription: "dispatch group block 7")
+        let expectation6 = self.expectation(description: "dispatch group block 6")
+        let expectation7 = self.expectation(description: "dispatch group block 7")
         var onceToken = group.enterOnce()
         GCDQueue.createConcurrent("concurrent").apply(2 as UInt) { (iteration) -> Void in
             
@@ -176,7 +176,7 @@ class GCDKitTests: XCTestCase {
             }
         }
 
-        self.waitForExpectations(withTimeout: 60, handler: nil)
+        self.waitForExpectations(timeout: 60, handler: nil)
     }
 
     func testGCDSemaphore() {
@@ -188,7 +188,7 @@ class GCDKitTests: XCTestCase {
         var expectations = [XCTestExpectation]();
         for i in 0 ..< numberOfTasks {
 
-            expectations.append(self.expectation(withDescription: "semaphore block \(i)"))
+            expectations.append(self.expectation(description: "semaphore block \(i)"))
         }
 
         let queue = GCDQueue.createConcurrent("testGCDSemaphore.queue")
@@ -201,7 +201,7 @@ class GCDKitTests: XCTestCase {
 
         semaphore.wait()
 
-        self.waitForExpectations(withTimeout: 0.0, handler: nil)
+        self.waitForExpectations(timeout: 0.0, handler: nil)
     }
 
     func testGCDTimer() {
@@ -210,9 +210,9 @@ class GCDKitTests: XCTestCase {
         let numberOfTicksToTest = 10
         for i in 0..<numberOfTicksToTest {
 
-            runningExpectations.append(self.expectation(withDescription: "timer tick \(i)"))
+            runningExpectations.append(self.expectation(description: "timer tick \(i)"))
         }
-        let suspendExpectation = self.expectation(withDescription: "timer suspended")
+        let suspendExpectation = self.expectation(description: "timer suspended")
 
         var previousTimestamp = CFAbsoluteTimeGetCurrent()
         var iteration = 0
@@ -245,6 +245,6 @@ class GCDKitTests: XCTestCase {
         XCTAssertTrue(timer.isRunning, "Timer's isRunning property is not true")
         
         let numberOfTicks = TimeInterval(numberOfTicksToTest) + 1
-        self.waitForExpectations(withTimeout: (numberOfTicks * (numberOfTicks / 2.0 + 1.0)) + 20.0, handler: nil)
+        self.waitForExpectations(timeout: (numberOfTicks * (numberOfTicks / 2.0 + 1.0)) + 20.0, handler: nil)
     }
 }
