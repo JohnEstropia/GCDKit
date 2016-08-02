@@ -185,11 +185,7 @@ public enum GCDQueue {
      */
     @discardableResult
     public func after(_ delay: TimeInterval, _ block: GCDBlock) -> GCDBlock {
-        
-        self.dispatchQueue().after(
-            when: DispatchTime.now() + delay,
-            execute: block.dispatchBlock()
-        )
+        self.dispatchQueue().asyncAfter(deadline: DispatchTime.now() + delay, execute: block.dispatchBlock())
         return block
     }
     
@@ -289,19 +285,19 @@ public enum GCDQueue {
             return DispatchQueue.main
             
         case .userInteractive:
-            return DispatchQueue.global(attributes: .qosUserInteractive)
+            return DispatchQueue.global(qos: .userInteractive)
             
         case .userInitiated:
-            return DispatchQueue.global(attributes: .qosUserInitiated)
+            return DispatchQueue.global(qos: .userInitiated)
             
         case .default:
-            return DispatchQueue.global(attributes: .qosDefault)
+          return DispatchQueue.global(qos: .default)
             
         case .utility:
-            return DispatchQueue.global(attributes: .qosUtility)
+          return DispatchQueue.global(qos: .utility)
             
         case .background:
-            return DispatchQueue.global(attributes: .qosBackground)
+          return DispatchQueue.global(qos: .background)
             
         case .custom(let rawObject):
             return rawObject
@@ -309,18 +305,42 @@ public enum GCDQueue {
     }
     
     private static func createCustom(_ isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
-        
-        let queue = GCDQueue.custom(
+      
+      var queue: GCDQueue? = nil
+      if #available(iOSApplicationExtension 10.0, watchOSApplicationExtension 3.0, tvOSApplicationExtension 10.0, OSXApplicationExtension 10.12, *) {
+        if isConcurrent {
+          queue = GCDQueue.custom(
             DispatchQueue(
-                label: label ?? "",
-                attributes: (isConcurrent ? .concurrent : .serial)
+              label: label ?? "",
+              attributes: .concurrent
             )
-        )
+          )
+        }
+        else {
+          queue = GCDQueue.custom(
+            DispatchQueue(label: label ?? "")
+          )
+        }
+      } else {
+        if isConcurrent {
+          queue = GCDQueue.custom(
+            DispatchQueue(
+              label: label ?? "",
+              attributes: .concurrent
+            )
+          )
+        }
+        else {
+          queue = GCDQueue.custom(
+            DispatchQueue(label: label ?? "")
+          )
+        }
+      }
         if let target = targetQueue {
             
-            queue.dispatchQueue().setTarget(queue: target.dispatchQueue())
+            queue!.dispatchQueue().setTarget(queue: target.dispatchQueue())
         }
-        return queue
+        return queue!
     }
 }
 

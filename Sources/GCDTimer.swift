@@ -144,7 +144,7 @@ public final class GCDTimer {
     public func setWallTimer(_ startDate: Date, interval: DispatchTimeInterval, leeway: DispatchTimeInterval) {
         
         self.rawObject.scheduleRepeating(
-            wallDeadline: DispatchWallTime(time: startDate.timeIntervalSince1970.toTimeSpec()),
+            wallDeadline: DispatchWallTime(timespec: startDate.timeIntervalSince1970.toTimeSpec()),
             interval: interval,
             leeway: leeway
         )
@@ -192,12 +192,11 @@ public final class GCDTimer {
     }
     
     private init(queue: GCDQueue) {
-        
-        let dispatchTimer = DispatchSource.timer(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: queue.dispatchQueue())
+        let dispatchTimer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: queue.dispatchQueue())
         
         self.queue = queue
         self.rawObject = dispatchTimer
-        self.barrierQueue = DispatchQueue(label: "com.GCDTimer.barrierQueue", attributes: DispatchQueueAttributes.concurrent)
+        self.barrierQueue = DispatchQueue(label: "com.GCDTimer.barrierQueue", attributes: DispatchQueue.Attributes.concurrent)
         self.isSuspended = true
     }
     
