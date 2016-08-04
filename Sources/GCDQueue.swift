@@ -307,7 +307,7 @@ public enum GCDQueue {
     private static func createCustom(_ isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
       
       var queue: GCDQueue? = nil
-      if #available(iOSApplicationExtension 10.0, watchOSApplicationExtension 3.0, tvOSApplicationExtension 10.0, OSXApplicationExtension 10.12, *) {
+      
         if isConcurrent {
           queue = GCDQueue.custom(
             DispatchQueue(
@@ -321,21 +321,7 @@ public enum GCDQueue {
             DispatchQueue(label: label ?? "")
           )
         }
-      } else {
-        if isConcurrent {
-          queue = GCDQueue.custom(
-            DispatchQueue(
-              label: label ?? "",
-              attributes: .concurrent
-            )
-          )
-        }
-        else {
-          queue = GCDQueue.custom(
-            DispatchQueue(label: label ?? "")
-          )
-        }
-      }
+      
         if let target = targetQueue {
             
             queue!.dispatchQueue().setTarget(queue: target.dispatchQueue())
