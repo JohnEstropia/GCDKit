@@ -120,7 +120,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func async(_ closure: () -> Void) -> GCDBlock {
+    public func async(_ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.async(GCDBlock(closure))
     }
@@ -145,7 +145,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func sync(_ closure: () -> Void) -> GCDBlock {
+    public func sync(_ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.sync(GCDBlock(closure))
     }
@@ -171,7 +171,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func after(_ delay: TimeInterval, _ closure: () -> Void) -> GCDBlock {
+    public func after(_ delay: TimeInterval, _ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.after(delay, GCDBlock(closure))
     }
@@ -196,7 +196,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func barrierAsync(_ closure: () -> Void) -> GCDBlock {
+    public func barrierAsync(_ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.barrierAsync(GCDBlock(closure))
     }
@@ -221,7 +221,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func barrierSync(_ closure: () -> Void) -> GCDBlock {
+    public func barrierSync(_ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.barrierSync(GCDBlock(closure))
     }
@@ -245,14 +245,14 @@ public enum GCDQueue {
      - parameter iterations: The number of iterations to perform.
      - parameter closure: The closure to submit.
      */
-    public func apply<T: UnsignedInteger>(_ iterations: T, _ closure: (iteration: T) -> Void) {
+    public func apply<T: UnsignedInteger>(_ iterations: T, _ closure: @escaping (_ iteration: T) -> Void) {
         
         let group = DispatchGroup()
         for iteration in stride(from: 0, to: iterations, by: 1) {
             
             self.dispatchQueue().async(group: group) {
                 
-                closure(iteration: iteration)
+                closure(iteration)
             }
         }
         group.wait()

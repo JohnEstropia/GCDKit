@@ -44,9 +44,8 @@ public struct GCDGroup {
      - returns: The group. Useful when chaining async invocations on the group.
      */
     @discardableResult
-    public func async(_ queue: GCDQueue, _ closure: () -> Void) -> GCDGroup {
-        
-        queue.dispatchQueue().async(group: self.rawObject, execute: closure)
+    public func async(_ queue: GCDQueue, _ closure: @escaping () -> Void) -> GCDGroup {
+        queue.dispatchQueue().async(group: self.rawObject, qos: .default, execute: closure)
         return self
     }
     
@@ -54,7 +53,7 @@ public struct GCDGroup {
      Explicitly indicates that a block has entered the group.
      */
     public func enter() {
-        
+      
         self.rawObject.enter()
     }
     
@@ -100,7 +99,7 @@ public struct GCDGroup {
      - parameter closure: The closure to submit to the target queue.
      */
     @discardableResult
-    public func notify(_ queue: GCDQueue, _ closure: () -> Void) {
+    public func notify(_ queue: GCDQueue, _ closure: @escaping () -> Void) {
         
         self.rawObject.notify(queue: queue.dispatchQueue(), execute: closure)
     }

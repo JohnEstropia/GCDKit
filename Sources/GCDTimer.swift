@@ -39,7 +39,7 @@ public final class GCDTimer {
     - parameter closure: The closure to submit to the timer queue.
     - returns: The created suspended timer.
     */
-    public class func createSuspended(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
+    public class func createSuspended(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: @escaping (_ timer: GCDTimer) -> Void) -> GCDTimer {
         
         let timer = GCDTimer(queue: queue)
         timer.setTimer(interval)
@@ -55,7 +55,7 @@ public final class GCDTimer {
     - parameter closure: The closure to submit to the timer queue.
     - returns: The created auto-start timer.
     */
-    public class func createAutoStart(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
+    public class func createAutoStart(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: @escaping (_ timer: GCDTimer) -> Void) -> GCDTimer {
         
         let timer = GCDTimer(queue: queue)
         timer.setTimer(interval)
@@ -153,7 +153,7 @@ public final class GCDTimer {
     /**
     Sets the event handler for the timer.
     */
-    public func setEventHandler(_ eventHandler: (timer: GCDTimer) -> Void) {
+    public func setEventHandler(_ eventHandler: @escaping (_ timer: GCDTimer) -> Void) {
         
         self.rawObject.setEventHandler { [weak self] in
             
@@ -163,7 +163,7 @@ public final class GCDTimer {
             }
             autoreleasepool {
                 
-                eventHandler(timer: `self`)
+                eventHandler(`self`)
             }
         }
     }
@@ -214,9 +214,9 @@ public final class GCDTimer {
 }
 
 
-private extension TimeInterval {
+fileprivate extension TimeInterval {
     
-    private func toTimeSpec() -> timespec {
+    fileprivate func toTimeSpec() -> timespec {
         
         var seconds: TimeInterval = 0.0
         let fractionalPart = modf(self, &seconds)
