@@ -120,7 +120,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func async(_ closure: () -> Void) -> GCDBlock {
+    public func async(_ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.async(GCDBlock(closure))
     }
@@ -145,7 +145,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func sync(_ closure: () -> Void) -> GCDBlock {
+    public func sync(_ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.sync(GCDBlock(closure))
     }
@@ -171,7 +171,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func after(_ delay: TimeInterval, _ closure: () -> Void) -> GCDBlock {
+    public func after(_ delay: TimeInterval, _ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.after(delay, GCDBlock(closure))
     }
@@ -186,8 +186,8 @@ public enum GCDQueue {
     @discardableResult
     public func after(_ delay: TimeInterval, _ block: GCDBlock) -> GCDBlock {
         
-        self.dispatchQueue().after(
-            when: DispatchTime.now() + delay,
+        self.dispatchQueue().asyncAfter(
+            deadline: DispatchTime.now() + delay,
             execute: block.dispatchBlock()
         )
         return block
@@ -200,7 +200,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func barrierAsync(_ closure: () -> Void) -> GCDBlock {
+    public func barrierAsync(_ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.barrierAsync(GCDBlock(closure))
     }
@@ -225,7 +225,7 @@ public enum GCDQueue {
      - returns: The block to submit. Useful when chaining blocks together.
      */
     @discardableResult
-    public func barrierSync(_ closure: () -> Void) -> GCDBlock {
+    public func barrierSync(_ closure: @escaping () -> Void) -> GCDBlock {
         
         return self.barrierSync(GCDBlock(closure))
     }
@@ -249,14 +249,14 @@ public enum GCDQueue {
      - parameter iterations: The number of iterations to perform.
      - parameter closure: The closure to submit.
      */
-    public func apply<T: UnsignedInteger>(_ iterations: T, _ closure: (iteration: T) -> Void) {
+    public func apply<T: UnsignedInteger>(_ iterations: T, _ closure: @escaping (_ iteration: T) -> Void) {
         
         let group = DispatchGroup()
         for iteration in stride(from: 0, to: iterations, by: 1) {
             
             self.dispatchQueue().async(group: group) {
                 
-                closure(iteration: iteration)
+                closure(iteration)
             }
         }
         group.wait()
@@ -289,31 +289,31 @@ public enum GCDQueue {
             return DispatchQueue.main
             
         case .userInteractive:
-            return DispatchQueue.global(attributes: .qosUserInteractive)
+            return DispatchQueue.global(qos: .userInteractive)
             
         case .userInitiated:
-            return DispatchQueue.global(attributes: .qosUserInitiated)
+            return DispatchQueue.global(qos: .userInitiated)
             
         case .default:
-            return DispatchQueue.global(attributes: .qosDefault)
+            return DispatchQueue.global(qos: .default)
             
         case .utility:
-            return DispatchQueue.global(attributes: .qosUtility)
+            return DispatchQueue.global(qos: .utility)
             
         case .background:
-            return DispatchQueue.global(attributes: .qosBackground)
+            return DispatchQueue.global(qos: .background)
             
         case .custom(let rawObject):
             return rawObject
         }
     }
     
-    private static func createCustom(_ isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
+    fileprivate static func createCustom(_ isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
         
         let queue = GCDQueue.custom(
             DispatchQueue(
                 label: label ?? "",
-                attributes: (isConcurrent ? .concurrent : .serial)
+                attributes: (isConcurrent ? .concurrent : [])
             )
         )
         if let target = targetQueue {

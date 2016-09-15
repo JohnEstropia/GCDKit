@@ -44,7 +44,7 @@ public struct GCDGroup {
      - returns: The group. Useful when chaining async invocations on the group.
      */
     @discardableResult
-    public func async(_ queue: GCDQueue, _ closure: () -> Void) -> GCDGroup {
+    public func async(_ queue: GCDQueue, _ closure: @escaping () -> Void) -> GCDGroup {
         
         queue.dispatchQueue().async(group: self.rawObject, execute: closure)
         return self
@@ -100,7 +100,7 @@ public struct GCDGroup {
      - parameter closure: The closure to submit to the target queue.
      */
     @discardableResult
-    public func notify(_ queue: GCDQueue, _ closure: () -> Void) {
+    public func notify(_ queue: GCDQueue, _ closure: @escaping () -> Void) {
         
         self.rawObject.notify(queue: queue.dispatchQueue(), execute: closure)
     }
@@ -145,7 +145,7 @@ public struct GCDGroup {
         return self.rawObject
     }
     
-    private let rawObject: DispatchGroup
+    fileprivate let rawObject: DispatchGroup
 }
 
 public func == (lhs: GCDGroup, rhs: GCDGroup) -> Bool {

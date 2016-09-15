@@ -35,7 +35,7 @@ public struct GCDBlock {
      
      - parameter closure: The closure to be associated with the block.
      */
-    public init(_ closure: () -> Void) {
+    public init(_ closure: @escaping () -> Void) {
         
         self.rawObject = DispatchWorkItem(flags: .inheritQoS, block: closure)
     }
@@ -48,7 +48,7 @@ public struct GCDBlock {
      - returns: The block to submit to the queue. Useful when chaining blocks together.
      */
     @discardableResult
-    public static func async(_ queue: GCDQueue, closure: () -> Void) -> GCDBlock {
+    public static func async(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
         
         return queue.async(closure)
     }
@@ -61,7 +61,7 @@ public struct GCDBlock {
      - returns: The block to submit to the queue. Useful when chaining blocks together.
      */
     @discardableResult
-    public static func sync(_ queue: GCDQueue, closure: () -> Void) -> GCDBlock {
+    public static func sync(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
         
         return queue.sync(closure)
     }
@@ -75,7 +75,7 @@ public struct GCDBlock {
      - returns: The block to submit to the queue. Useful when chaining blocks together.
      */
     @discardableResult
-    public static func after(_ queue: GCDQueue, delay: TimeInterval, _ closure: () -> Void) -> GCDBlock {
+    public static func after(_ queue: GCDQueue, delay: TimeInterval, _ closure: @escaping () -> Void) -> GCDBlock {
         
         return queue.after(delay, closure)
     }
@@ -88,7 +88,7 @@ public struct GCDBlock {
      - returns: The block to submit to the queue. Useful when chaining blocks together.
      */
     @discardableResult
-    public static func barrierAsync(_ queue: GCDQueue, closure: () -> Void) -> GCDBlock {
+    public static func barrierAsync(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
         
         return queue.barrierAsync(closure)
     }
@@ -101,7 +101,7 @@ public struct GCDBlock {
      - returns: The block to submit to the queue. Useful when chaining blocks together.
      */
     @discardableResult
-    public static func barrierSync(_ queue: GCDQueue, closure: () -> Void) -> GCDBlock {
+    public static func barrierSync(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
         
         return queue.barrierSync(closure)
     }
@@ -123,7 +123,7 @@ public struct GCDBlock {
      */
     @available(iOS 8.0, OSX 10.10, *)
     @discardableResult
-    public func notify(_ queue: GCDQueue, closure: () -> Void) -> GCDBlock {
+    public func notify(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
         
         let block = GCDBlock(closure)
         self.rawObject.notify(queue: queue.dispatchQueue(), execute: block.rawObject)
@@ -183,5 +183,5 @@ public struct GCDBlock {
         return self.rawObject
     }
     
-    private let rawObject: DispatchWorkItem
+    fileprivate let rawObject: DispatchWorkItem
 }

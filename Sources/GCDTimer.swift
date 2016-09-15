@@ -39,7 +39,7 @@ public final class GCDTimer {
     - parameter closure: The closure to submit to the timer queue.
     - returns: The created suspended timer.
     */
-    public class func createSuspended(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
+    public class func createSuspended(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: @escaping (_ timer: GCDTimer) -> Void) -> GCDTimer {
         
         let timer = GCDTimer(queue: queue)
         timer.setTimer(interval)
@@ -55,7 +55,7 @@ public final class GCDTimer {
     - parameter closure: The closure to submit to the timer queue.
     - returns: The created auto-start timer.
     */
-    public class func createAutoStart(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: (timer: GCDTimer) -> Void) -> GCDTimer {
+    public class func createAutoStart(_ queue: GCDQueue, interval: DispatchTimeInterval, eventHandler: @escaping (_ timer: GCDTimer) -> Void) -> GCDTimer {
         
         let timer = GCDTimer(queue: queue)
         timer.setTimer(interval)
@@ -144,7 +144,7 @@ public final class GCDTimer {
     public func setWallTimer(_ startDate: Date, interval: DispatchTimeInterval, leeway: DispatchTimeInterval) {
         
         self.rawObject.scheduleRepeating(
-            wallDeadline: DispatchWallTime(time: startDate.timeIntervalSince1970.toTimeSpec()),
+            wallDeadline: DispatchWallTime(timespec: startDate.timeIntervalSince1970.toTimeSpec()),
             interval: interval,
             leeway: leeway
         )
@@ -153,7 +153,7 @@ public final class GCDTimer {
     /**
     Sets the event handler for the timer.
     */
-    public func setEventHandler(_ eventHandler: (timer: GCDTimer) -> Void) {
+    public func setEventHandler(_ eventHandler: @escaping (_ timer: GCDTimer) -> Void) {
         
         self.rawObject.setEventHandler { [weak self] in
             
@@ -163,7 +163,7 @@ public final class GCDTimer {
             }
             autoreleasepool {
                 
-                eventHandler(timer: `self`)
+                eventHandler(`self`)
             }
         }
     }
@@ -191,13 +191,13 @@ public final class GCDTimer {
         return self.rawObject
     }
     
-    private init(queue: GCDQueue) {
+    fileprivate init(queue: GCDQueue) {
         
-        let dispatchTimer = DispatchSource.timer(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: queue.dispatchQueue())
+        let dispatchTimer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: queue.dispatchQueue())
         
         self.queue = queue
         self.rawObject = dispatchTimer
-        self.barrierQueue = DispatchQueue(label: "com.GCDTimer.barrierQueue", attributes: DispatchQueueAttributes.concurrent)
+        self.barrierQueue = DispatchQueue(label: "com.GCDTimer.barrierQueue", attributes: .concurrent)
         self.isSuspended = true
     }
     
@@ -208,16 +208,16 @@ public final class GCDTimer {
         self.rawObject.cancel()
     }
     
-    private let queue: GCDQueue
-    private let rawObject: DispatchSourceTimer
-    private let barrierQueue: DispatchQueue
-    private var isSuspended: Bool
+    fileprivate let queue: GCDQueue
+    fileprivate let rawObject: DispatchSourceTimer
+    fileprivate let barrierQueue: DispatchQueue
+    fileprivate var isSuspended: Bool
 }
 
 
 private extension TimeInterval {
     
-    private func toTimeSpec() -> timespec {
+    func toTimeSpec() -> timespec {
         
         var seconds: TimeInterval = 0.0
         let fractionalPart = modf(self, &seconds)
