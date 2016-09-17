@@ -408,6 +408,7 @@
 					};
 					B563214F1BD6408F006C9394 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -911,6 +912,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 			};
 			name = Debug;
@@ -930,6 +932,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 			};
 			name = Release;
