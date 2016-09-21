@@ -271,6 +271,28 @@ public enum GCDQueue {
     }
     
     /**
+    Suspends invocation of blocks on this queue. The suspension occurs after the completion of any blocks running at the time of the call.
+    
+    - Note:
+        - Blocks remaining on the queue or submitted after the queue is suspended are delivered once the queue is resumed.
+        - No effect when the target represents a system queue.
+     
+    - attention: Each call to `suspend()` **must** be balanced by a call to `resume()` before the underlying queue is deallocated.
+    */
+    public func suspend() {
+        dispatch_suspend(self.dispatchQueue())
+    }
+    
+    /**
+    Resumes invocation of blocks on this queue.
+    
+    - attention: Each call to `resume()` **must** balance a call to `suspend()`
+    */
+    public func resume() {
+        dispatch_resume(self.dispatchQueue())
+    }
+    
+    /**
     Returns the dispatch_queue_t object associated with this value.
     
     - returns: The dispatch_queue_t object associated with this value.
