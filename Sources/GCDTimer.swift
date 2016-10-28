@@ -191,12 +191,13 @@ public final class GCDTimer {
         return self.rawObject
     }
     
-    private init(queue: GCDQueue) {
+    fileprivate init(queue: GCDQueue) {
+        
         let dispatchTimer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: queue.dispatchQueue())
         
         self.queue = queue
         self.rawObject = dispatchTimer
-        self.barrierQueue = DispatchQueue(label: "com.GCDTimer.barrierQueue", attributes: DispatchQueue.Attributes.concurrent)
+        self.barrierQueue = DispatchQueue(label: "com.GCDTimer.barrierQueue", attributes: .concurrent)
         self.isSuspended = true
     }
     
@@ -207,16 +208,16 @@ public final class GCDTimer {
         self.rawObject.cancel()
     }
     
-    private let queue: GCDQueue
-    private let rawObject: DispatchSourceTimer
-    private let barrierQueue: DispatchQueue
-    private var isSuspended: Bool
+    fileprivate let queue: GCDQueue
+    fileprivate let rawObject: DispatchSourceTimer
+    fileprivate let barrierQueue: DispatchQueue
+    fileprivate var isSuspended: Bool
 }
 
 
-fileprivate extension TimeInterval {
+private extension TimeInterval {
     
-    fileprivate func toTimeSpec() -> timespec {
+    func toTimeSpec() -> timespec {
         
         var seconds: TimeInterval = 0.0
         let fractionalPart = modf(self, &seconds)

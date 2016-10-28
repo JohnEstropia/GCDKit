@@ -396,9 +396,11 @@
 					};
 					B563212A1BD6359A006C9394 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 					};
 					B563213F1BD63D14006C9394 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 					};
 					B563214F1BD6408F006C9394 = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -825,6 +827,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -845,6 +848,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -860,6 +864,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.johnestropia.GCDKitTests-OSX";
 				PRODUCT_NAME = "GCDKitTests OSX";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -877,6 +882,7 @@
 				PRODUCT_NAME = "GCDKitTests OSX";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

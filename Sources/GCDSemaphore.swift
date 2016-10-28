@@ -104,7 +104,7 @@ public struct GCDSemaphore {
         return self.rawObject
     }
     
-    private let rawObject: DispatchSemaphore
+    fileprivate let rawObject: DispatchSemaphore
 }
 
 public func == (lhs: GCDSemaphore, rhs: GCDSemaphore) -> Bool {

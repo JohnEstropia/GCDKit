@@ -6,17 +6,15 @@ env:
   - LC_CTYPE=en_US.UTF-8
   - LANG=en_US.UTF-8
   matrix:
-    - DESTINATION="OS=10.0,name=iPhone 6s"          SCHEME="GCDKit iOS"     SDK=iphonesimulator10.0  RUN_TESTS="YES" POD_LINT="NO"
-    - DESTINATION="OS=9.3,name=iPhone 6s"          SCHEME="GCDKit iOS"     SDK=iphonesimulator9.3  RUN_TESTS="YES" POD_LINT="NO"
-    - DESTINATION="OS=9.0,name=iPhone 6 Plus"      SCHEME="GCDKit iOS"     SDK=iphonesimulator9.3  RUN_TESTS="YES" POD_LINT="NO"	
-    - DESTINATION="OS=8.4,name=iPhone 6"           SCHEME="GCDKit iOS"     SDK=iphonesimulator9.3  RUN_TESTS="YES" POD_LINT="NO"	
-    - DESTINATION="OS=8.3,name=iPhone 5S"          SCHEME="GCDKit iOS"     SDK=iphonesimulator9.3  RUN_TESTS="YES" POD_LINT="NO"	
-    - DESTINATION="OS=8.2,name=iPhone 5"           SCHEME="GCDKit iOS"     SDK=iphonesimulator9.3  RUN_TESTS="YES" POD_LINT="NO"
-    - DESTINATION="OS=8.1,name=iPhone 4S"          SCHEME="GCDKit iOS"     SDK=iphonesimulator9.3  RUN_TESTS="YES" POD_LINT="YES"
-    - DESTINATION="OS=8.1,name=iPhone 4S"          SCHEME="GCDKit iOS7"    SDK=iphonesimulator9.3  RUN_TESTS="YES" POD_LINT="YES"
-    - DESTINATION="arch=x86_64"                    SCHEME="GCDKit OSX"     SDK=macosx10.11         RUN_TESTS="YES" POD_LINT="NO"
-    - DESTINATION="OS=2.2,name=Apple Watch - 42mm" SCHEME="GCDKit watchOS" SDK=watchsimulator2.2   RUN_TESTS="NO"  POD_LINT="NO"
-    - DESTINATION="OS=9.2,name=Apple TV 1080p"     SCHEME="GCDKit tvOS"    SDK=appletvsimulator9.2 RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=10.0,name=iPhone 7"          SCHEME="GCDKit iOS"     SDK=iphonesimulator10.0  RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=9.0,name=iPhone 6 Plus"      SCHEME="GCDKit iOS"     SDK=iphonesimulator10.0  RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=8.4,name=iPhone 6"           SCHEME="GCDKit iOS"     SDK=iphonesimulator10.0  RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=8.3,name=iPhone 5S"          SCHEME="GCDKit iOS"     SDK=iphonesimulator10.0  RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=8.2,name=iPhone 5"           SCHEME="GCDKit iOS"     SDK=iphonesimulator10.0  RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=8.1,name=iPhone 4S"          SCHEME="GCDKit iOS"     SDK=iphonesimulator10.0  RUN_TESTS="YES" POD_LINT="YES"
+    - DESTINATION="arch=x86_64"                    SCHEME="GCDKit OSX"     SDK=macosx10.12          RUN_TESTS="YES" POD_LINT="NO"
+    - DESTINATION="OS=3.0,name=Apple Watch - 42mm" SCHEME="GCDKit watchOS" SDK=watchsimulator3.0    RUN_TESTS="NO"  POD_LINT="NO"
+    - DESTINATION="OS=9.2,name=Apple TV 1080p"     SCHEME="GCDKit tvOS"    SDK=appletvsimulator10.0 RUN_TESTS="YES" POD_LINT="NO"
 before_install:
   - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet

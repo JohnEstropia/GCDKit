@@ -45,7 +45,8 @@ public struct GCDGroup {
      */
     @discardableResult
     public func async(_ queue: GCDQueue, _ closure: @escaping () -> Void) -> GCDGroup {
-        queue.dispatchQueue().async(group: self.rawObject, qos: .default, execute: closure)
+        
+        queue.dispatchQueue().async(group: self.rawObject, execute: closure)
         return self
     }
     
@@ -144,7 +145,7 @@ public struct GCDGroup {
         return self.rawObject
     }
     
-    private let rawObject: DispatchGroup
+    fileprivate let rawObject: DispatchGroup
 }
 
 public func == (lhs: GCDGroup, rhs: GCDGroup) -> Bool {

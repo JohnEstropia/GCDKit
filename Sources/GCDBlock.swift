@@ -183,5 +183,5 @@ public struct GCDBlock {
         return self.rawObject
     }
     
-    private let rawObject: DispatchWorkItem
+    fileprivate let rawObject: DispatchWorkItem
 }

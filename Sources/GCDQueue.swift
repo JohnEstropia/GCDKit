@@ -185,7 +185,11 @@ public enum GCDQueue {
      */
     @discardableResult
     public func after(_ delay: TimeInterval, _ block: GCDBlock) -> GCDBlock {
-        self.dispatchQueue().asyncAfter(deadline: DispatchTime.now() + delay, execute: block.dispatchBlock())
+        
+        self.dispatchQueue().asyncAfter(
+            deadline: DispatchTime.now() + delay,
+            execute: block.dispatchBlock()
+        )
         return block
     }
     
@@ -291,42 +295,32 @@ public enum GCDQueue {
             return DispatchQueue.global(qos: .userInitiated)
             
         case .default:
-          return DispatchQueue.global(qos: .default)
+            return DispatchQueue.global(qos: .default)
             
         case .utility:
-          return DispatchQueue.global(qos: .utility)
+            return DispatchQueue.global(qos: .utility)
             
         case .background:
-          return DispatchQueue.global(qos: .background)
+            return DispatchQueue.global(qos: .background)
             
         case .custom(let rawObject):
             return rawObject
         }
     }
     
-    private static func createCustom(_ isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
-      
-      var queue: GCDQueue? = nil
-      
-        if isConcurrent {
-          queue = GCDQueue.custom(
+    fileprivate static func createCustom(_ isConcurrent: Bool, label: String?, targetQueue: GCDQueue?) -> GCDQueue {
+        
+        let queue = GCDQueue.custom(
             DispatchQueue(
-              label: label ?? "",
-              attributes: .concurrent
+                label: label ?? "",
+                attributes: (isConcurrent ? .concurrent : [])
             )
-          )
-        }
-        else {
-          queue = GCDQueue.custom(
-            DispatchQueue(label: label ?? "")
-          )
-        }
-      
+        )
         if let target = targetQueue {
             
-            queue!.dispatchQueue().setTarget(queue: target.dispatchQueue())
+            queue.dispatchQueue().setTarget(queue: target.dispatchQueue())
         }
-        return queue!
+        return queue
     }
 }
 
