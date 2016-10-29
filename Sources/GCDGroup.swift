@@ -54,7 +54,7 @@ public struct GCDGroup {
      Explicitly indicates that a block has entered the group.
      */
     public func enter() {
-        
+      
         self.rawObject.enter()
     }
     
