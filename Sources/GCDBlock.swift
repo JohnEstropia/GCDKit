@@ -26,180 +26,162 @@
 import Foundation
 
 /**
-A wrapper and utility class for dispatch_block_t.
-*/
-@available(iOS, introduced=7.0)
+ A wrapper and utility class for dispatch_block_t.
+ */
 public struct GCDBlock {
-
+    
     /**
-    Create a new block object on the heap from a closure.
-
-    - parameter closure: The closure to be associated with the block.
-    */
-    public init(_ closure: () -> Void) {
+     Create a new block object on the heap from a closure.
+     
+     - parameter closure: The closure to be associated with the block.
+     */
+    public init(_ closure: @escaping () -> Void) {
         
-        #if USE_FRAMEWORKS
-            
-            self.rawObject = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS) {
-                
-                autoreleasepool(closure)
-            }
-        #else
-            
-            if #available(iOS 8.0, *) {
-                
-                self.rawObject = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS) {
-                    
-                    autoreleasepool(closure)
-                }
-            }
-            else {
-                
-                self.rawObject = {
-                    
-                    autoreleasepool(closure)
-                }
-            }
-        #endif
+        self.rawObject = DispatchWorkItem(flags: .inheritQoS, block: closure)
     }
-
+    
     /**
-    Submits a closure for asynchronous execution on a queue and returns immediately.
-
-    - parameter queue: The queue to which the supplied block will be submitted.
-    - parameter closure: The closure to submit to the target queue.
-    - returns: The block to submit to the queue. Useful when chaining blocks together.
-    */
-    public static func async(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
-
+     Submits a closure for asynchronous execution on a queue and returns immediately.
+     
+     - parameter queue: The queue to which the supplied block will be submitted.
+     - parameter closure: The closure to submit to the target queue.
+     - returns: The block to submit to the queue. Useful when chaining blocks together.
+     */
+    @discardableResult
+    public static func async(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
+        
         return queue.async(closure)
     }
-
+    
     /**
-    Submits a closure for execution on a queue and waits until that block completes.
-
-    - parameter queue: The queue to which the supplied block will be submitted.
-    - parameter closure: The closure to submit to the target queue.
-    - returns: The block to submit to the queue. Useful when chaining blocks together.
-    */
-    public static func sync(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
-
+     Submits a closure for execution on a queue and waits until that block completes.
+     
+     - parameter queue: The queue to which the supplied block will be submitted.
+     - parameter closure: The closure to submit to the target queue.
+     - returns: The block to submit to the queue. Useful when chaining blocks together.
+     */
+    @discardableResult
+    public static func sync(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
+        
         return queue.sync(closure)
     }
-
+    
     /**
-    Enqueue a closure for execution at the specified time.
-
-    - parameter queue: The queue to which the supplied block will be submitted.
-    - parameter delay: The number of seconds delay before executing the block
-    - parameter closure: The closure to submit to the target queue.
-    - returns: The block to submit to the queue. Useful when chaining blocks together.
-    */
-    public static func after(queue: GCDQueue, delay: NSTimeInterval, _ closure: () -> Void) -> GCDBlock {
-
+     Enqueue a closure for execution at the specified time.
+     
+     - parameter queue: The queue to which the supplied block will be submitted.
+     - parameter delay: The number of seconds delay before executing the block
+     - parameter closure: The closure to submit to the target queue.
+     - returns: The block to submit to the queue. Useful when chaining blocks together.
+     */
+    @discardableResult
+    public static func after(_ queue: GCDQueue, delay: TimeInterval, _ closure: @escaping () -> Void) -> GCDBlock {
+        
         return queue.after(delay, closure)
     }
-
+    
     /**
-    Submits a barrier closure for asynchronous execution and returns immediately.
-
-    - parameter queue: The queue to which the supplied block will be submitted.
-    - parameter closure: The closure to submit to the target queue.
-    - returns: The block to submit to the queue. Useful when chaining blocks together.
-    */
-    public static func barrierAsync(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
-
+     Submits a barrier closure for asynchronous execution and returns immediately.
+     
+     - parameter queue: The queue to which the supplied block will be submitted.
+     - parameter closure: The closure to submit to the target queue.
+     - returns: The block to submit to the queue. Useful when chaining blocks together.
+     */
+    @discardableResult
+    public static func barrierAsync(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
+        
         return queue.barrierAsync(closure)
     }
-
+    
     /**
-    Submits a barrier closure object for execution and waits until that block completes.
-
-    - parameter queue: The queue to which the supplied block will be submitted.
-    - parameter closure: The closure to submit to the target queue.
-    - returns: The block to submit to the queue. Useful when chaining blocks together.
-    */
-    public static func barrierSync(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
-
+     Submits a barrier closure object for execution and waits until that block completes.
+     
+     - parameter queue: The queue to which the supplied block will be submitted.
+     - parameter closure: The closure to submit to the target queue.
+     - returns: The block to submit to the queue. Useful when chaining blocks together.
+     */
+    @discardableResult
+    public static func barrierSync(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
+        
         return queue.barrierSync(closure)
     }
-
+    
     /**
-    Synchronously executes the block.
-    */
+     Synchronously executes the block.
+     */
     public func perform() {
-
-        self.rawObject()
+        
+        self.rawObject.perform()
     }
-
+    
     /**
-    Schedule a notification closure to be submitted to a queue when the execution of the block has completed.
-
-    - parameter queue: The queue to which the supplied notification closure will be submitted when the block completes.
-    - parameter closure: The notification closure to submit when the block completes.
-    - returns: The notification block. Useful when chaining blocks together.
-    */
+     Schedule a notification closure to be submitted to a queue when the execution of the block has completed.
+     
+     - parameter queue: The queue to which the supplied notification closure will be submitted when the block completes.
+     - parameter closure: The notification closure to submit when the block completes.
+     - returns: The notification block. Useful when chaining blocks together.
+     */
     @available(iOS 8.0, OSX 10.10, *)
-    public func notify(queue: GCDQueue, closure: () -> Void) -> GCDBlock {
-
+    @discardableResult
+    public func notify(_ queue: GCDQueue, closure: @escaping () -> Void) -> GCDBlock {
+        
         let block = GCDBlock(closure)
-        dispatch_block_notify(self.rawObject, queue.dispatchQueue(), block.rawObject)
-
+        self.rawObject.notify(queue: queue.dispatchQueue(), execute: block.rawObject)
         return block
     }
-
+    
     /**
-    Asynchronously cancel the block.
-    */
+     Asynchronously cancel the block.
+     */
     @available(iOS 8.0, OSX 10.10, *)
     public func cancel() {
-
-        dispatch_block_cancel(self.rawObject)
+        
+        self.rawObject.cancel()
     }
-
+    
     /**
-    Wait synchronously until execution of the block @available(iOS 8.0, OSX 10.10, *)
-    has completed.
-    */
+     Wait synchronously until execution of the block @available(iOS 8.0, OSX 10.10, *)
+     has completed.
+     */
     @available(iOS 8.0, OSX 10.10, *)
     public func wait() {
-
-        dispatch_block_wait(self.rawObject, DISPATCH_TIME_FOREVER)
+        
+        self.rawObject.wait()
     }
-
+    
     /**
-    Wait synchronously until execution of the block has completed or until the specified timeout has elapsed.
-
-    - parameter timeout: The number of seconds before timeout.
-    - returns: Returns zero on success, or non-zero if the timeout occurred.
-    */
+     Wait synchronously until execution of the block has completed or until the specified timeout has elapsed.
+     
+     - parameter timeout: The number of seconds before timeout.
+     - returns: Returns `.Success` on success, or `.TimedOut` if the timeout occurred.
+     */
     @available(iOS 8.0, OSX 10.10, *)
-    public func wait(timeout: NSTimeInterval) -> Int {
-
-        return dispatch_block_wait(self.rawObject, dispatch_time(DISPATCH_TIME_NOW, Int64(timeout * NSTimeInterval(NSEC_PER_SEC))))
+    public func wait(_ timeout: TimeInterval) -> DispatchTimeoutResult {
+        
+        return self.rawObject.wait(timeout: DispatchTime.now() + timeout)
     }
-
+    
     /**
-    Wait synchronously until execution of the block has completed or until the specified timeout has elapsed.
-
-    - parameter date: The timeout date.
-    - returns: Returns zero on success, or non-zero if the timeout occurred.
-    */
+     Wait synchronously until execution of the block has completed or until the specified timeout has elapsed.
+     
+     - parameter date: The timeout date.
+     - returns: Returns `.Success` on success, or `.TimedOut` if the timeout occurred.
+     */
     @available(iOS 8.0, OSX 10.10, *)
-    public func wait(date: NSDate) -> Int {
-
+    public func wait(_ date: Date) -> DispatchTimeoutResult {
+        
         return self.wait(date.timeIntervalSinceNow)
     }
-
+    
     /**
-    Returns the dispatch_block_t object associated with this value.
-
-    - returns: The dispatch_block_t object associated with this value.
-    */
-    public func dispatchBlock() -> dispatch_block_t {
-
+     Returns the dispatch_block_t object associated with this value.
+     
+     - returns: The dispatch_block_t object associated with this value.
+     */
+    public func dispatchBlock() -> DispatchWorkItem {
+        
         return self.rawObject
     }
-
-    private let rawObject: dispatch_block_t
+    
+    fileprivate let rawObject: DispatchWorkItem
 }

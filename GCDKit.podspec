@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = "GCDKit"
-    s.version = "1.3.0"
+    s.version = "2.1.0"
     s.license = "MIT"
     s.summary = "GCDKit is Grand Central Dispatch simplified with Swift"
     s.homepage = "https://github.com/JohnEstropia/GCDKit"
@@ -15,5 +15,4 @@ Pod::Spec.new do |s|
     s.source_files = "Sources", "Sources/**/*.{swift}"
     s.frameworks = "Foundation"
     s.requires_arc = true
-    s.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-D USE_FRAMEWORKS' }
 end
